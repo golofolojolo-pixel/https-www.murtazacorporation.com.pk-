@@ -5,17 +5,22 @@ fetch_articles.py
 Monthly pipeline for Murtaza Corporation's "Engineering Articles" page.
 
 What it does, in order:
-  1. DISCOVER  - Ask Gemini (with Google Search grounding) to find real,
-                 recently published, reputable engineering/technical articles
-                 relevant to Murtaza Corporation's business (stainless &
-                 carbon steel piping, tubes, fittings, flanges, valves,
-                 corrosion, MTRs/EN 10204, welding & fabrication).
-  2. FETCH     - Download the actual article page and extract its real text.
-  3. SUMMARIZE - Ask Gemini to summarize ONLY the fetched text into ~10
-                 short lines. No search tool is used at this step, so the
-                 model cannot invent facts that aren't in the source text.
-  4. DEDUPE    - Skip URLs already listed in data/published_articles.json.
-  5. INSERT    - Add new, image-free cards into engineering-articles.html
+  1. DISCOVER  - Search free, keyless RSS sources (Google News RSS search,
+                 plus any custom feeds you add) to find real, recently
+                 published articles relevant to Murtaza Corporation's
+                 business (stainless & carbon steel piping, tubes,
+                 fittings, flanges, valves, corrosion, MTRs/EN 10204,
+                 welding & fabrication). No LLM call happens in this step,
+                 so it never requires a paid/billed Gemini project.
+  2. RESOLVE   - Decode Google News' obfuscated redirect links to the real
+                 publisher URL (via googlenewsdecoder).
+  3. FETCH     - Download the actual article page and extract its real text.
+  4. SUMMARIZE - Ask Gemini (free tier, plain text generation - no paid
+                 Google Search grounding tool) to summarize ONLY the
+                 fetched text into ~10 short lines. The model cannot invent
+                 facts that aren't in the source text.
+  5. DEDUPE    - Skip URLs already listed in data/published_articles.json.
+  6. INSERT    - Add new, image-free cards into engineering-articles.html
                  that link OUT to the original article (curation, not
                  republishing).
 
@@ -34,13 +39,15 @@ import os
 import random
 import re
 import sys
+import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
-from urllib.parse import urlparse
+from urllib.parse import urlparse, quote
 
 import requests
 import trafilatura
 from google import genai
 from google.genai import types
+from googlenewsdecoder import gnewsdecoder
 
 # ---------------------------------------------------------------------------
 # Configuration
@@ -52,88 +59,113 @@ TRACKING_PATH = os.path.join(REPO_ROOT, "data", "published_articles.json")
 
 CARD_MARKER = "<!-- AUTO-CARDS:START (script inserts new card as first child here) -->"
 
-MODEL_DISCOVER = "gemini-flash-latest"
+# Only used for the summarization step (plain text generation - no paid
+# Google Search grounding tool involved, so this stays on the free tier).
 MODEL_SUMMARIZE = "gemini-flash-latest"
 
 ARTICLES_PER_RUN = int(os.environ.get("ARTICLES_PER_RUN", "2"))
 
+USER_AGENT = "Mozilla/5.0 (compatible; MurtazaArticleBot/1.0)"
+
+# Optional: paste direct RSS feed URLs from trade publications you trust
+# here (e.g. a publication's own /feed page). Direct feeds are more
+# reliable than Google News search since there's no redirect to resolve.
+# Leave empty to rely on Google News RSS search alone.
+CUSTOM_RSS_FEEDS = [
+    # "https://example-trade-publication.com/feed",
+]
+
 # Rotate through a subset of these each run so coverage stays broad over time
 # rather than repeating the same query every month.
 TOPIC_POOL = [
-    "304 vs 316 stainless steel selection for industrial piping",
-    "carbon steel pipe corrosion prevention in industrial plants",
-    "welded vs seamless pipe fittings manufacturing and specification",
-    "flange types and gasket selection for process piping",
-    "industrial valve selection (ball, gate, check, camlock) best practices",
-    "instrumentation tubing standards and installation practices",
-    "EN 10204 mill test certificates and material traceability",
-    "ASTM/ASME piping standards updates for stainless and carbon steel",
-    "structural steel fabrication techniques and quality control",
-    "pipe welding procedures and weld quality inspection",
-    "pitting and crevice corrosion in chloride environments",
-    "hygienic (sanitary) stainless tubing for food and dairy processing",
+    "304 vs 316 stainless steel selection industrial piping",
+    "carbon steel pipe corrosion prevention industrial plants",
+    "welded vs seamless pipe fittings manufacturing specification",
+    "flange types gasket selection process piping",
+    "industrial valve selection ball gate check camlock",
+    "instrumentation tubing standards installation practices",
+    "EN 10204 mill test certificates material traceability",
+    "ASTM ASME piping standards stainless carbon steel",
+    "structural steel fabrication techniques quality control",
+    "pipe welding procedures weld quality inspection",
+    "pitting crevice corrosion chloride environments",
+    "hygienic sanitary stainless tubing food dairy processing",
 ]
 
 MIN_SOURCE_CHARS = 800  # skip pages that are too thin to summarize responsibly
 
 
 # ---------------------------------------------------------------------------
-# Step 1: Discover real candidate articles via Gemini + Google Search grounding
+# Step 1: Discover real candidate articles via free RSS sources (no billing)
 # ---------------------------------------------------------------------------
 
-def discover_candidates(client, topics, excluded_urls, want_count):
-    """Uses Gemini's Google Search grounding tool to find real articles.
-
-    Grounding metadata returns actual URLs the model found via search, so
-    we don't rely on the model to type out a URL from memory (which risks
-    hallucination). We treat grounding_chunks as the source of truth.
-    """
-    excluded_list = "\n".join(f"- {u}" for u in list(excluded_urls)[:50]) or "(none yet)"
-    topics_list = "\n".join(f"- {t}" for t in topics)
-
-    prompt = f"""
-Find recent (ideally last 90 days, but high-quality evergreen technical
-references are acceptable) real, published engineering/technical articles
-on the following topics, written for an industrial B2B audience buying
-stainless and carbon steel piping products:
-
-{topics_list}
-
-Prefer reputable sources: trade publications, engineering standards
-organizations, manufacturer technical resources, and industry education
-sites. Avoid marketing/sales pages, forums, and low-quality content mills.
-
-Do NOT include any of these URLs, which have already been used:
-{excluded_list}
-
-Return {want_count * 4} good candidate articles.
-""".strip()
-
-    response = client.models.generate_content(
-        model=MODEL_DISCOVER,
-        contents=prompt,
-        config=types.GenerateContentConfig(
-            tools=[types.Tool(google_search=types.GoogleSearch())]
-        ),
-    )
-
-    candidates = []
-    seen = set()
-
+def _parse_rss_items(xml_bytes):
+    items = []
     try:
-        chunks = response.candidates[0].grounding_metadata.grounding_chunks or []
-    except (AttributeError, IndexError, TypeError):
-        chunks = []
+        root = ET.fromstring(xml_bytes)
+    except ET.ParseError:
+        return items
+    for item in root.findall(".//item"):
+        title = (item.findtext("title") or "").strip()
+        link = (item.findtext("link") or "").strip()
+        if title and link:
+            items.append({"title": title, "url": link})
+    return items
 
-    for chunk in chunks:
-        web = getattr(chunk, "web", None)
-        uri = getattr(web, "uri", None) if web else None
-        title = getattr(web, "title", None) if web else None
-        if uri and uri not in seen and uri not in excluded_urls:
-            seen.add(uri)
-            candidates.append({"url": uri, "title": title or ""})
 
-    return candidates
+def discover_candidates(topics, excluded_urls, want_count):
+    """Finds real candidate articles using free, keyless RSS sources:
+    Google News RSS search (per topic) plus any custom feeds you've added
+    above. No LLM call happens here, so this step never touches billing.
+    """
+    candidates = []
+    seen = set(excluded_urls)
+
+    for topic in topics:
+        rss_url = (
+            "https://news.google.com/rss/search?q="
+            f"{quote(topic)}+when:180d&hl=en-US&gl=US&ceid=US:en"
+        )
+        try:
+            resp = requests.get(rss_url, timeout=15, headers={"User-Agent": USER_AGENT})
+            resp.raise_for_status()
+        except requests.RequestException:
+            continue
+
+        for item in _parse_rss_items(resp.content):
+            if item["url"] not in seen:
+                seen.add(item["url"])
+                candidates.append(item)
+
+    for feed_url in CUSTOM_RSS_FEEDS:
+        try:
+            resp = requests.get(feed_url, timeout=15, headers={"User-Agent": USER_AGENT})
+            resp.raise_for_status()
+        except requests.RequestException:
+            continue
+        for item in _parse_rss_items(resp.content):
+            if item["url"] not in seen:
+                seen.add(item["url"])
+                candidates.append(item)
+
+    random.shuffle(candidates)
+    return candidates[: want_count * 6]
+
+
+def resolve_real_url(url):
+    """Google News RSS <link> values are obfuscated redirect URLs, not the
+    actual article URL. This decodes them to the real source URL so that
+    (a) we can fetch the real page text, and (b) the published card links
+    to the original publisher, not to Google News."""
+    if "news.google.com" not in url:
+        return url
+    try:
+        result = gnewsdecoder(url, interval=1)
+    except Exception:
+        return None
+    if result and result.get("status"):
+        return result.get("decoded_url")
+    return None
 
 
 # ---------------------------------------------------------------------------
@@ -284,8 +316,8 @@ def main():
 
     print(f"Topics this run: {topics}")
 
-    candidates = discover_candidates(client, topics, excluded_urls, ARTICLES_PER_RUN)
-    print(f"Discovered {len(candidates)} candidate URLs via search grounding.")
+    candidates = discover_candidates(topics, excluded_urls, ARTICLES_PER_RUN)
+    print(f"Discovered {len(candidates)} candidate URLs via free RSS sources.")
 
     accepted = []
     for candidate in candidates:
@@ -293,21 +325,28 @@ def main():
             break
 
         url = candidate["url"]
-        print(f"Fetching: {url}")
-        text = fetch_article_text(url)
+        real_url = resolve_real_url(url)
+        if not real_url:
+            print(f"  -> could not resolve real URL for {url[:80]}, skipping.")
+            continue
+        if real_url in excluded_urls:
+            continue
+
+        print(f"Fetching: {real_url}")
+        text = fetch_article_text(real_url)
         if not text:
             print("  -> could not extract usable text, skipping.")
             continue
 
-        title = candidate["title"] or url
-        summary = summarize_article(client, title, url, text)
+        title = candidate["title"] or real_url
+        summary = summarize_article(client, title, real_url, text)
         if not summary:
             print("  -> summarization failed, skipping.")
             continue
 
         accepted.append(
             {
-                "url": url,
+                "url": real_url,
                 "title": title,
                 "summary": summary,
                 "read_minutes": estimate_read_minutes(text),
@@ -315,6 +354,7 @@ def main():
             }
         )
         print(f"  -> accepted: {title}")
+        excluded_urls.add(real_url)
 
     if not accepted:
         print("No new articles were accepted this run. Nothing to do.")
