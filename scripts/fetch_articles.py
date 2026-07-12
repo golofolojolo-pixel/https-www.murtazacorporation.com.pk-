@@ -39,6 +39,7 @@ import os
 import random
 import re
 import sys
+import time
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from urllib.parse import urlparse, quote
@@ -196,9 +197,13 @@ def fetch_article_text(url):
 # Step 3: Summarize strictly from the fetched text
 # ---------------------------------------------------------------------------
 
-def summarize_article(client, title, url, source_text):
+def summarize_article(client, title, url, source_text, max_attempts=3):
     """Asks Gemini to summarize ONLY the given text. No search tool is
-    attached here, which keeps the model from pulling in outside claims."""
+    attached here, which keeps the model from pulling in outside claims.
+
+    Retries a couple of times on transient server errors (e.g. 503 'high
+    demand') before giving up on this one article - a temporary hiccup on
+    one candidate shouldn't crash the whole run."""
 
     # Trim very long articles to keep the prompt focused and cheap.
     trimmed = source_text[:12000]
@@ -218,15 +223,21 @@ Article text:
 \"\"\"
 """.strip()
 
-    response = client.models.generate_content(
-        model=MODEL_SUMMARIZE,
-        contents=prompt,
-    )
-
-    summary = (response.text or "").strip()
-    if not summary:
-        return None
-    return summary
+    for attempt in range(1, max_attempts + 1):
+        try:
+            response = client.models.generate_content(
+                model=MODEL_SUMMARIZE,
+                contents=prompt,
+            )
+            summary = (response.text or "").strip()
+            return summary or None
+        except Exception as exc:
+            print(f"  -> Gemini call failed (attempt {attempt}/{max_attempts}): {exc}")
+            if attempt < max_attempts:
+                time.sleep(5 * attempt)  # 5s, then 10s
+            else:
+                print("  -> giving up on this article after repeated failures.")
+                return None
 
 
 # ---------------------------------------------------------------------------
@@ -324,37 +335,41 @@ def main():
         if len(accepted) >= ARTICLES_PER_RUN:
             break
 
-        url = candidate["url"]
-        real_url = resolve_real_url(url)
-        if not real_url:
-            print(f"  -> could not resolve real URL for {url[:80]}, skipping.")
-            continue
-        if real_url in excluded_urls:
-            continue
+        try:
+            url = candidate["url"]
+            real_url = resolve_real_url(url)
+            if not real_url:
+                print(f"  -> could not resolve real URL for {url[:80]}, skipping.")
+                continue
+            if real_url in excluded_urls:
+                continue
 
-        print(f"Fetching: {real_url}")
-        text = fetch_article_text(real_url)
-        if not text:
-            print("  -> could not extract usable text, skipping.")
-            continue
+            print(f"Fetching: {real_url}")
+            text = fetch_article_text(real_url)
+            if not text:
+                print("  -> could not extract usable text, skipping.")
+                continue
 
-        title = candidate["title"] or real_url
-        summary = summarize_article(client, title, real_url, text)
-        if not summary:
-            print("  -> summarization failed, skipping.")
-            continue
+            title = candidate["title"] or real_url
+            summary = summarize_article(client, title, real_url, text)
+            if not summary:
+                print("  -> summarization failed, skipping.")
+                continue
 
-        accepted.append(
-            {
-                "url": real_url,
-                "title": title,
-                "summary": summary,
-                "read_minutes": estimate_read_minutes(text),
-                "added": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
-            }
-        )
-        print(f"  -> accepted: {title}")
-        excluded_urls.add(real_url)
+            accepted.append(
+                {
+                    "url": real_url,
+                    "title": title,
+                    "summary": summary,
+                    "read_minutes": estimate_read_minutes(text),
+                    "added": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+                }
+            )
+            print(f"  -> accepted: {title}")
+            excluded_urls.add(real_url)
+        except Exception as exc:
+            print(f"  -> unexpected error on this candidate, skipping: {exc}")
+            continue
 
     if not accepted:
         print("No new articles were accepted this run. Nothing to do.")
