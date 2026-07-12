@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fittings — Murtaza Corporation</title>
+<meta name="description" content="Butt-weld and threaded (NPT/BSP/socket-weld) stainless steel, carbon steel and alloy steel pipe fittings, 1/8&quot; to 32&quot; NB — from Murtaza Corporation, Karachi." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  #product-top .section-head {
+    text-align: left;
+    margin: 0 0 40px 0;
+    max-width: none;
+  }
+
+  /* Readability: left-aligned copy instead of justified (avoids uneven
+     word-spacing "rivers" on the web), tighter line-height, consistent tokens */
+  #product-top p {
+    text-align: left;
+  }
+
+  #product-top .spec-item {
+    background: #fff;
+    border: 1px solid #ececec;
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+
+  #product-top .spec-label {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-stone);
+    margin-bottom: 4px;
+  }
+
+  #product-top .spec-value {
+    color: var(--color-ink);
+    font-weight: 500;
+    font-size: 15px;
+  }
+
+  #product-top .type-card {
+    position: relative;
+    padding: 4px 18px 4px 54px;
+  }
+
+  #product-top .type-badge {
+    position: absolute;
+    left: 0;
+    top: 2px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--color-cobalt-ink);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #product-top .spec-pill {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: #eaf0fe;
+    color: var(--color-cobalt-ink);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  #product-top .stock-list {
+    list-style: none;
+    margin: 14px 0 0;
+    padding: 0;
+  }
+
+  #product-top .stock-list li {
+    position: relative;
+    padding-left: 26px;
+    margin-bottom: 14px;
+    color: var(--color-ink);
+    font-size: 16px;
+  }
+
+  #product-top .stock-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--color-cobalt-ink);
+    font-weight: 700;
+  }
+
+  @media (max-width: 640px) {
+    #product-top .type-card {
+      padding-left: 46px;
+    }
+    #product-top .type-badge {
+      width: 28px;
+      height: 28px;
+      font-size: 13px;
+    }
+  }
+
+  #product-top .product-photo-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  #product-top .product-photo-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+  }
+
+  #product-top .fitting-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0,1fr));
+    gap: 16px;
+    margin-top: 18px;
+    justify-items: center;
+  }
+
+  #product-top .fitting-tile {
+    background: #fff;
+    border: 1px solid #ececec;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    width: 150px !important;
+    height: auto;
+  }
+
+  #product-top .fitting-tile:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+  }
+
+  #product-top .fitting-tile img {
+    width: 150px !important;
+    height: 150px !important;
+    max-width: 150px !important;
+    min-width: 150px !important;
+    max-height: 150px !important;
+    min-height: 150px !important;
+    object-fit: contain !important;
+    object-position: center;
+    background: #fafafa;
+    display: block;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  #product-top .fitting-tile span {
+    display: block;
+    padding: 8px 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-ink);
+  }
+
+  @media (max-width: 900px) {
+    #product-top .fitting-grid {
+      grid-template-columns: repeat(3, minmax(0,1fr));
+    }
+  }
+
+  @media (max-width: 640px) {
+    #product-top .fitting-grid {
+      grid-template-columns: repeat(2, minmax(0,1fr));
+    }
+  }
+</style>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+
+<div class="header-hover-zone" id="headerHoverZone"></div>
+<header>
+  <div class="nav-inner">
+
+    <a href="index.html#top" class="logo" aria-label="Murtaza Corporation home">
+      <img src="Logos/company.png" alt="Murtaza Corporation" class="logo-img" />
+      <span class="logo-name">Murtaza Corporation</span>
+    </a>
+
+    <span class="nav-divider" aria-hidden="true"></span>
+
+    <nav>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#about">About</a></li>
+        <li class="nav-item-dropdown">
+          <a href="index.html#products" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+            Products <span class="nav-caret" aria-hidden="true">▾</span>
+          </a>
+          <ul class="nav-dropdown-menu">
+            <li><a href="pipes.html">Pipes</a></li>
+            <li><a href="fittings.html">Fittings</a></li>
+            <li><a href="valves.html">Valves</a></li>
+            <li><a href="flanges.html">Flanges</a></li>
+            <li><a href="tubes.html">Tubes</a></li>
+            <li><a href="dairy-tubes.html">Dairy tubes &amp; fittings</a></li>
+          </ul>
+        </li>
+        <li class="nav-item-dropdown">
+          <a href="index.html#resources" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+            Resources <span class="nav-caret" aria-hidden="true">▾</span>
+          </a>
+          <ul class="nav-dropdown-menu">
+            <li><a href="company-profile.html">Company profile</a></li>
+            <li><a href="lor.html">LOR</a></li>
+            <li><a href="mill-test-report.html">Mill Test Report</a></li>
+            <li><a href="services.html">Services</a></li>
+          </ul>
+        </li>
+        <li class="nav-item-dropdown">
+          <a href="index.html#track-record" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+            Updates <span class="nav-caret" aria-hidden="true">▾</span>
+          </a>
+          <ul class="nav-dropdown-menu">
+            <li><a href="linkedin-updates.html">LinkedIn Updates</a></li>
+            <li><a href="engineering-articles.html">Engineering Articles</a></li>
+            <li><a href="project-gallery.html">Project Gallery</a></li>
+          </ul>
+        </li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <span class="nav-divider" aria-hidden="true"></span>
+
+    <div class="nav-actions">
+      <a href="index.html#contact" class="btn btn-primary btn-sm">Request a quote <span class="arrow">&rarr;</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+<div id="top"></div>
+
+<section class="block" id="product-top">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow"><a href="index.html#products" style="color:inherit;">Products</a> / Fittings</p>
+      <h2 class="heading">Fittings</h2>
+      <p class="sub-copy">Butt-weld and threaded stainless, carbon &amp; alloy steel pipe fittings, certified stock.</p>
+    </div>
+    
+
+    <!-- ============================================================ -->
+    <!-- PRODUCT CONTENT — FITTINGS -->
+    <!-- ============================================================ -->
+
+    <div class="wrap" style="padding:0;max-width:100%;">
+
+      <!-- Spec summary -->
+      <div style="background:var(--color-bone);border:1px solid #ececec;border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:36px;">
+  <h3 style="margin:0 0 18px;font-size:18px;font-weight:500;">Pipe Fittings — Specification</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;">
+          <div class="spec-item"><span class="spec-label">Materials</span><span class="spec-value">Stainless Steel, Carbon Steel, Alloy Steel, Nickel Alloys</span></div>
+          <div class="spec-item"><span class="spec-label">Size</span><span class="spec-value">1/8" NB to 32" NB</span></div>
+          <div class="spec-item"><span class="spec-label">Seam</span><span class="spec-value">Seamless, Welded &amp; EFW</span></div>
+          <div class="spec-item"><span class="spec-label">Wall Thickness</span><span class="spec-value">SCH-5S to SCH-XXS</span></div>
+          <div class="spec-item"><span class="spec-label">Form</span><span class="spec-value">Butt-weld and Threaded (NPT / BSP / Socket-weld)</span></div>
+          <div class="spec-item"><span class="spec-label">Application</span><span class="spec-value">Petrochemical, Oil &amp; Gas, Power Generation, Industrial</span></div>
+        </div>
+      </div>
+      
+
+      <!-- Product imagery -->
+<div class="grid-3" style="grid-template-columns:repeat(2,minmax(0,1fr));max-width:640px;gap:28px;margin:0 auto 36px;">
+            <div class="card product-photo-card">
+         <img src="images/fittings.jpg" alt="Butt-weld pipe fittings" style="height:240px;width:100%;object-fit:cover;" />
+          <div class="card-body" style="text-align:center;">
+            <h3 style="margin:0;">Butt-weld Fittings</h3>
+          </div>
+        </div>
+        <div class="card product-photo-card">
+         <img src="fittings/WhatsApp-Image-2024-01-25-at-5.36.42-PM.jpg" alt="Threaded NPT and BSP pipe fittings" style="height:240px;width:100%;object-fit:cover;" />
+          <div class="card-body" style="text-align:center;">
+            <h3 style="margin:0;">Threaded Fittings</h3>
+          </div>
+        </div>
+      </div>
+
+      <!-- Overview -->
+<div style="margin-bottom:32px;">
+  <h3 style="font-size:20px;font-weight:500;margin:0 0 14px;">Stainless &amp; Carbon Steel Fitting Systems</h3>
+  <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0 0 16px;">Pipe fittings allow alterations in flow direction, size reduction, closure or branching within a piping system, and are produced either by welding pipe sections together (butt-weld) or by machining threaded and socket-weld connections for mechanical joining. Stainless steel fittings offer excellent corrosion resistance and are well suited to harsh, corrosive or hygienic environments, while carbon steel fittings — which can be coated or treated to improve corrosion resistance — remain a cost-effective, weld-friendly choice where corrosion resistance is not the primary concern. Both materials perform reliably across a wide temperature range and see use across petrochemical, chemical processing, oil and gas, water treatment and general industrial applications.</p>
+  <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0 0 16px;">Fittings for fluid applications in petrochemical, desalination, mineral processing, power generation and oil &amp; gas recovery plants, as well as industrial, structural and decorative applications, are stocked across a comprehensive range of sizes, wall thicknesses, grades and connection types to suit pipeline pressure and end-use requirements. The Murtaza Corporation stock range has been built over many years of experience to meet these demands.</p>
+</div>
+
+      <!-- Fitting type breakdown -->
+      <div style="margin-bottom:36px;">
+        <h3 style="font-size:20px;font-weight:500;margin:0 0 18px;">Fitting Types</h3>
+        <div style="display:flex;flex-direction:column;gap:20px;">
+
+          <div class="type-card">
+            <span class="type-badge">1</span>
+            <h4 style="margin:0 0 10px;font-size:17px;font-weight:600;">Butt-weld Fittings</h4>
+            <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0;">Formed by welding directly to pipe ends, butt-weld fittings — elbows, tees, end caps, reducers, crosses, collars and stub ends — enable changes in flow direction, size reduction, closure or branching across diverse industries. Nominal pipe sizes and wall thicknesses are matched to the pipeline's pressure requirements, and fittings are supplied in stainless steel, carbon steel, alloy steel and nickel alloys, in both seamless and welded (including EFW) construction, sizes 1/4" NB to 32" NB, wall thickness SCH-5S to SCH-XXS.</p>
+            <span class="spec-pill">Spec: ASTM A403 WP304/304L/304H/316/316L/321/347 (SS) · ASTM A234 WPB, A420 WPL3/WPL6, MSS-SP-75 WPHY (CS) · ASTM A234 WP1/WP5/WP9/WP11/WP22/WP91 (Alloy) · Monel, Nickel, Inconel, Hastelloy, Titanium, Tantalum, Alloy-20</span>
+
+            <div class="fitting-grid">
+              <div class="fitting-tile"><img src="fittings/S.S-ELBOW-90-DEGREE-150x150.jpg" alt="Butt-weld 90 degree elbow" /><span>Elbow 90°</span></div>
+              <div class="fitting-tile"><img src="fittings/S.S-ELBOW-45-DEGREE-150x150.jpg" alt="Butt-weld 45 degree elbow" /><span>Elbow 45°</span></div>
+              <div class="fitting-tile"><img src="fittings/S.S-EQUAL-TEE.jfif_-150x150.jpg" alt="Butt-weld equal tee" /><span>Equal Tee</span></div>
+              <div class="fitting-tile"><img src="fittings/S.S-REDUCE-TEE-150x150.jpg" alt="Butt-weld reducing tee" /><span>Reducing Tee</span></div>
+              <div class="fitting-tile"><img src="fittings/stainless-steel-concentric-reducer-300x300.jpg" alt="Butt-weld concentric reducer" /><span>Concentric Reducer</span></div>
+              <div class="fitting-tile"><img src="fittings/S.S-ECCENTRIC-REDUCER-150x150.jpg" alt="Butt-weld eccentric reducer" /><span>Eccentric Reducer</span></div>
+              <div class="fitting-tile"><img src="fittings/S.S-COLLAR-150x150.jpg" alt="Butt-weld collar" /><span>Collar</span></div>
+              <div class="fitting-tile"><img src="fittings/S.S-END-CAP-150x150.jpg" alt="Butt-weld end cap" /><span>End Cap</span></div>
+              <div class="fitting-tile"><img src="fittings/S.S-STUB-END-150x150.jpg" alt="Butt-weld stub end" /><span>Stub End</span></div>
+              <div class="fitting-tile"><img src="fittings/WhatsApp-Image-2024-01-25-at-5.31.00-PM-150x150.jpg" alt="Butt-weld cross" /><span>CS Fittings</span></div>
+              <div class="fitting-tile"><img src="fittings/WhatsApp-Image-2024-01-25-at-5.30.59-PM-150x150.jpg" alt="Carbon steel elbow" /><span>CS Elbow</span></div>
+              <div class="fitting-tile"><img src="fittings/WhatsApp-Image-2024-01-25-at-5.30.59-PM-1-150x150.jpg"alt="Carbon steel tee" /><span>CS Tee</span></div>
+            </div>
+          </div>
+
+          <div class="type-card">
+            <span class="type-badge">2</span>
+            <h4 style="margin:0 0 10px;font-size:17px;font-weight:600;">Threaded Fittings — NPT, BSP &amp; Socket-weld</h4>
+            <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0;">Threaded and socket-weld fittings are vital in piping systems where mechanical, dismantlable connections are required. NPT fittings, with tapered threads, excel in high-pressure scenarios and are widely used in the United States; BSP fittings, with parallel threaded ends, suit lower-pressure applications and are common across oil &amp; gas and general industry. Available in elbows, tees, unions, crosses, couplings, caps, bushings, plugs, nipples and specialty outlet fittings (weld-o-let, elbow-o-let, sock-o-let, thread-o-let and more), in sizes 1/8" NB to 4" NB, at pressure ratings from 150 lb up to 9000 lbs.</p>
+            <span class="spec-pill">Spec: ASTM A105, A350 LF2 (CS) · ASTM A182 F304/F304L/F316/F316L/F347L/F321 (SS) · ASTM A182 F11 (Alloy) · Manufactured to ANSI B16.11 / BS 2.1, galvanised or pickled finish</span>
+
+            <div class="fitting-grid">
+              <div class="fitting-tile"><img src="fittings/S.S-THREADED-ELBOW.jfif_-150x150.jpg" alt="Threaded elbow" /><span>Threaded Elbow</span></div>
+              <div class="fitting-tile"><img src="fittings/S.S-THREADED-TEE-150x150.jpg" alt="Threaded tee" /><span>Threaded Tee</span></div>
+              <div class="fitting-tile"><img src="fittings/S.S-THREADED-REDUCE-TEE.jfif_-150x150.jpg" alt="Threaded reducing tee" /><span>Reducing Tee</span></div>
+              <div class="fitting-tile"><img src="fittings/S.S-THREADED-UNION-150x150.jpg" alt="Threaded union" /><span>Union</span></div>
+              <div class="fitting-tile"><img src="fittings/S.S-BARREL-NIPPLE-150x150.jpg" alt="Barrel nipple" /><span>Barrel Nipple</span></div>
+              <div class="fitting-tile"><img src="fittings/S.S-DEAD-PLUG-150x150.jpg" alt="Dead plug" /><span>Dead Plug</span></div>
+              <div class="fitting-tile"><img src="fittings/S.S-NOZZLE-150x150.jpg" alt="Nozzle fitting" /><span>Nozzle</span></div>
+              <div class="fitting-tile"><img src="fittings/S.S-THREADED-REDUCE-ELBOW-150x150.jpg" alt="Threaded reducing elbow" /><span>Reducing Elbow</span></div>
+              <div class="fitting-tile"><img src="fittings/S.S-PIPE-NIPPLE-150x150.jpg" alt="Pipe nipple" /><span>Pipe Nipple</span></div>
+              <div class="fitting-tile"><img src="fittings/S.S-REDUCE-BUSH-150x150.jpg" alt="Reducing bush" /><span>Reducing Bush</span></div>
+              <div class="fitting-tile"><img src="fittings/S.S-SYPHON-150x150.jpg" alt="Syphon fitting" /><span>Syphon</span></div>
+              <div class="fitting-tile"><img src="fittings/S.S-THREADED-SOCKET-150x150.jpg" alt="Threaded socket" /><span>Threaded Socket</span></div>
+              <div class="fitting-tile"><img src="fittings/S.S-THREADED-STREET-ELBOW.jfif_-150x150 - Copy.jpg" alt="Threaded street elbow" /><span>Street Elbow</span></div>
+              <div class="fitting-tile"><img src="fittings/S.S-THREADED-CAP-150x150.jpg" alt="Threaded cup" /><span>Threaded Cup</span></div>
+              <div class="fitting-tile"><img src="fittings/WhatsApp-Image-2024-01-25-at-5.36.42-PM.jpg" alt="Threaded cross" /><span>Forged Fittings</span></div>
+              <div class="fitting-tile"><img src="fittings/WhatsApp-Image-2024-01-25-at-5.36.52-PM.jpg" alt="Threaded coupling" /><span>Coupling</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Stock range -->
+      <div style="max-width:85ch;margin-bottom:40px;">
+        <p style="color:var(--color-ink);font-weight:600;line-height:1.75;margin:0;">The range of pipe fittings stocked by Murtaza Corporation includes fittings for:</p>
+        <ul class="stock-list">
+          <li>Fluid application in Petrochemical, Desalination, Mineral processing, Power generation, Oil and Gas recovery plants.</li>
+          <li>Industrial, structural and decorative applications.</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- END PRODUCT CONTENT                                           -->
+    <!-- ============================================================ -->
+<style>
+  #product-top .card::after {
+    display: none !important;
+  }
+</style>
+    <div class="view-all reveal">
+  <a href="index.html#products" class="btn btn-ghost">
+    Back to all products
+  </a>
+</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="Logos/company.png" alt="Murtaza Corporation" class="footer-logo-img" />
+    </div>
+
+    <div class="footer-col">
+      <h4>Address</h4>
+      <p>516/517, Sector 6-A, Mehran Town, Korangi Industrial Area, Karachi - 74900, Pakistan</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contacts</h4>
+      <p>Email: <a href="mailto:sales@murtazacorporation.com.pk">sales@murtazacorporation.com.pk</a></p>
+      <p>Phone: <a href="tel:+922135141451">+92 (21) 35141451</a></p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Links</h4>
+      <ul class="footer-link-list">
+        <li><a href="http://www.wermac.org/" target="_blank" rel="noopener">Wermac</a></li>
+        <li><a href="http://www.huikepipe.com/en/" target="_blank" rel="noopener">Hebei Huike</a></li>
+        <li><a href="http://www.yuandavalves.com/brand.html" target="_blank" rel="noopener">Yuanda Valve</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">© 2026 Murtaza Corporation. All rights reserved.</div>
+</footer>
+
+<script src="script.js" defer></script>
+<!-- Floating Calculator Button -->
+<a href="#"
+   class="calculator-widget"
+   id="calculatorWidgetBtn"
+   aria-label="Open pipe calculator">
+
+    <span class="whatsapp-text">
+        Calculator
+    </span>
+
+    <div class="calculator-icon">
+        <i class="fa-solid fa-calculator"></i>
+    </div>
+
+</a>
+<!-- Floating WhatsApp Button -->
+<a href="https://wa.me/923343791852"
+   class="whatsapp-widget"
+   target="_blank"
+   aria-label="Chat on WhatsApp">
+
+    <span class="whatsapp-text">
+        Chat with us
+    </span>
+
+    <div class="whatsapp-icon">
+        <i class="fab fa-whatsapp"></i>
+    </div>
+
+</a>
+</body>
+</html>
+<!-- Calculator Modal -->
+<div class="calculator-overlay" id="calculatorOverlay">
+  <div class="calculator-modal" id="calculatorModal" role="dialog" aria-modal="true" aria-labelledby="calculatorModalTitle">
+    <button type="button" class="calculator-modal-close" id="calculatorModalClose" aria-label="Close calculator">&times;</button>
+    <div class="calculator-modal-header">
+      <h3 id="calculatorModalTitle">Pipe Calculator</h3>
+    </div>
+    <div class="calculator-modal-body">
+  <form id="calcForm" onsubmit="return false;" class="calc-form">
+
+   <div class="calc-shape-bar" id="calcShapeBar">
+      <label>Shape</label>
+      <div class="calc-shape-icons" id="calcShapeIcons">
+        <button type="button" class="calc-shape-icon is-active" data-shape="Round" aria-pressed="true" aria-label="Round"><img src="images/round.png" alt="" /><span class="calc-shape-icon-label">Round</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Square" aria-pressed="false" aria-label="Square"><img src="images/icon-square.png" alt="" /><span class="calc-shape-icon-label">Square</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Rectangle" aria-pressed="false" aria-label="Rectangle"><img src="images/icon-rectangle.png" alt="" /><span class="calc-shape-icon-label">Rectangle</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Hexagonal" aria-pressed="false" aria-label="Hexagonal"><img src="images/icon-hexagol.jpg" alt="" /><span class="calc-shape-icon-label">Hexagonal</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Octagonal" aria-pressed="false" aria-label="Octagonal"><img src="images/icon-octa.png" alt="" /><span class="calc-shape-icon-label">Octagonal</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Sheet" aria-pressed="false" aria-label="Sheet"><img src="images/sheet.png" alt="" /><span class="calc-shape-icon-label">Sheet</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Plate" aria-pressed="false" aria-label="Plate"><img src="images/plate.jpg" alt="" /><span class="calc-shape-icon-label">Plate</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Pipe" aria-pressed="false" aria-label="Tubular / Pipe"><img src="images/tubular.jpg" alt="" /><span class="calc-shape-icon-label">Tubular/Pipe</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Ring" aria-pressed="false" aria-label="Ring"><img src="images/ring.png" alt="" /><span class="calc-shape-icon-label">Ring</span></button>
+      </div>
+      <p class="calc-shape-name" id="calcShapeName" style="display:none;">Round</p>
+      <select id="calcShape" style="display:none;">
+        <option value="Round" selected>Round</option>
+        <option value="Square">Square</option>
+        <option value="Rectangle">Rectangle</option>
+        <option value="Hexagonal">Hexagonal</option>
+        <option value="Octagonal">Octagonal</option>
+        <option value="Sheet">Sheet</option>
+        <option value="Plate">Plate</option>
+        <option value="Tubular">Tubular</option>
+        <option value="Pipe">Pipe</option>
+        <option value="Ring">Ring</option>
+        </select>
+    </div>
+
+   <div class="calc-layout">
+    <div class="calc-main">
+
+    <div class="calc-row">
+      <label for="calcMaterial">Material</label>
+      <select id="calcMaterial">
+        <option data-factor="1" selected>Steel (default)</option>
+        <option data-factor="0.3462">Aluminum 1100</option>
+        <option data-factor="0.3604">Aluminum 2011</option>
+        <option data-factor="0.3568">Aluminum 2014</option>
+        <option data-factor="0.3568">Aluminum 2017</option>
+        <option data-factor="0.3533">Aluminum 2024</option>
+        <option data-factor="0.3498">Aluminum 3003</option>
+        <option data-factor="0.3462">Aluminum 5005</option>
+        <option data-factor="0.3427">Aluminum 5052</option>
+        <option data-factor="0.3356">Aluminum 5056</option>
+        <option data-factor="0.3392">Aluminum 5083</option>
+        <option data-factor="0.3392">Aluminum 5086</option>
+        <option data-factor="0.3462">Aluminum 6061</option>
+        <option data-factor="0.3462">Aluminum 6063</option>
+        <option data-factor="0.3568">Aluminum 7050</option>
+        <option data-factor="0.3568">Aluminum 7075</option>
+        <option data-factor="0.3604">Aluminum 7178</option>
+        <option data-factor="1.030">Stainless 300 Series</option>
+        <option data-factor="1.010">Stainless 400 Series</option>
+        <option data-factor="1.132">Nickel 200</option>
+        <option data-factor="1.125">Nickel 400</option>
+        <option data-factor="1.121">Nickel R-405</option>
+        <option data-factor="1.075">Nickel K-500</option>
+        <option data-factor="1.072">Nickel 600</option>
+        <option data-factor="1.075">Nickel 625</option>
+        <option data-factor="1.012">Nickel 800H</option>
+        <option data-factor="1.012">Nickel 800AT</option>
+        <option data-factor="1.037">Nickel 825</option>
+        <option data-factor="1.012">Nickel 330</option>
+        <option data-factor="1.030">Nickel 20</option>
+        <option data-factor="1.132">Nickel C-276</option>
+        <option data-factor="1.012">Nickel 2545MD</option>
+        <option data-factor="0.229">Magnesium</option>
+        <option data-factor="0.236">Beryllium</option>
+        <option data-factor="0.575">Titanium</option>
+        <option data-factor="0.812">Zirconium</option>
+        <option data-factor="0.911">Cast Iron</option>
+        <option data-factor="0.911">Zinc</option>
+        <option data-factor="1.084">Brass</option>
+        <option data-factor="1.095">Columbium</option>
+        <option data-factor="1.144">Copper</option>
+        <option data-factor="1.303">Molybdenum</option>
+        <option data-factor="1.339">Silver</option>
+        <option data-factor="1.448">Lead</option>
+        <option data-factor="2.120">Tantalum</option>
+        <option data-factor="2.462">Tungsten</option>
+        <option data-factor="2.466">Gold</option>
+      </select>
+    </div>
+
+    <div class="calc-row" id="calcField1Row">
+      <label id="calcLabel1" for="calcParam1">Diameter</label>
+      <div class="calc-input-group">
+        <input type="number" step="any" id="calcParam1" placeholder="0.00" />
+        <select id="calcUnit1">
+          <option>in</option><option>ft</option><option>yd</option>
+          <option>mm</option><option>cm</option><option>m</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="calc-row" id="calcField2Row" style="display:none;">
+      <label id="calcLabel2" for="calcParam2">Width</label>
+      <div class="calc-input-group">
+        <input type="number" step="any" id="calcParam2" placeholder="0.00" />
+        <select id="calcUnit2">
+          <option>in</option><option>ft</option><option>yd</option>
+          <option>mm</option><option>cm</option><option>m</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="calc-row" id="calcField3Row">
+      <label id="calcLabel3" for="calcParam3">Length</label>
+      <div class="calc-input-group">
+        <input type="number" step="any" id="calcParam3" placeholder="0.00" />
+        <select id="calcUnit3">
+          <option>in</option><option>ft</option><option>yd</option>
+          <option>mm</option><option>cm</option><option>m</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="calc-row">
+      <label for="calcQty">Quantity (pieces)</label>
+      <input type="number" step="1" min="1" id="calcQty" value="1" />
+    </div>
+
+    <p class="calc-error" id="calcError" style="display:none;"></p>
+
+    <div class="calc-actions">
+      <button type="button" class="btn btn-primary btn-sm" id="calcCalculateBtn">Calculate</button>
+      <button type="button" class="btn btn-ghost btn-sm" id="calcClearBtn">Clear</button>
+    </div>
+
+   </div>
+    <div class="calc-side">
+
+<div class="calc-history-header calc-side-header">
+  <span>Saved calculations</span>
+  <button type="button" class="calc-history-clear" id="calcHistoryClearBtn">Remove all</button>
+</div>
+
+<div class="calc-history" id="calcHistory" style="display:none;">
+  <div class="calc-history-list" id="calcHistoryList"></div>
+
+ <div class="calc-history-total">
+    <span>Total weight</span>
+    <strong><span id="calcHistoryTotalLbs">0</span> lbs / <span id="calcHistoryTotalKg">0</span> kg</strong>
+  </div>
+
+  <button type="button" class="calc-history-pdf" id="calcHistoryPdfBtn">Export as PDF</button>
+
+  <p class="calc-standards-note">Weights calculated per standard imperial steel weight formulas.</p>
+
+  <div class="calc-history-confirm" id="calcHistoryConfirm" style="display:none;">
+    Are you sure?
+    <span class="calc-history-confirm-yes" id="calcHistoryConfirmYes">Yes</span>
+    <span class="calc-history-confirm-no" id="calcHistoryConfirmNo">No</span>
+  </div>
+</div>
+
+    <div class="calc-results" id="calcResults" style="display:none;">
+      <div class="calc-result-row">
+        <span>Weight</span>
+        <strong><span id="calcResultLbs">0</span> lbs</strong>
+      </div>
+      <div class="calc-result-row">
+        <span>Weight</span>
+        <strong><span id="calcResultKg">0</span> kg</strong>
+      </div>
+  </div>
+</div>
+    </div>
+
+ </form></div></div>
+</div>

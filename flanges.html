@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Flanges — Murtaza Corporation</title>
+<meta name="description" content="Weld neck, slip-on, socket weld, blind, RTJ and orifice stainless steel &amp; carbon steel pipe flanges, 1/4&quot; to 48&quot; OD, Class 150 to 1800 — from Murtaza Corporation, Karachi." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  #product-top .section-head {
+    text-align: left;
+    margin: 0 0 40px 0;
+    max-width: none;
+  }
+
+  /* Readability: left-aligned copy instead of justified (avoids uneven
+     word-spacing "rivers" on the web), tighter line-height, consistent tokens */
+  #product-top p {
+    text-align: left;
+  }
+
+  #product-top .spec-item {
+    background: #fff;
+    border: 1px solid #ececec;
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+
+  #product-top .spec-label {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-stone);
+    margin-bottom: 4px;
+  }
+
+  #product-top .spec-value {
+    color: var(--color-ink);
+    font-weight: 500;
+    font-size: 15px;
+  }
+
+  #product-top .type-card {
+    position: relative;
+    padding: 4px 18px 4px 54px;
+  }
+
+  #product-top .type-badge {
+    position: absolute;
+    left: 0;
+    top: 2px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--color-cobalt-ink);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #product-top .spec-pill {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: #eaf0fe;
+    color: var(--color-cobalt-ink);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  #product-top .stock-list {
+    list-style: none;
+    margin: 14px 0 0;
+    padding: 0;
+  }
+
+  #product-top .stock-list li {
+    position: relative;
+    padding-left: 26px;
+    margin-bottom: 14px;
+    color: var(--color-ink);
+    font-size: 16px;
+  }
+
+  #product-top .stock-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--color-cobalt-ink);
+    font-weight: 700;
+  }
+
+  @media (max-width: 640px) {
+    #product-top .type-card {
+      padding-left: 46px;
+    }
+    #product-top .type-badge {
+      width: 28px;
+      height: 28px;
+      font-size: 13px;
+    }
+  }
+
+  #product-top .product-photo-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  #product-top .product-photo-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+  }
+
+  #product-top .fitting-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0,1fr));
+    gap: 16px;
+    margin-top: 18px;
+    justify-items: center;
+  }
+
+  #product-top .fitting-tile {
+    background: #fff;
+    border: 1px solid #ececec;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    width: 150px !important;
+    height: auto;
+  }
+
+  #product-top .fitting-tile:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+  }
+
+  #product-top .fitting-tile img {
+    width: 150px !important;
+    height: 150px !important;
+    max-width: 150px !important;
+    min-width: 150px !important;
+    max-height: 150px !important;
+    min-height: 150px !important;
+    object-fit: contain !important;
+    object-position: center;
+    background: #fafafa;
+    display: block;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  #product-top .fitting-tile span {
+    display: block;
+    padding: 8px 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-ink);
+  }
+
+  @media (max-width: 900px) {
+    #product-top .fitting-grid {
+      grid-template-columns: repeat(3, minmax(0,1fr));
+    }
+  }
+
+  @media (max-width: 640px) {
+    #product-top .fitting-grid {
+      grid-template-columns: repeat(2, minmax(0,1fr));
+    }
+  }
+</style>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+
+<div class="header-hover-zone" id="headerHoverZone"></div>
+<header>
+  <div class="nav-inner">
+
+    <a href="index.html#top" class="logo" aria-label="Murtaza Corporation home">
+      <img src="Logos/company.png" alt="Murtaza Corporation" class="logo-img" />
+      <span class="logo-name">Murtaza Corporation</span>
+    </a>
+
+    <span class="nav-divider" aria-hidden="true"></span>
+
+    <nav>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#about">About</a></li>
+        <li class="nav-item-dropdown">
+          <a href="index.html#products" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+            Products <span class="nav-caret" aria-hidden="true">▾</span>
+          </a>
+          <ul class="nav-dropdown-menu">
+            <li><a href="pipes.html">Pipes</a></li>
+            <li><a href="fittings.html">Fittings</a></li>
+            <li><a href="valves.html">Valves</a></li>
+            <li><a href="flanges.html">Flanges</a></li>
+            <li><a href="tubes.html">Tubes</a></li>
+            <li><a href="dairy-tubes.html">Dairy tubes &amp; fittings</a></li>
+          </ul>
+        </li>
+        <li class="nav-item-dropdown">
+          <a href="index.html#resources" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+            Resources <span class="nav-caret" aria-hidden="true">▾</span>
+          </a>
+          <ul class="nav-dropdown-menu">
+            <li><a href="company-profile.html">Company profile</a></li>
+            <li><a href="lor.html">LOR</a></li>
+            <li><a href="mill-test-report.html">Mill Test Report</a></li>
+            <li><a href="services.html">Services</a></li>
+          </ul>
+        </li>
+        <li class="nav-item-dropdown">
+          <a href="index.html#track-record" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+            Updates <span class="nav-caret" aria-hidden="true">▾</span>
+          </a>
+          <ul class="nav-dropdown-menu">
+            <li><a href="linkedin-updates.html">LinkedIn Updates</a></li>
+            <li><a href="engineering-articles.html">Engineering Articles</a></li>
+            <li><a href="project-gallery.html">Project Gallery</a></li>
+          </ul>
+        </li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <span class="nav-divider" aria-hidden="true"></span>
+
+    <div class="nav-actions">
+      <a href="index.html#contact" class="btn btn-primary btn-sm">Request a quote <span class="arrow">&rarr;</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+<div id="top"></div>
+
+<section class="block" id="product-top">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow"><a href="index.html#products" style="color:inherit;">Products</a> / Flanges</p>
+      <h2 class="heading">Flanges</h2>
+      <p class="sub-copy">Weld neck, slip-on, socket weld, blind, RTJ and orifice stainless &amp; carbon steel flanges, certified stock.</p>
+    </div>
+
+
+    <!-- ============================================================ -->
+    <!-- PRODUCT CONTENT — FLANGES -->
+    <!-- ============================================================ -->
+
+    <div class="wrap" style="padding:0;max-width:100%;">
+
+      <!-- Spec summary -->
+      <div style="background:var(--color-bone);border:1px solid #ececec;border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:36px;">
+  <h3 style="margin:0 0 18px;font-size:18px;font-weight:500;">Pipe Flanges — Specification</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;">
+          <div class="spec-item"><span class="spec-label">Materials</span><span class="spec-value">Stainless Steel, Carbon Steel</span></div>
+          <div class="spec-item"><span class="spec-label">Size</span><span class="spec-value">1/4" through 48" OD</span></div>
+          <div class="spec-item"><span class="spec-label">Wall Thickness</span><span class="spec-value">SCH-5S to SCH-XXS</span></div>
+          <div class="spec-item"><span class="spec-label">Types</span><span class="spec-value">Weld Neck, Long Weld Neck, Slip-On, Socket Weld, RTJ, Blind, Orifice, Raised or Flat Face</span></div>
+          <div class="spec-item"><span class="spec-label">Pressure Rating</span><span class="spec-value">Class 150, 300, 600, 900, 1200, 1500, 1800</span></div>
+          <div class="spec-item"><span class="spec-label">Specifications</span><span class="spec-value">MSS, ANSI (Series A &amp; B), JIS (5K &amp; 10K), DIN (PN10 &amp; PN16)</span></div>
+        </div>
+      </div>
+
+<!-- Product imagery -->
+<div class="grid-4" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;max-width:1100px;margin:0 auto 36px;">
+
+  <div class="card product-photo-card">
+    <img src="flanges/S.S-BLIND-FLANGE.jpg" alt="Blind Flange" style="height:220px;width:100%;object-fit:contain;padding:15px;background:#fff;" />
+    <div class="card-body" style="text-align:center;">
+      <h3 style="margin:0;">Blind Flange</h3>
+    </div>
+  </div>
+
+  <div class="card product-photo-card">
+    <img src="flanges/S.S-SORF-FLANGE.jpg" alt="SORF Flange" style="height:220px;width:100%;object-fit:contain;padding:15px;background:#fff;" />
+    <div class="card-body" style="text-align:center;">
+      <h3 style="margin:0;">SORF Flange</h3>
+    </div>
+  </div>
+
+  <div class="card product-photo-card">
+    <img src="flanges/S.S-WNRF-FLANGE.jpg" alt="WNRF Flange" style="height:220px;width:100%;object-fit:contain;padding:15px;background:#fff;" />
+    <div class="card-body" style="text-align:center;">
+      <h3 style="margin:0;">WNRF Flange</h3>
+    </div>
+  </div>
+
+  <div class="card product-photo-card">
+    <img src="flanges/MS-flanges-3-300x300.jpg" alt="MS Flange" style="height:220px;width:100%;object-fit:contain;padding:15px;background:#fff;" />
+    <div class="card-body" style="text-align:center;">
+      <h3 style="margin:0;">MS Flange</h3>
+    </div>
+  </div>
+
+</div>
+
+      <!-- Overview -->
+<div style="margin-bottom:32px;">
+  <h3 style="font-size:20px;font-weight:500;margin:0 0 14px;">Stainless &amp; Carbon Steel Flange Systems</h3>
+  <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0 0 16px;">A flange serves as a method for connecting pipes, valves, pumps, and additional equipment to create a piping system. It is primarily employed in situations where a connection or disassembly point is required. These joints serve the purpose of linking a pipe to fittings, valves, mechanical equipment, or other essential components within a piping system. Moreover, they provide easy access for cleaning, inspection, or modification. Typically, flanges are either welded or screwed into place.</p>
+  <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0 0 16px;">Stainless steel flanges, produced to ASTM A182 grades F304/304L/316/316L/321/310/347 and similar, offer excellent corrosion resistance for harsh, corrosive or hygienic environments, while carbon steel flanges — to ASTM A105, A694 F42 through F70, and A350 LF2/LF3 — remain a cost-effective, weld-friendly choice where corrosion resistance is not the primary concern. Both are stocked across the full range of sizes, wall thicknesses, facings and pressure classes to suit pipeline design requirements across petrochemical, oil &amp; gas, power generation and general industrial applications.</p>
+</div>
+
+      <!-- Flange type breakdown -->
+      <div style="margin-bottom:36px;">
+        <h3 style="font-size:20px;font-weight:500;margin:0 0 18px;">Flange Types</h3>
+        <div style="display:flex;flex-direction:column;gap:20px;">
+
+          <div class="type-card">
+            <span class="type-badge">1</span>
+            <h4 style="margin:0 0 10px;font-size:17px;font-weight:600;">Weld Neck &amp; Long Weld Neck Flanges</h4>
+            <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0;">Identified by a long tapered hub that is butt-welded to the pipe, weld neck flanges transfer stress from the flange to the pipe, reducing high stress concentrations at the base of the hub. Long weld neck flanges extend this hub further, doubling as a schedule pipe section and reducing the number of welded joints in a line. Both are the preferred choice for high-pressure, high-temperature and cyclic-load piping.</p>
+            <span class="spec-pill">Spec: ASTM A182 F304/F304L/F316/F316L/F321/F310/F347 (SS) · ASTM A105, A694 F42-F70, A350 LF2/LF3 (CS) · ANSI B16.5 / B16.47</span>
+          </div>
+
+          <div class="type-card">
+            <span class="type-badge">2</span>
+            <h4 style="margin:0 0 10px;font-size:17px;font-weight:600;">Slip-On Flanges</h4>
+            <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0;">Slip-on flanges slide over the pipe end and are fillet-welded both inside and outside for added strength. Easier to align than weld neck flanges and lower in initial cost, they are widely used in low-pressure applications where ease of installation outweighs the need for maximum joint strength.</p>
+            <span class="spec-pill">Spec: ASTM A182 F304/F304L/F316/F316L (SS) · ASTM A105 (CS) · ANSI B16.5 / MSS-SP-44</span>
+          </div>
+
+          <div class="type-card">
+            <span class="type-badge">3</span>
+            <h4 style="margin:0 0 10px;font-size:17px;font-weight:600;">Socket Weld Flanges</h4>
+            <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0;">Designed with a recessed bore into which the pipe is inserted and single fillet-welded around the outside, socket weld flanges give a smoother bore than slip-on types, making them well suited to smaller-bore, high-pressure piping carrying non-corrosive fluids and gases.</p>
+            <span class="spec-pill">Spec: ASTM A182 F304/F304L/F316/F316L (SS) · ASTM A105 (CS) · ANSI B16.5</span>
+          </div>
+
+          <div class="type-card">
+            <span class="type-badge">4</span>
+            <h4 style="margin:0 0 10px;font-size:17px;font-weight:600;">Blind Flanges</h4>
+            <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0;">Blind flanges have no bore and are used to seal off the end of a piping system, a valve, or a pressure vessel opening. They also provide a convenient point of access for future line extension.</p>
+            <span class="spec-pill">Spec: ASTM A182 F304/F304L/F316/F316L (SS) · ASTM A105 (CS) · ANSI B16.5 / B16.47</span>
+          </div>
+
+          <div class="type-card">
+            <span class="type-badge">5</span>
+            <h4 style="margin:0 0 10px;font-size:17px;font-weight:600;">Orifice Flanges</h4>
+            <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0;">Manufactured in weld neck or slip-on styles with radial tapped and jack-screw holes, orifice flanges are used in pairs to hold an orifice plate in place for flow measurement, and permit the plate to be removed for inspection without breaking the pipeline alignment.</p>
+            <span class="spec-pill">Spec: ASTM A182 F304/F304L/F316/F316L (SS) · ASTM A105 (CS) · ANSI B16.36</span>
+          </div>
+
+          <div class="type-card">
+            <span class="type-badge">6</span>
+            <h4 style="margin:0 0 10px;font-size:17px;font-weight:600;">Ring Type Joint (RTJ) Flanges</h4>
+            <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0;">RTJ flanges carry a machined groove on the face into which a metal ring gasket seats, forming a metal-to-metal seal under bolt load. This facing is specified for high-pressure and high-temperature service where a superior, leak-tight seal is required, commonly in upstream oil &amp; gas piping.</p>
+            <span class="spec-pill">Spec: ASTM A182 F304/F304L/F316/F316L (SS) · ASTM A105 (CS) · ANSI B16.5</span>
+          </div>
+
+          <div class="type-card">
+            <span class="type-badge">7</span>
+            <h4 style="margin:0 0 10px;font-size:17px;font-weight:600;">Raised Face &amp; Flat Face Flanges</h4>
+            <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0;">Raised face flanges carry a small raised area around the bore that concentrates bolt load onto a smaller gasket area, and are the most common facing for steel piping systems. Flat face flanges, machined flush across the whole face, are typically specified when mating with cast iron flanges or fittings that cannot tolerate a raised face without risk of cracking.</p>
+            <span class="spec-pill">Spec: ASTM A182 F304/F304L/F316/F316L (SS) · ASTM A105 (CS) · ANSI B16.5</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Stock range -->
+      <div style="max-width:85ch;margin-bottom:40px;">
+        <p style="color:var(--color-ink);font-weight:600;line-height:1.75;margin:0;">The range of pipe flanges stocked by Murtaza Corporation includes flanges for:</p>
+        <ul class="stock-list">
+          <li>Fluid application in Petrochemical, Desalination, Mineral processing, Power generation, Oil and Gas recovery plants.</li>
+          <li>Industrial, structural and decorative applications.</li>
+          <li>Grade options in 304 / 304L / 316 / 316L / A-105, to DIN (PN-10 &amp; PN-16) and JIS 10K specifications, in pressure classes 150 to 1500.</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- END PRODUCT CONTENT                                           -->
+    <!-- ============================================================ -->
+<style>
+  #product-top .card::after {
+    display: none !important;
+  }
+</style>
+    <div class="view-all reveal">
+  <a href="index.html#products" class="btn btn-ghost">
+    Back to all products
+  </a>
+</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="Logos/company.png" alt="Murtaza Corporation" class="footer-logo-img" />
+    </div>
+
+    <div class="footer-col">
+      <h4>Address</h4>
+      <p>516/517, Sector 6-A, Mehran Town, Korangi Industrial Area, Karachi - 74900, Pakistan</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contacts</h4>
+      <p>Email: <a href="mailto:sales@murtazacorporation.com.pk">sales@murtazacorporation.com.pk</a></p>
+      <p>Phone: <a href="tel:+922135141451">+92 (21) 35141451</a></p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Links</h4>
+      <ul class="footer-link-list">
+        <li><a href="http://www.wermac.org/" target="_blank" rel="noopener">Wermac</a></li>
+        <li><a href="http://www.huikepipe.com/en/" target="_blank" rel="noopener">Hebei Huike</a></li>
+        <li><a href="http://www.yuandavalves.com/brand.html" target="_blank" rel="noopener">Yuanda Valve</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">© 2026 Murtaza Corporation. All rights reserved.</div>
+</footer>
+
+<script src="script.js" defer></script>
+<!-- Floating Calculator Button -->
+<a href="#"
+   class="calculator-widget"
+   id="calculatorWidgetBtn"
+   aria-label="Open pipe calculator">
+
+    <span class="whatsapp-text">
+        Calculator
+    </span>
+
+    <div class="calculator-icon">
+        <i class="fa-solid fa-calculator"></i>
+    </div>
+
+</a>
+<!-- Floating WhatsApp Button -->
+<a href="https://wa.me/923343791852"
+   class="whatsapp-widget"
+   target="_blank"
+   aria-label="Chat on WhatsApp">
+
+    <span class="whatsapp-text">
+        Chat with us
+    </span>
+
+    <div class="whatsapp-icon">
+        <i class="fab fa-whatsapp"></i>
+    </div>
+
+</a>
+</body>
+</html>
+<!-- Calculator Modal -->
+<div class="calculator-overlay" id="calculatorOverlay">
+  <div class="calculator-modal" id="calculatorModal" role="dialog" aria-modal="true" aria-labelledby="calculatorModalTitle">
+    <button type="button" class="calculator-modal-close" id="calculatorModalClose" aria-label="Close calculator">&times;</button>
+    <div class="calculator-modal-header">
+      <h3 id="calculatorModalTitle">Pipe Calculator</h3>
+    </div>
+    <div class="calculator-modal-body">
+  <form id="calcForm" onsubmit="return false;" class="calc-form">
+
+   <div class="calc-shape-bar" id="calcShapeBar">
+      <label>Shape</label>
+      <div class="calc-shape-icons" id="calcShapeIcons">
+        <button type="button" class="calc-shape-icon is-active" data-shape="Round" aria-pressed="true" aria-label="Round"><img src="images/round.png" alt="" /><span class="calc-shape-icon-label">Round</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Square" aria-pressed="false" aria-label="Square"><img src="images/icon-square.png" alt="" /><span class="calc-shape-icon-label">Square</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Rectangle" aria-pressed="false" aria-label="Rectangle"><img src="images/icon-rectangle.png" alt="" /><span class="calc-shape-icon-label">Rectangle</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Hexagonal" aria-pressed="false" aria-label="Hexagonal"><img src="images/icon-hexagol.jpg" alt="" /><span class="calc-shape-icon-label">Hexagonal</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Octagonal" aria-pressed="false" aria-label="Octagonal"><img src="images/icon-octa.png" alt="" /><span class="calc-shape-icon-label">Octagonal</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Sheet" aria-pressed="false" aria-label="Sheet"><img src="images/sheet.png" alt="" /><span class="calc-shape-icon-label">Sheet</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Plate" aria-pressed="false" aria-label="Plate"><img src="images/plate.jpg" alt="" /><span class="calc-shape-icon-label">Plate</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Pipe" aria-pressed="false" aria-label="Tubular / Pipe"><img src="images/tubular.jpg" alt="" /><span class="calc-shape-icon-label">Tubular/Pipe</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Ring" aria-pressed="false" aria-label="Ring"><img src="images/ring.png" alt="" /><span class="calc-shape-icon-label">Ring</span></button>
+      </div>
+      <p class="calc-shape-name" id="calcShapeName" style="display:none;">Round</p>
+      <select id="calcShape" style="display:none;">
+        <option value="Round" selected>Round</option>
+        <option value="Square">Square</option>
+        <option value="Rectangle">Rectangle</option>
+        <option value="Hexagonal">Hexagonal</option>
+        <option value="Octagonal">Octagonal</option>
+        <option value="Sheet">Sheet</option>
+        <option value="Plate">Plate</option>
+        <option value="Tubular">Tubular</option>
+        <option value="Pipe">Pipe</option>
+        <option value="Ring">Ring</option>
+        </select>
+    </div>
+
+   <div class="calc-layout">
+    <div class="calc-main">
+
+    <div class="calc-row">
+      <label for="calcMaterial">Material</label>
+      <select id="calcMaterial">
+        <option data-factor="1" selected>Steel (default)</option>
+        <option data-factor="0.3462">Aluminum 1100</option>
+        <option data-factor="0.3604">Aluminum 2011</option>
+        <option data-factor="0.3568">Aluminum 2014</option>
+        <option data-factor="0.3568">Aluminum 2017</option>
+        <option data-factor="0.3533">Aluminum 2024</option>
+        <option data-factor="0.3498">Aluminum 3003</option>
+        <option data-factor="0.3462">Aluminum 5005</option>
+        <option data-factor="0.3427">Aluminum 5052</option>
+        <option data-factor="0.3356">Aluminum 5056</option>
+        <option data-factor="0.3392">Aluminum 5083</option>
+        <option data-factor="0.3392">Aluminum 5086</option>
+        <option data-factor="0.3462">Aluminum 6061</option>
+        <option data-factor="0.3462">Aluminum 6063</option>
+        <option data-factor="0.3568">Aluminum 7050</option>
+        <option data-factor="0.3568">Aluminum 7075</option>
+        <option data-factor="0.3604">Aluminum 7178</option>
+        <option data-factor="1.030">Stainless 300 Series</option>
+        <option data-factor="1.010">Stainless 400 Series</option>
+        <option data-factor="1.132">Nickel 200</option>
+        <option data-factor="1.125">Nickel 400</option>
+        <option data-factor="1.121">Nickel R-405</option>
+        <option data-factor="1.075">Nickel K-500</option>
+        <option data-factor="1.072">Nickel 600</option>
+        <option data-factor="1.075">Nickel 625</option>
+        <option data-factor="1.012">Nickel 800H</option>
+        <option data-factor="1.012">Nickel 800AT</option>
+        <option data-factor="1.037">Nickel 825</option>
+        <option data-factor="1.012">Nickel 330</option>
+        <option data-factor="1.030">Nickel 20</option>
+        <option data-factor="1.132">Nickel C-276</option>
+        <option data-factor="1.012">Nickel 2545MD</option>
+        <option data-factor="0.229">Magnesium</option>
+        <option data-factor="0.236">Beryllium</option>
+        <option data-factor="0.575">Titanium</option>
+        <option data-factor="0.812">Zirconium</option>
+        <option data-factor="0.911">Cast Iron</option>
+        <option data-factor="0.911">Zinc</option>
+        <option data-factor="1.084">Brass</option>
+        <option data-factor="1.095">Columbium</option>
+        <option data-factor="1.144">Copper</option>
+        <option data-factor="1.303">Molybdenum</option>
+        <option data-factor="1.339">Silver</option>
+        <option data-factor="1.448">Lead</option>
+        <option data-factor="2.120">Tantalum</option>
+        <option data-factor="2.462">Tungsten</option>
+        <option data-factor="2.466">Gold</option>
+      </select>
+    </div>
+
+    <div class="calc-row" id="calcField1Row">
+      <label id="calcLabel1" for="calcParam1">Diameter</label>
+      <div class="calc-input-group">
+        <input type="number" step="any" id="calcParam1" placeholder="0.00" />
+        <select id="calcUnit1">
+          <option>in</option><option>ft</option><option>yd</option>
+          <option>mm</option><option>cm</option><option>m</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="calc-row" id="calcField2Row" style="display:none;">
+      <label id="calcLabel2" for="calcParam2">Width</label>
+      <div class="calc-input-group">
+        <input type="number" step="any" id="calcParam2" placeholder="0.00" />
+        <select id="calcUnit2">
+          <option>in</option><option>ft</option><option>yd</option>
+          <option>mm</option><option>cm</option><option>m</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="calc-row" id="calcField3Row">
+      <label id="calcLabel3" for="calcParam3">Length</label>
+      <div class="calc-input-group">
+        <input type="number" step="any" id="calcParam3" placeholder="0.00" />
+        <select id="calcUnit3">
+          <option>in</option><option>ft</option><option>yd</option>
+          <option>mm</option><option>cm</option><option>m</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="calc-row">
+      <label for="calcQty">Quantity (pieces)</label>
+      <input type="number" step="1" min="1" id="calcQty" value="1" />
+    </div>
+
+    <p class="calc-error" id="calcError" style="display:none;"></p>
+
+    <div class="calc-actions">
+      <button type="button" class="btn btn-primary btn-sm" id="calcCalculateBtn">Calculate</button>
+      <button type="button" class="btn btn-ghost btn-sm" id="calcClearBtn">Clear</button>
+    </div>
+
+   </div>
+    <div class="calc-side">
+
+<div class="calc-history-header calc-side-header">
+  <span>Saved calculations</span>
+  <button type="button" class="calc-history-clear" id="calcHistoryClearBtn">Remove all</button>
+</div>
+
+<div class="calc-history" id="calcHistory" style="display:none;">
+  <div class="calc-history-list" id="calcHistoryList"></div>
+
+ <div class="calc-history-total">
+    <span>Total weight</span>
+    <strong><span id="calcHistoryTotalLbs">0</span> lbs / <span id="calcHistoryTotalKg">0</span> kg</strong>
+  </div>
+
+  <button type="button" class="calc-history-pdf" id="calcHistoryPdfBtn">Export as PDF</button>
+
+  <p class="calc-standards-note">Weights calculated per standard imperial steel weight formulas.</p>
+
+  <div class="calc-history-confirm" id="calcHistoryConfirm" style="display:none;">
+    Are you sure?
+    <span class="calc-history-confirm-yes" id="calcHistoryConfirmYes">Yes</span>
+    <span class="calc-history-confirm-no" id="calcHistoryConfirmNo">No</span>
+  </div>
+</div>
+
+    <div class="calc-results" id="calcResults" style="display:none;">
+      <div class="calc-result-row">
+        <span>Weight</span>
+        <strong><span id="calcResultLbs">0</span> lbs</strong>
+      </div>
+      <div class="calc-result-row">
+        <span>Weight</span>
+        <strong><span id="calcResultKg">0</span> kg</strong>
+      </div>
+  </div>
+</div>
+    </div>
+
+ </form></div></div>
+</div>

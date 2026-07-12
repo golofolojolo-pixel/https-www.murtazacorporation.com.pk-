@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Company Profile — Murtaza Corporation</title>
+<meta name="description" content="Capabilities, certifications, and 25 years of project history — the Murtaza Corporation company profile." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+
+<div class="header-hover-zone" id="headerHoverZone"></div>
+<header>
+  <div class="nav-inner">
+
+    <a href="index.html#top" class="logo" aria-label="Murtaza Corporation home">
+      <img src="Logos/company.png" alt="Murtaza Corporation" class="logo-img" />
+      <span class="logo-name">Murtaza Corporation</span>
+    </a>
+
+    <span class="nav-divider" aria-hidden="true"></span>
+
+    <nav>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#about">About</a></li>
+        <li class="nav-item-dropdown">
+          <a href="index.html#products" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+            Products <span class="nav-caret" aria-hidden="true">▾</span>
+          </a>
+          <ul class="nav-dropdown-menu">
+            <li><a href="pipes.html">Pipes</a></li>
+            <li><a href="fittings.html">Fittings</a></li>
+            <li><a href="valves.html">Valves</a></li>
+            <li><a href="flanges.html">Flanges</a></li>
+            <li><a href="tubes.html">Tubes</a></li>
+            <li><a href="dairy-tubes.html">Dairy tubes &amp; fittings</a></li>
+          </ul>
+        </li>
+        <li class="nav-item-dropdown">
+          <a href="index.html#resources" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+            Resources <span class="nav-caret" aria-hidden="true">▾</span>
+          </a>
+          <ul class="nav-dropdown-menu">
+            <li><a href="company-profile.html">Company profile</a></li>
+            <li><a href="lor.html">LOR</a></li>
+            <li><a href="mill-test-report.html">Mill Test Report</a></li>
+            <li><a href="services.html">Services</a></li>
+          </ul>
+        </li>
+        <li class="nav-item-dropdown">
+          <a href="index.html#track-record" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+            Updates <span class="nav-caret" aria-hidden="true">▾</span>
+          </a>
+          <ul class="nav-dropdown-menu">
+            <li><a href="linkedin-updates.html">LinkedIn Updates</a></li>
+            <li><a href="engineering-articles.html">Engineering Articles</a></li>
+            <li><a href="project-gallery.html">Project Gallery</a></li>
+          </ul>
+        </li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <span class="nav-divider" aria-hidden="true"></span>
+
+    <div class="nav-actions">
+      <a href="index.html#contact" class="btn btn-primary btn-sm">Request a quote <span class="arrow">&rarr;</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+<div id="top"></div>
+
+<section class="block" id="page-top">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow"><a href="index.html#resources" style="color:inherit;">Resources</a> / Company profile</p>
+      <h2 class="heading">Company profile</h2>
+      <p class="sub-copy">See exactly who you're ordering from — capabilities, certifications, and 25 years of project history in one document.</p>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- PAGE CONTENT — COMPANY PROFILE FLIPBOOK                       -->
+    <!-- ============================================================ -->
+
+    <div class="flipbook-section reveal">
+
+      <div class="flipbook-toolbar">
+        <div class="flipbook-nav">
+          <button type="button" class="flipbook-nav-btn" id="fbPrev" aria-label="Previous page">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+          <span class="flipbook-page-indicator" id="fbPageIndicator">Page 1 / 1</span>
+          <button type="button" class="flipbook-nav-btn" id="fbNext" aria-label="Next page">
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+        <a href="company%20profile/Catalogue%20-%20Murtaza%20Corporation.pdf" download class="btn btn-primary btn-sm" id="fbDownload">
+          <i class="fa-solid fa-download"></i> Download PDF
+        </a>
+      </div>
+
+      <div class="flipbook-stage" id="flipbookStage">
+        <button type="button" class="flipbook-expand-btn" id="fbExpand" aria-label="Expand to full screen">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+            <path d="M9 3H3v6"/>
+            <path d="M15 3h6v6"/>
+            <path d="M3 15v6h6"/>
+            <path d="M21 15v6h-6"/>
+          </svg>
+        </button>
+        <button type="button" class="flipbook-close-btn" id="fbClose" aria-label="Close full screen">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="flipbook-loading" id="fbLoading">
+          <div class="flipbook-spinner"></div>
+          <p id="fbLoadingText">Loading company profile…</p>
+        </div>
+        <div class="flipbook-container" id="flipbookContainer"></div>
+      </div>
+
+      <p class="flipbook-hint">Drag a corner to turn the page, or use the arrows above.</p>
+    </div>
+
+    <style>
+      .flipbook-section{
+        margin: 2.5rem 0;
+      }
+      .flipbook-toolbar{
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:1rem;
+        flex-wrap:wrap;
+        margin-bottom:1.25rem;
+      }
+      .flipbook-nav{
+        display:flex;
+        align-items:center;
+        gap:.75rem;
+      }
+      .flipbook-nav-btn{
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        width:38px;
+        height:38px;
+        border-radius:8px;
+        border:1px solid rgba(0,0,0,.12);
+        background:#fff;
+        cursor:pointer;
+        font-size:.95rem;
+        transition:background .15s ease, border-color .15s ease, transform .1s ease;
+      }
+      .flipbook-nav-btn:hover{
+        background:rgba(0,0,0,.04);
+        border-color:rgba(0,0,0,.2);
+      }
+      .flipbook-nav-btn:active{
+        transform:scale(.94);
+      }
+      .flipbook-nav-btn:disabled{
+        opacity:.4;
+        cursor:not-allowed;
+      }
+      .flipbook-page-indicator{
+        font-size:.9rem;
+        font-weight:500;
+        letter-spacing:.01em;
+        min-width:90px;
+        text-align:center;
+      }
+      .flipbook-stage{
+        height:98vh;
+        min-height:900px;
+        max-height:2200px;
+        position:relative;
+        width:100%;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        background:#e9e9e6;
+        border-radius:4px;
+        padding: clamp(2rem, 6vw, 5rem) 2rem;
+        box-sizing:border-box;
+      }
+      .flipbook-expand-btn,
+      .flipbook-close-btn{
+        position:absolute;
+        top:16px;
+        right:16px;
+        z-index:10;
+        width:42px;
+        height:42px;
+        border-radius:50%;
+        border:none;
+        background:rgba(0,0,0,.55);
+        color:#fff;
+        cursor:pointer;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+      }
+      .flipbook-expand-btn:hover,
+      .flipbook-close-btn:hover{
+        background:rgba(0,0,0,.75);
+      }
+      .flipbook-close-btn{
+        display:none;
+        font-size:1.1rem;
+      }
+      .flipbook-stage.is-fullscreen{
+        position:fixed !important;
+        top:0 !important; left:0 !important; right:0 !important; bottom:0 !important;
+        width:100vw !important;
+        height:100vh !important;
+        min-height:100vh !important;
+        max-height:none !important;
+        border-radius:0 !important;
+        z-index:2147483647 !important;
+        padding: clamp(0.5rem, 2vw, 1.5rem);
+        overflow:hidden;
+      }
+      .flipbook-stage.is-fullscreen .flipbook-container{
+        max-width:100%;
+        max-height:100%;
+      }
+      .flipbook-stage.is-fullscreen .flipbook-expand-btn{
+        display:none;
+      }
+      .flipbook-stage.is-fullscreen .flipbook-close-btn{
+        display:flex;
+      }
+      html.flipbook-locked, body.flipbook-locked{
+        overflow:hidden;
+        height:100%;
+      }
+      .flipbook-loading{
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        gap:.9rem;
+        color:#555;
+        font-size:.92rem;
+      }
+      .flipbook-spinner{
+        width:34px;
+        height:34px;
+        border-radius:50%;
+        border:3px solid rgba(0,0,0,.12);
+        border-top-color: currentColor;
+        animation: flipbook-spin 0.85s linear infinite;
+      }
+      @keyframes flipbook-spin{
+        to{ transform: rotate(360deg); }
+      }
+      .flipbook-container{
+        display:none;
+        margin:0 auto;
+      }
+      .flipbook-container .page{
+        background-color:#fff;
+        background-size:cover;
+        background-position:center;
+        box-shadow: 0 0 8px rgba(0,0,0,.08);
+      }
+      .flipbook-hint{
+        text-align:center;
+        font-size:.82rem;
+        color:#888;
+        margin-top:.9rem;
+      }
+      @media (max-width: 640px){
+        .flipbook-toolbar{
+          justify-content:center;
+        }
+        .flipbook-stage{
+          min-height:500px;
+          padding: 1.5rem 0.75rem;
+        }
+      }
+      @media (prefers-reduced-motion: reduce){
+        .flipbook-spinner{ animation-duration: 1.6s; }
+      }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
+    <script>
+    (function () {
+      // Path to the company profile PDF — update this if you move the file.
+      var PDF_PATH = "company profile/Catalogue - Murtaza Corporation.pdf";
+
+      var stageLoading   = document.getElementById('fbLoading');
+      var loadingText    = document.getElementById('fbLoadingText');
+      var container      = document.getElementById('flipbookContainer');
+      var indicator      = document.getElementById('fbPageIndicator');
+      var prevBtn        = document.getElementById('fbPrev');
+      var nextBtn        = document.getElementById('fbNext');
+      var stage      = document.getElementById('flipbookStage');
+      var expandBtn  = document.getElementById('fbExpand');
+      var closeBtn   = document.getElementById('fbClose');
+      var stagePlaceholder = document.createComment('flipbook-stage-anchor');
+      stage.parentNode.insertBefore(stagePlaceholder, stage);
+
+      function setFullscreen(on) {
+        if (on) {
+          document.body.appendChild(stage);
+        } else {
+          stagePlaceholder.parentNode.insertBefore(stage, stagePlaceholder.nextSibling);
+        }
+        stage.classList.toggle('is-fullscreen', on);
+        document.documentElement.classList.toggle('flipbook-locked', on);
+        document.body.classList.toggle('flipbook-locked', on);
+        setTimeout(function () {
+          window.dispatchEvent(new Event('resize'));
+          if (pageFlip && typeof pageFlip.update === 'function') pageFlip.update();
+        }, 260);
+      }
+
+      expandBtn.addEventListener('click', function () { setFullscreen(true); });
+      closeBtn.addEventListener('click', function () { setFullscreen(false); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && stage.classList.contains('is-fullscreen')) setFullscreen(false);
+      });
+
+      function showError(msg) {
+        loadingText.textContent = msg;
+        stageLoading.querySelector('.flipbook-spinner').style.display = 'none';
+      }
+
+      if (typeof pdfjsLib === 'undefined' || typeof St === 'undefined') {
+        showError('Couldn\'t load the page viewer. Use the download button above to get the PDF.');
+        return;
+      }
+
+      pdfjsLib.GlobalWorkerOptions.workerSrc =
+        'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+      var pageFlip = null;
+
+      function renderPdfToImages(url) {
+        return pdfjsLib.getDocument(encodeURI(url)).promise.then(function (pdf) {
+          var scale = window.devicePixelRatio > 1 ? 2 : 1.5;
+          var images = [];
+          var pageNum = 1;
+
+          function renderNext() {
+            if (pageNum > pdf.numPages) {
+              return Promise.resolve(images);
+            }
+            return pdf.getPage(pageNum).then(function (page) {
+              var viewport = page.getViewport({ scale: scale });
+              var canvas = document.createElement('canvas');
+              canvas.width = viewport.width;
+              canvas.height = viewport.height;
+              var ctx = canvas.getContext('2d');
+              return page.render({ canvasContext: ctx, viewport: viewport }).promise.then(function () {
+                images.push(canvas.toDataURL('image/jpeg', 0.85));
+                loadingText.textContent = 'Loading page ' + pageNum + ' of ' + pdf.numPages + '\u2026';
+                pageNum++;
+                return renderNext();
+              });
+            });
+          }
+
+          return renderNext();
+        });
+      }
+
+      function updateIndicator() {
+        if (!pageFlip) return;
+        var current = pageFlip.getCurrentPageIndex() + 1;
+        var total = pageFlip.getPageCount();
+        indicator.textContent = 'Page ' + current + ' / ' + total;
+        prevBtn.disabled = current <= 1;
+        nextBtn.disabled = current >= total;
+      }
+
+      renderPdfToImages(PDF_PATH).then(function (images) {
+        if (!images.length) {
+          showError('This document has no pages to display.');
+          return;
+        }
+
+        stageLoading.style.display = 'none';
+        container.style.display = 'block';
+
+       pageFlip = new St.PageFlip(container, {
+          width: 595,
+          height: 842,
+          size: 'stretch',
+          minWidth: 260,
+          maxWidth: 1300,
+          minHeight: 400,
+          maxHeight: 1900,
+          showCover: true,
+          maxShadowOpacity: 0.5,
+          mobileScrollSupport: false,
+          useMouseEvents: true
+        });
+
+        pageFlip.loadFromImages(images);
+        pageFlip.on('flip', updateIndicator);
+        pageFlip.on('init', updateIndicator);
+        updateIndicator();
+
+        prevBtn.addEventListener('click', function () { pageFlip.flipPrev(); });
+        nextBtn.addEventListener('click', function () { pageFlip.flipNext(); });
+
+        document.addEventListener('keydown', function (e) {
+          var rect = container.getBoundingClientRect();
+          var inView = rect.top < window.innerHeight && rect.bottom > 0;
+          if (!inView) return;
+          if (e.key === 'ArrowLeft') pageFlip.flipPrev();
+          if (e.key === 'ArrowRight') pageFlip.flipNext();
+        });
+      }).catch(function (err) {
+        console.error('Flipbook error:', err);
+        showError('Couldn\'t load the preview. Use the download button above to get the PDF.');
+      });
+    })();
+    </script>
+
+    <!-- ============================================================ -->
+    <!-- END PAGE CONTENT                                              -->
+    <!-- ============================================================ -->
+
+    <div class="view-all reveal">
+      <a href="index.html#resources" class="btn btn-ghost">
+        &larr; Back to all resources
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="Logos/company.png" alt="Murtaza Corporation" class="footer-logo-img" />
+    </div>
+
+    <div class="footer-col">
+      <h4>Address</h4>
+      <p>516/517, Sector 6-A, Mehran Town, Korangi Industrial Area, Karachi - 74900, Pakistan</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contacts</h4>
+      <p>Email: <a href="mailto:sales@murtazacorporation.com.pk">sales@murtazacorporation.com.pk</a></p>
+      <p>Phone: <a href="tel:+922135141451">+92 (21) 35141451</a></p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Links</h4>
+      <ul class="footer-link-list">
+        <li><a href="http://www.wermac.org/" target="_blank" rel="noopener">Wermac</a></li>
+        <li><a href="http://www.huikepipe.com/en/" target="_blank" rel="noopener">Hebei Huike</a></li>
+        <li><a href="http://www.yuandavalves.com/brand.html" target="_blank" rel="noopener">Yuanda Valve</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">© 2026 Murtaza Corporation. All rights reserved.</div>
+</footer>
+
+<script src="script.js" defer></script>
+<a href="#" class="calculator-widget" id="calculatorWidgetBtn" aria-label="Open pipe calculator">
+    <span class="whatsapp-text">Calculator</span>
+    <div class="calculator-icon"><i class="fa-solid fa-calculator"></i></div>
+</a>
+<a href="https://wa.me/923343791852" class="whatsapp-widget" target="_blank" aria-label="Chat on WhatsApp">
+    <span class="whatsapp-text">Chat with us</span>
+    <div class="whatsapp-icon"><i class="fab fa-whatsapp"></i></div>
+</a>
+</body>
+</html>
+<div class="calculator-overlay" id="calculatorOverlay">
+  <div class="calculator-modal" id="calculatorModal" role="dialog" aria-modal="true" aria-labelledby="calculatorModalTitle">
+    <button type="button" class="calculator-modal-close" id="calculatorModalClose" aria-label="Close calculator">&times;</button>
+    <div class="calculator-modal-header">
+      <h3 id="calculatorModalTitle">Pipe Calculator</h3>
+    </div>
+    <div class="calculator-modal-body">
+  <form id="calcForm" onsubmit="return false;" class="calc-form">
+
+   <div class="calc-shape-bar" id="calcShapeBar">
+      <label>Shape</label>
+      <div class="calc-shape-icons" id="calcShapeIcons">
+        <button type="button" class="calc-shape-icon is-active" data-shape="Round" aria-pressed="true" aria-label="Round"><img src="images/round.png" alt="" /><span class="calc-shape-icon-label">Round</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Square" aria-pressed="false" aria-label="Square"><img src="images/icon-square.png" alt="" /><span class="calc-shape-icon-label">Square</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Rectangle" aria-pressed="false" aria-label="Rectangle"><img src="images/icon-rectangle.png" alt="" /><span class="calc-shape-icon-label">Rectangle</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Hexagonal" aria-pressed="false" aria-label="Hexagonal"><img src="images/icon-hexagol.jpg" alt="" /><span class="calc-shape-icon-label">Hexagonal</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Octagonal" aria-pressed="false" aria-label="Octagonal"><img src="images/icon-octa.png" alt="" /><span class="calc-shape-icon-label">Octagonal</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Sheet" aria-pressed="false" aria-label="Sheet"><img src="images/sheet.png" alt="" /><span class="calc-shape-icon-label">Sheet</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Plate" aria-pressed="false" aria-label="Plate"><img src="images/plate.jpg" alt="" /><span class="calc-shape-icon-label">Plate</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Pipe" aria-pressed="false" aria-label="Tubular / Pipe"><img src="images/tubular.jpg" alt="" /><span class="calc-shape-icon-label">Tubular/Pipe</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Ring" aria-pressed="false" aria-label="Ring"><img src="images/ring.png" alt="" /><span class="calc-shape-icon-label">Ring</span></button>
+      </div>
+      <p class="calc-shape-name" id="calcShapeName" style="display:none;">Round</p>
+      <select id="calcShape" style="display:none;">
+        <option value="Round" selected>Round</option>
+        <option value="Square">Square</option>
+        <option value="Rectangle">Rectangle</option>
+        <option value="Hexagonal">Hexagonal</option>
+        <option value="Octagonal">Octagonal</option>
+        <option value="Sheet">Sheet</option>
+        <option value="Plate">Plate</option>
+        <option value="Tubular">Tubular</option>
+        <option value="Pipe">Pipe</option>
+        <option value="Ring">Ring</option>
+        </select>
+    </div>
+
+   <div class="calc-layout">
+    <div class="calc-main">
+
+    <div class="calc-row">
+      <label for="calcMaterial">Material</label>
+      <select id="calcMaterial">
+        <option data-factor="1" selected>Steel (default)</option>
+        <option data-factor="0.3462">Aluminum 1100</option>
+        <option data-factor="0.3604">Aluminum 2011</option>
+        <option data-factor="0.3568">Aluminum 2014</option>
+        <option data-factor="0.3568">Aluminum 2017</option>
+        <option data-factor="0.3533">Aluminum 2024</option>
+        <option data-factor="0.3498">Aluminum 3003</option>
+        <option data-factor="0.3462">Aluminum 5005</option>
+        <option data-factor="0.3427">Aluminum 5052</option>
+        <option data-factor="0.3356">Aluminum 5056</option>
+        <option data-factor="0.3392">Aluminum 5083</option>
+        <option data-factor="0.3392">Aluminum 5086</option>
+        <option data-factor="0.3462">Aluminum 6061</option>
+        <option data-factor="0.3462">Aluminum 6063</option>
+        <option data-factor="0.3568">Aluminum 7050</option>
+        <option data-factor="0.3568">Aluminum 7075</option>
+        <option data-factor="0.3604">Aluminum 7178</option>
+        <option data-factor="1.030">Stainless 300 Series</option>
+        <option data-factor="1.010">Stainless 400 Series</option>
+        <option data-factor="1.132">Nickel 200</option>
+        <option data-factor="1.125">Nickel 400</option>
+        <option data-factor="1.121">Nickel R-405</option>
+        <option data-factor="1.075">Nickel K-500</option>
+        <option data-factor="1.072">Nickel 600</option>
+        <option data-factor="1.075">Nickel 625</option>
+        <option data-factor="1.012">Nickel 800H</option>
+        <option data-factor="1.012">Nickel 800AT</option>
+        <option data-factor="1.037">Nickel 825</option>
+        <option data-factor="1.012">Nickel 330</option>
+        <option data-factor="1.030">Nickel 20</option>
+        <option data-factor="1.132">Nickel C-276</option>
+        <option data-factor="1.012">Nickel 2545MD</option>
+        <option data-factor="0.229">Magnesium</option>
+        <option data-factor="0.236">Beryllium</option>
+        <option data-factor="0.575">Titanium</option>
+        <option data-factor="0.812">Zirconium</option>
+        <option data-factor="0.911">Cast Iron</option>
+        <option data-factor="0.911">Zinc</option>
+        <option data-factor="1.084">Brass</option>
+        <option data-factor="1.095">Columbium</option>
+        <option data-factor="1.144">Copper</option>
+        <option data-factor="1.303">Molybdenum</option>
+        <option data-factor="1.339">Silver</option>
+        <option data-factor="1.448">Lead</option>
+        <option data-factor="2.120">Tantalum</option>
+        <option data-factor="2.462">Tungsten</option>
+        <option data-factor="2.466">Gold</option>
+      </select>
+    </div>
+
+    <div class="calc-row" id="calcField1Row">
+      <label id="calcLabel1" for="calcParam1">Diameter</label>
+      <div class="calc-input-group">
+        <input type="number" step="any" id="calcParam1" placeholder="0.00" />
+        <select id="calcUnit1">
+          <option>in</option><option>ft</option><option>yd</option>
+          <option>mm</option><option>cm</option><option>m</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="calc-row" id="calcField2Row" style="display:none;">
+      <label id="calcLabel2" for="calcParam2">Width</label>
+      <div class="calc-input-group">
+        <input type="number" step="any" id="calcParam2" placeholder="0.00" />
+        <select id="calcUnit2">
+          <option>in</option><option>ft</option><option>yd</option>
+          <option>mm</option><option>cm</option><option>m</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="calc-row" id="calcField3Row">
+      <label id="calcLabel3" for="calcParam3">Length</label>
+      <div class="calc-input-group">
+        <input type="number" step="any" id="calcParam3" placeholder="0.00" />
+        <select id="calcUnit3">
+          <option>in</option><option>ft</option><option>yd</option>
+          <option>mm</option><option>cm</option><option>m</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="calc-row">
+      <label for="calcQty">Quantity (pieces)</label>
+      <input type="number" step="1" min="1" id="calcQty" value="1" />
+    </div>
+
+    <p class="calc-error" id="calcError" style="display:none;"></p>
+
+    <div class="calc-actions">
+      <button type="button" class="btn btn-primary btn-sm" id="calcCalculateBtn">Calculate</button>
+      <button type="button" class="btn btn-ghost btn-sm" id="calcClearBtn">Clear</button>
+    </div>
+
+   </div>
+    <div class="calc-side">
+
+<div class="calc-history-header calc-side-header">
+  <span>Saved calculations</span>
+  <button type="button" class="calc-history-clear" id="calcHistoryClearBtn">Remove all</button>
+</div>
+
+<div class="calc-history" id="calcHistory" style="display:none;">
+  <div class="calc-history-list" id="calcHistoryList"></div>
+
+ <div class="calc-history-total">
+    <span>Total weight</span>
+    <strong><span id="calcHistoryTotalLbs">0</span> lbs / <span id="calcHistoryTotalKg">0</span> kg</strong>
+  </div>
+
+  <button type="button" class="calc-history-pdf" id="calcHistoryPdfBtn">Export as PDF</button>
+
+  <p class="calc-standards-note">Weights calculated per standard imperial steel weight formulas.</p>
+
+  <div class="calc-history-confirm" id="calcHistoryConfirm" style="display:none;">
+    Are you sure?
+    <span class="calc-history-confirm-yes" id="calcHistoryConfirmYes">Yes</span>
+    <span class="calc-history-confirm-no" id="calcHistoryConfirmNo">No</span>
+  </div>
+</div>
+
+    <div class="calc-results" id="calcResults" style="display:none;">
+      <div class="calc-result-row">
+        <span>Weight</span>
+        <strong><span id="calcResultLbs">0</span> lbs</strong>
+      </div>
+      <div class="calc-result-row">
+        <span>Weight</span>
+        <strong><span id="calcResultKg">0</span> kg</strong>
+      </div>
+  </div>
+</div>
+    </div>
+
+ </form></div></div>
+</div>

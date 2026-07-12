@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Engineering Articles — Murtaza Corporation</title>
+<meta name="description" content="Practical articles on stainless steel materials, fabrication techniques, piping systems and corrosion prevention." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+
+<div class="header-hover-zone" id="headerHoverZone"></div>
+<header>
+  <div class="nav-inner">
+
+    <a href="index.html#top" class="logo" aria-label="Murtaza Corporation home">
+      <img src="Logos/company.png" alt="Murtaza Corporation" class="logo-img" />
+      <span class="logo-name">Murtaza Corporation</span>
+    </a>
+
+    <span class="nav-divider" aria-hidden="true"></span>
+
+    <nav>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#about">About</a></li>
+        <li class="nav-item-dropdown">
+          <a href="index.html#products" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+            Products <span class="nav-caret" aria-hidden="true">▾</span>
+          </a>
+          <ul class="nav-dropdown-menu">
+            <li><a href="pipes.html">Pipes</a></li>
+            <li><a href="fittings.html">Fittings</a></li>
+            <li><a href="valves.html">Valves</a></li>
+            <li><a href="flanges.html">Flanges</a></li>
+            <li><a href="tubes.html">Tubes</a></li>
+            <li><a href="dairy-tubes.html">Dairy tubes &amp; fittings</a></li>
+          </ul>
+        </li>
+        <li class="nav-item-dropdown">
+          <a href="index.html#resources" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+            Resources <span class="nav-caret" aria-hidden="true">▾</span>
+          </a>
+          <ul class="nav-dropdown-menu">
+            <li><a href="company-profile.html">Company profile</a></li>
+            <li><a href="lor.html">LOR</a></li>
+            <li><a href="mill-test-report.html">Mill Test Report</a></li>
+            <li><a href="services.html">Services</a></li>
+          </ul>
+        </li>
+        <li class="nav-item-dropdown">
+          <a href="index.html#track-record" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+            Updates <span class="nav-caret" aria-hidden="true">▾</span>
+          </a>
+          <ul class="nav-dropdown-menu">
+            <li><a href="linkedin-updates.html">LinkedIn Updates</a></li>
+            <li><a href="engineering-articles.html">Engineering Articles</a></li>
+            <li><a href="project-gallery.html">Project Gallery</a></li>
+          </ul>
+        </li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <span class="nav-divider" aria-hidden="true"></span>
+
+    <div class="nav-actions">
+      <a href="index.html#contact" class="btn btn-primary btn-sm">Request a quote <span class="arrow">&rarr;</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+<div id="top"></div>
+
+<section class="block" id="page-top">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow"><a href="index.html#track-record" style="color:inherit;">Updates</a> / Engineering Articles</p>
+      <h2 class="heading">Engineering Articles</h2>
+      <p class="sub-copy">Read practical articles covering stainless steel materials, fabrication techniques, piping systems, corrosion prevention and engineering best practices.</p>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- PAGE CONTENT — ENGINEERING ARTICLES                           -->
+    <!-- New articles are added weekly. Newest cards go first in the   -->
+    <!-- grid below; full write-ups go in the same order further down. -->
+    <!-- ============================================================ -->
+
+    <div class="grid-3 reveal" id="articles-grid" style="scroll-margin-top:110px;">
+      <!-- AUTO-CARDS:START (script inserts new card as first child here) -->
+      <a class="card" href="#article-304-vs-316">
+        <img src="https://images.unsplash.com/photo-1581093458791-9f3113e5cbb2?q=80&w=800&auto=format&fit=crop" alt="Stainless steel pipe stock" />
+        <div class="card-body">
+          <p class="num">01.</p>
+          <h3>304 vs 316 Stainless Steel: Choosing the Right Grade</h3>
+          <p>Both grades look identical on the shelf, but the wrong choice can mean corrosion failure within months. Here's how to pick correctly.</p>
+          <p class="hint">Read article &rarr;</p>
+        </div>
+      </a>
+
+      <a class="card" href="#article-pipe-schedules">
+        <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=800&auto=format&fit=crop" alt="Pipe wall thickness and schedule chart" />
+        <div class="card-body">
+          <p class="num">02.</p>
+          <h3>Pipe Schedules Explained: Picking the Right Wall Thickness</h3>
+          <p>SCH10, SCH40, SCH80 — what the schedule number actually means, and how pressure, size and corrosion allowance decide it.</p>
+          <p class="hint">Read article &rarr;</p>
+        </div>
+      </a>
+
+      <a class="card" href="#article-mill-test-certificates">
+        <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=800&auto=format&fit=crop" alt="Mill test certificate document review" />
+        <div class="card-body">
+          <p class="num">03.</p>
+          <h3>Reading a Mill Test Certificate: 3.1 vs 3.2 Explained</h3>
+          <p>EN 10204 gets quoted on every PO, but few buyers know what it actually guarantees. A plain-English breakdown.</p>
+          <p class="hint">Read article &rarr;</p>
+        </div>
+      </a>
+
+      <!-- AUTO-CARDS:END -->
+    </div>
+
+    <!-- AUTO-ARTICLES:START (script inserts new full article as first child here) -->
+    <!-- ARTICLE 1 -->
+    <div id="article-304-vs-316" style="margin-top:64px;padding-top:24px;border-top:1px solid #ececec;scroll-margin-top:110px;">
+      <p class="eyebrow" style="margin:0 0 8px;">Article 01 &middot; Materials &middot; 6 min read</p>
+      <h3 style="font-size:26px;font-weight:600;margin:0 0 20px;">304 vs 316 Stainless Steel: Choosing the Right Grade</h3>
+
+      <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0 0 16px;">304 and 316 are the two grades that come up in almost every piping enquiry, and it's easy to see why they get confused — both are austenitic, both are non-magnetic in the annealed condition, and both machine, weld and polish in much the same way. The difference that matters is molybdenum: 316 contains 2–3% Mo, which 304 does not, and that single alloying addition changes where each grade belongs in a plant.</p>
+
+      <h4 style="margin:24px 0 10px;font-size:17px;font-weight:600;">Where 304 is the right call</h4>
+      <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0 0 16px;">304 (and its low-carbon version, 304L, for welded fabrication) handles general atmospheric exposure, freshwater, most food contact, and a wide range of mild chemical environments comfortably. It's the more economical of the two grades, and for piping, fittings and tanks that never see chlorides in any concentration, specifying 316 is usually money spent without a return.</p>
+
+      <h4 style="margin:24px 0 10px;font-size:17px;font-weight:600;">Where 316 earns its premium</h4>
+      <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0 0 16px;">Molybdenum sharply improves resistance to pitting and crevice corrosion in chloride-bearing environments — seawater, brine, coastal atmospheres, de-icing salts, and many pharmaceutical and chemical process streams. If a line will regularly see chlorides above a few hundred ppm, or the application is offshore, marine, or coastal, 316 (or 316L) is the safer default. Dairy and beverage lines that undergo frequent CIP cleaning with chloride-based sanitizers are a common case where 316L is specified even though the product itself is benign — see our <a href="dairy-tubes.html" style="color:var(--color-ink);text-decoration:underline;">dairy tube &amp; fitting range</a> for the hygienic-finish options usually paired with it.</p>
+
+      <h4 style="margin:24px 0 10px;font-size:17px;font-weight:600;">A quick decision checklist</h4>
+      <ul class="stock-list" style="margin:0 0 16px;">
+        <li>Freshwater, dry atmosphere, general indoor process — 304/304L is normally sufficient.</li>
+        <li>Coastal, marine, or chloride-cleaned service — step up to 316/316L.</li>
+        <li>Strong acids, high-chloride brines, or sour service — 316 may still not be enough; ask about duplex or super-austenitic grades.</li>
+        <li>When in doubt, check the actual chloride concentration and operating temperature of the media, not just its name — "salt" and "saline" cover a huge range of severity.</li>
+      </ul>
+
+      <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0;">Both grades are stocked across our <a href="pipes.html" style="color:var(--color-ink);text-decoration:underline;">pipe</a>, <a href="fittings.html" style="color:var(--color-ink);text-decoration:underline;">fittings</a> and <a href="tubes.html" style="color:var(--color-ink);text-decoration:underline;">tube</a> ranges — talk to us with your media, temperature and cleaning regime and we'll confirm the grade before you order.</p>
+
+      <a href="#articles-grid" class="btn btn-ghost btn-sm" style="margin-top:24px;">&uarr; Back to articles</a>
+    </div>
+
+    <!-- ARTICLE 2 -->
+    <div id="article-pipe-schedules" style="margin-top:56px;padding-top:24px;border-top:1px solid #ececec;scroll-margin-top:110px;">
+      <p class="eyebrow" style="margin:0 0 8px;">Article 02 &middot; Piping Design &middot; 5 min read</p>
+      <h3 style="font-size:26px;font-weight:600;margin:0 0 20px;">Pipe Schedules Explained: Picking the Right Wall Thickness</h3>
+
+      <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0 0 16px;">The "schedule" number stamped on a pipe spec — SCH10, SCH40, SCH80, SCH160 — is simply a standardized way of expressing wall thickness relative to outside diameter, as set out in ASME B36.19 (stainless) and B36.10 (carbon steel). A higher schedule number means a thicker wall for the same nominal pipe size (NPS/DN), and therefore a smaller internal bore.</p>
+
+      <h4 style="margin:24px 0 10px;font-size:17px;font-weight:600;">What actually drives the schedule choice</h4>
+      <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0 0 16px;">Wall thickness selection comes down to four factors working together, not any one number in isolation:</p>
+      <ul class="stock-list" style="margin:0 0 16px;">
+        <li><strong>Design pressure</strong> — the primary driver; higher internal pressure needs more wall thickness at a given diameter.</li>
+        <li><strong>Design temperature</strong> — allowable stress for the material drops as temperature rises, so the same pressure needs a thicker wall at higher operating temperature.</li>
+        <li><strong>Corrosion/erosion allowance</strong> — an extra margin of thickness added so the pipe still meets minimum requirements after years of service wear.</li>
+        <li><strong>Joint efficiency and manufacturing method</strong> — seamless pipe and welded pipe are rated differently under the same code because of how the weld seam is accounted for.</li>
+      </ul>
+
+      <h4 style="margin:24px 0 10px;font-size:17px;font-weight:600;">Common schedules in practice</h4>
+      <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0 0 16px;">SCH10 and SCH10S are common in lower-pressure stainless process lines where cost and weight matter. SCH40 (and 40S) is the general-purpose default across a huge range of industrial piping. SCH80 and SCH160 step up for higher-pressure or higher-temperature service, and XXS covers the most demanding cases. The "S" suffix specifically denotes the stainless steel series dimensions under B36.19, which don't always match the carbon steel series at the same schedule number — worth checking before assuming a schedule carries over between materials.</p>
+
+      <h4 style="margin:24px 0 10px;font-size:17px;font-weight:600;">A practical note for buyers</h4>
+      <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0;">The schedule on a data sheet should always be checked against the actual design pressure/temperature calculation for the line — never assumed from a similar-looking project. Our <a href="pipes.html" style="color:var(--color-ink);text-decoration:underline;">pipes page</a> lists the schedules we stock across sizes and grades, and our <a href="index.html#resources" style="color:var(--color-ink);text-decoration:underline;">resources</a> section has weight and dimension references to help confirm before you place an order.</p>
+
+      <a href="#articles-grid" class="btn btn-ghost btn-sm" style="margin-top:24px;">&uarr; Back to articles</a>
+    </div>
+
+    <!-- ARTICLE 3 -->
+    <div id="article-mill-test-certificates" style="margin-top:56px;padding-top:24px;border-top:1px solid #ececec;scroll-margin-top:110px;">
+      <p class="eyebrow" style="margin:0 0 8px;">Article 03 &middot; Quality &amp; Traceability &middot; 5 min read</p>
+      <h3 style="font-size:26px;font-weight:600;margin:0 0 20px;">Reading a Mill Test Certificate: 3.1 vs 3.2 Explained</h3>
+
+      <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0 0 16px;">Almost every purchase order for pipe, fittings or valves asks for a "Mill Test Certificate" or "MTC," usually with a reference to EN 10204. In practice, the standard defines several inspection document types, and mixing them up can mean receiving less traceability than a project actually needs.</p>
+
+      <h4 style="margin:24px 0 10px;font-size:17px;font-weight:600;">Type 2.2 — a manufacturer's declaration</h4>
+      <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0 0 16px;">A 2.2 report is issued by the manufacturer based on non-specific inspection — it confirms the product complies with the order, but the test results shown may come from routine production testing rather than the specific batch supplied. It's adequate for lower-criticality, non-pressure applications.</p>
+
+      <h4 style="margin:24px 0 10px;font-size:17px;font-weight:600;">Type 3.1 — validated by the manufacturer</h4>
+      <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0 0 16px;">A 3.1 certificate is issued and validated by the manufacturer's own authorized quality department, independent of the production department, and the results shown are specific to the material actually supplied. This is the standard requirement for most pressure piping, valves and fittings in industrial and process plant work, and is what our <a href="mill-test-report.html" style="color:var(--color-ink);text-decoration:underline;">Mill Test Report</a> documentation is issued to.</p>
+
+      <h4 style="margin:24px 0 10px;font-size:17px;font-weight:600;">Type 3.2 — validated by an independent third party</h4>
+      <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0 0 16px;">A 3.2 certificate carries everything a 3.1 does, but is additionally validated either by an inspector designated by the purchaser or by an inspector responsible for compliance with the official regulations, independent of both manufacturer and purchaser. This is typically reserved for safety-critical or code-mandated projects — pressure vessels, nuclear, or client specifications that explicitly call for third-party witness — and comes with a corresponding lead time and cost.</p>
+
+      <h4 style="margin:24px 0 10px;font-size:17px;font-weight:600;">What to check before you specify one</h4>
+      <ul class="stock-list" style="margin:0 0 16px;">
+        <li>Confirm whether your project spec, client, or governing code actually mandates 3.2 — many projects default to asking for it when 3.1 would satisfy the requirement, adding cost and lead time unnecessarily.</li>
+        <li>Check that heat/batch numbers on the certificate match the physical markings on the pipe, fitting or valve received — traceability is only useful if it's verifiable on-site.</li>
+        <li>For sanitary and dairy lines, ask whether the certificate covers surface finish and passivation results in addition to chemical composition and mechanical properties.</li>
+      </ul>
+
+      <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0;">Every order from Murtaza Corporation ships with full material traceability documentation — see our <a href="mill-test-report.html" style="color:var(--color-ink);text-decoration:underline;">Mill Test Report page</a> for a sample and details on what's included as standard.</p>
+
+      <a href="#articles-grid" class="btn btn-ghost btn-sm" style="margin-top:24px;">&uarr; Back to articles</a>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- END PAGE CONTENT                                              -->
+    <!-- ============================================================ -->
+
+    <div class="view-all reveal">
+      <a href="index.html#track-record" class="btn btn-ghost">
+        &larr; Back to all updates
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="Logos/company.png" alt="Murtaza Corporation" class="footer-logo-img" />
+    </div>
+
+    <div class="footer-col">
+      <h4>Address</h4>
+      <p>516/517, Sector 6-A, Mehran Town, Korangi Industrial Area, Karachi - 74900, Pakistan</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contacts</h4>
+      <p>Email: <a href="mailto:sales@murtazacorporation.com.pk">sales@murtazacorporation.com.pk</a></p>
+      <p>Phone: <a href="tel:+922135141451">+92 (21) 35141451</a></p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Links</h4>
+      <ul class="footer-link-list">
+        <li><a href="http://www.wermac.org/" target="_blank" rel="noopener">Wermac</a></li>
+        <li><a href="http://www.huikepipe.com/en/" target="_blank" rel="noopener">Hebei Huike</a></li>
+        <li><a href="http://www.yuandavalves.com/brand.html" target="_blank" rel="noopener">Yuanda Valve</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">© 2026 Murtaza Corporation. All rights reserved.</div>
+</footer>
+
+<script src="script.js" defer></script>
+<a href="#" class="calculator-widget" id="calculatorWidgetBtn" aria-label="Open pipe calculator">
+    <span class="whatsapp-text">Calculator</span>
+    <div class="calculator-icon"><i class="fa-solid fa-calculator"></i></div>
+</a>
+<a href="https://wa.me/923343791852" class="whatsapp-widget" target="_blank" aria-label="Chat on WhatsApp">
+    <span class="whatsapp-text">Chat with us</span>
+    <div class="whatsapp-icon"><i class="fab fa-whatsapp"></i></div>
+</a>
+</body>
+</html>
+<div class="calculator-overlay" id="calculatorOverlay">
+  <div class="calculator-modal" id="calculatorModal" role="dialog" aria-modal="true" aria-labelledby="calculatorModalTitle">
+    <button type="button" class="calculator-modal-close" id="calculatorModalClose" aria-label="Close calculator">&times;</button>
+    <div class="calculator-modal-header">
+      <h3 id="calculatorModalTitle">Pipe Calculator</h3>
+    </div>
+    <div class="calculator-modal-body">
+  <form id="calcForm" onsubmit="return false;" class="calc-form">
+
+   <div class="calc-shape-bar" id="calcShapeBar">
+      <label>Shape</label>
+      <div class="calc-shape-icons" id="calcShapeIcons">
+        <button type="button" class="calc-shape-icon is-active" data-shape="Round" aria-pressed="true" aria-label="Round"><img src="images/round.png" alt="" /><span class="calc-shape-icon-label">Round</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Square" aria-pressed="false" aria-label="Square"><img src="images/icon-square.png" alt="" /><span class="calc-shape-icon-label">Square</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Rectangle" aria-pressed="false" aria-label="Rectangle"><img src="images/icon-rectangle.png" alt="" /><span class="calc-shape-icon-label">Rectangle</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Hexagonal" aria-pressed="false" aria-label="Hexagonal"><img src="images/icon-hexagol.jpg" alt="" /><span class="calc-shape-icon-label">Hexagonal</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Octagonal" aria-pressed="false" aria-label="Octagonal"><img src="images/icon-octa.png" alt="" /><span class="calc-shape-icon-label">Octagonal</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Sheet" aria-pressed="false" aria-label="Sheet"><img src="images/sheet.png" alt="" /><span class="calc-shape-icon-label">Sheet</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Plate" aria-pressed="false" aria-label="Plate"><img src="images/plate.jpg" alt="" /><span class="calc-shape-icon-label">Plate</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Pipe" aria-pressed="false" aria-label="Tubular / Pipe"><img src="images/tubular.jpg" alt="" /><span class="calc-shape-icon-label">Tubular/Pipe</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Ring" aria-pressed="false" aria-label="Ring"><img src="images/ring.png" alt="" /><span class="calc-shape-icon-label">Ring</span></button>
+      </div>
+      <p class="calc-shape-name" id="calcShapeName" style="display:none;">Round</p>
+      <select id="calcShape" style="display:none;">
+        <option value="Round" selected>Round</option>
+        <option value="Square">Square</option>
+        <option value="Rectangle">Rectangle</option>
+        <option value="Hexagonal">Hexagonal</option>
+        <option value="Octagonal">Octagonal</option>
+        <option value="Sheet">Sheet</option>
+        <option value="Plate">Plate</option>
+        <option value="Tubular">Tubular</option>
+        <option value="Pipe">Pipe</option>
+        <option value="Ring">Ring</option>
+        </select>
+    </div>
+
+   <div class="calc-layout">
+    <div class="calc-main">
+
+    <div class="calc-row">
+      <label for="calcMaterial">Material</label>
+      <select id="calcMaterial">
+        <option data-factor="1" selected>Steel (default)</option>
+        <option data-factor="0.3462">Aluminum 1100</option>
+        <option data-factor="0.3604">Aluminum 2011</option>
+        <option data-factor="0.3568">Aluminum 2014</option>
+        <option data-factor="0.3568">Aluminum 2017</option>
+        <option data-factor="0.3533">Aluminum 2024</option>
+        <option data-factor="0.3498">Aluminum 3003</option>
+        <option data-factor="0.3462">Aluminum 5005</option>
+        <option data-factor="0.3427">Aluminum 5052</option>
+        <option data-factor="0.3356">Aluminum 5056</option>
+        <option data-factor="0.3392">Aluminum 5083</option>
+        <option data-factor="0.3392">Aluminum 5086</option>
+        <option data-factor="0.3462">Aluminum 6061</option>
+        <option data-factor="0.3462">Aluminum 6063</option>
+        <option data-factor="0.3568">Aluminum 7050</option>
+        <option data-factor="0.3568">Aluminum 7075</option>
+        <option data-factor="0.3604">Aluminum 7178</option>
+        <option data-factor="1.030">Stainless 300 Series</option>
+        <option data-factor="1.010">Stainless 400 Series</option>
+        <option data-factor="1.132">Nickel 200</option>
+        <option data-factor="1.125">Nickel 400</option>
+        <option data-factor="1.121">Nickel R-405</option>
+        <option data-factor="1.075">Nickel K-500</option>
+        <option data-factor="1.072">Nickel 600</option>
+        <option data-factor="1.075">Nickel 625</option>
+        <option data-factor="1.012">Nickel 800H</option>
+        <option data-factor="1.012">Nickel 800AT</option>
+        <option data-factor="1.037">Nickel 825</option>
+        <option data-factor="1.012">Nickel 330</option>
+        <option data-factor="1.030">Nickel 20</option>
+        <option data-factor="1.132">Nickel C-276</option>
+        <option data-factor="1.012">Nickel 2545MD</option>
+        <option data-factor="0.229">Magnesium</option>
+        <option data-factor="0.236">Beryllium</option>
+        <option data-factor="0.575">Titanium</option>
+        <option data-factor="0.812">Zirconium</option>
+        <option data-factor="0.911">Cast Iron</option>
+        <option data-factor="0.911">Zinc</option>
+        <option data-factor="1.084">Brass</option>
+        <option data-factor="1.095">Columbium</option>
+        <option data-factor="1.144">Copper</option>
+        <option data-factor="1.303">Molybdenum</option>
+        <option data-factor="1.339">Silver</option>
+        <option data-factor="1.448">Lead</option>
+        <option data-factor="2.120">Tantalum</option>
+        <option data-factor="2.462">Tungsten</option>
+        <option data-factor="2.466">Gold</option>
+      </select>
+    </div>
+
+    <div class="calc-row" id="calcField1Row">
+      <label id="calcLabel1" for="calcParam1">Diameter</label>
+      <div class="calc-input-group">
+        <input type="number" step="any" id="calcParam1" placeholder="0.00" />
+        <select id="calcUnit1">
+          <option>in</option><option>ft</option><option>yd</option>
+          <option>mm</option><option>cm</option><option>m</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="calc-row" id="calcField2Row" style="display:none;">
+      <label id="calcLabel2" for="calcParam2">Width</label>
+      <div class="calc-input-group">
+        <input type="number" step="any" id="calcParam2" placeholder="0.00" />
+        <select id="calcUnit2">
+          <option>in</option><option>ft</option><option>yd</option>
+          <option>mm</option><option>cm</option><option>m</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="calc-row" id="calcField3Row">
+      <label id="calcLabel3" for="calcParam3">Length</label>
+      <div class="calc-input-group">
+        <input type="number" step="any" id="calcParam3" placeholder="0.00" />
+        <select id="calcUnit3">
+          <option>in</option><option>ft</option><option>yd</option>
+          <option>mm</option><option>cm</option><option>m</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="calc-row">
+      <label for="calcQty">Quantity (pieces)</label>
+      <input type="number" step="1" min="1" id="calcQty" value="1" />
+    </div>
+
+    <p class="calc-error" id="calcError" style="display:none;"></p>
+
+    <div class="calc-actions">
+      <button type="button" class="btn btn-primary btn-sm" id="calcCalculateBtn">Calculate</button>
+      <button type="button" class="btn btn-ghost btn-sm" id="calcClearBtn">Clear</button>
+    </div>
+
+   </div>
+    <div class="calc-side">
+
+<div class="calc-history-header calc-side-header">
+  <span>Saved calculations</span>
+  <button type="button" class="calc-history-clear" id="calcHistoryClearBtn">Remove all</button>
+</div>
+
+<div class="calc-history" id="calcHistory" style="display:none;">
+  <div class="calc-history-list" id="calcHistoryList"></div>
+
+ <div class="calc-history-total">
+    <span>Total weight</span>
+    <strong><span id="calcHistoryTotalLbs">0</span> lbs / <span id="calcHistoryTotalKg">0</span> kg</strong>
+  </div>
+
+  <button type="button" class="calc-history-pdf" id="calcHistoryPdfBtn">Export as PDF</button>
+
+  <p class="calc-standards-note">Weights calculated per standard imperial steel weight formulas.</p>
+
+  <div class="calc-history-confirm" id="calcHistoryConfirm" style="display:none;">
+    Are you sure?
+    <span class="calc-history-confirm-yes" id="calcHistoryConfirmYes">Yes</span>
+    <span class="calc-history-confirm-no" id="calcHistoryConfirmNo">No</span>
+  </div>
+</div>
+
+    <div class="calc-results" id="calcResults" style="display:none;">
+      <div class="calc-result-row">
+        <span>Weight</span>
+        <strong><span id="calcResultLbs">0</span> lbs</strong>
+      </div>
+      <div class="calc-result-row">
+        <span>Weight</span>
+        <strong><span id="calcResultKg">0</span> kg</strong>
+      </div>
+  </div>
+</div>
+    </div>
+
+ </form></div></div>
+</div>

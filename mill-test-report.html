@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mill Test Reports — Murtaza Corporation</title>
+<meta name="description" content="Certified Mill Test Reports (EN 10204 3.1) for stainless &amp; carbon steel pipe, fittings, valves, flanges and bar stock — Murtaza Corporation, Karachi." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  #mtr-top .section-head {
+    text-align: left;
+    margin: 0 0 40px 0;
+    max-width: none;
+  }
+
+  #mtr-top p {
+    text-align: left;
+  }
+
+  #mtr-top .spec-item {
+    background: #fff;
+    border: 1px solid #ececec;
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+
+  #mtr-top .spec-label {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-stone);
+    margin-bottom: 4px;
+  }
+
+  #mtr-top .spec-value {
+    color: var(--color-ink);
+    font-weight: 500;
+    font-size: 15px;
+  }
+
+  #mtr-top .type-card {
+    position: relative;
+    padding: 4px 18px 4px 54px;
+  }
+
+  #mtr-top .type-badge {
+    position: absolute;
+    left: 0;
+    top: 2px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--color-cobalt-ink);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #mtr-top .spec-pill {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: #eaf0fe;
+    color: var(--color-cobalt-ink);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  #mtr-top .stock-list {
+    list-style: none;
+    margin: 14px 0 0;
+    padding: 0;
+  }
+
+  #mtr-top .stock-list li {
+    position: relative;
+    padding-left: 26px;
+    margin-bottom: 14px;
+    color: var(--color-ink);
+    font-size: 16px;
+  }
+
+  #mtr-top .stock-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--color-cobalt-ink);
+    font-weight: 700;
+  }
+
+  @media (max-width: 640px) {
+    #mtr-top .type-card {
+      padding-left: 46px;
+    }
+    #mtr-top .type-badge {
+      width: 28px;
+      height: 28px;
+      font-size: 13px;
+    }
+  }
+
+  #mtr-top .product-photo-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  #mtr-top .product-photo-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+  }
+
+  /* MTR thumbnail cards: small A4-ratio preview, click to view full size */
+  #mtr-top .report-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 18px;
+    margin: 0 auto 40px;
+  }
+
+  #mtr-top .report-card {
+    padding: 10px 10px 14px;
+    text-align: center;
+  }
+
+  #mtr-top .report-thumb-btn {
+    display: block;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 210 / 297;
+    padding: 0;
+    margin: 0 0 10px;
+    border: 1px solid #ececec;
+    border-radius: 8px;
+    background: var(--color-bone);
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  #mtr-top .report-thumb-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  #mtr-top .report-thumb-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: rgba(15, 23, 42, 0.55);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    text-align: center;
+    padding: 8px;
+  }
+
+  #mtr-top .report-thumb-overlay i {
+    font-size: 18px;
+  }
+
+  #mtr-top .report-thumb-btn:hover .report-thumb-overlay,
+  #mtr-top .report-thumb-btn:focus-visible .report-thumb-overlay {
+    opacity: 1;
+  }
+
+  #mtr-top .report-card .card-body {
+    padding: 0;
+  }
+
+  #mtr-top .report-card .card-body h3 {
+    margin: 0 0 10px;
+    font-size: 13.5px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  #mtr-top .report-card .btn {
+    width: 100%;
+    justify-content: center;
+    font-size: 12.5px;
+    padding: 7px 10px;
+  }
+
+  #mtr-top .report-card .btn.mtr-download {
+    border: 1.5px solid #000;
+    color: #000;
+    background: transparent;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  #mtr-top .report-card .btn.mtr-download:hover,
+  #mtr-top .report-card .btn.mtr-download:focus-visible {
+    background: #000;
+    color: #fff;
+  }
+
+  /* Full-size viewer modal */
+  #mtrModalOverlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.72);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  #mtrModalOverlay.is-open {
+    display: flex;
+  }
+
+  #mtrModalOverlay .mtr-modal {
+    background: #fff;
+    border-radius: var(--radius-lg, 12px);
+    max-width: min(640px, 100%);
+    width: 100%;
+    max-height: 90vh;
+    padding: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  #mtrModalOverlay .mtr-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 26px;
+    line-height: 1;
+    color: var(--color-stone);
+    cursor: pointer;
+  }
+
+  #mtrModalOverlay .mtr-modal-title {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 600;
+    padding-right: 24px;
+  }
+
+  #mtrModalOverlay .mtr-modal-image-wrap {
+    flex: 1;
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+    background: var(--color-bone);
+    border-radius: 8px;
+  }
+
+  #mtrModalOverlay .mtr-modal-image {
+    width: 100%;
+    max-width: 480px;
+    aspect-ratio: 210 / 297;
+    object-fit: contain;
+    background: #fff;
+  }
+</style>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+
+<div class="header-hover-zone" id="headerHoverZone"></div>
+<header>
+  <div class="nav-inner">
+
+    <a href="index.html#top" class="logo" aria-label="Murtaza Corporation home">
+      <img src="Logos/company.png" alt="Murtaza Corporation" class="logo-img" />
+      <span class="logo-name">Murtaza Corporation</span>
+    </a>
+
+    <span class="nav-divider" aria-hidden="true"></span>
+
+    <nav>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#about">About</a></li>
+        <li class="nav-item-dropdown">
+          <a href="index.html#products" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+            Products <span class="nav-caret" aria-hidden="true">▾</span>
+          </a>
+          <ul class="nav-dropdown-menu">
+            <li><a href="pipes.html">Pipes</a></li>
+            <li><a href="fittings.html">Fittings</a></li>
+            <li><a href="valves.html">Valves</a></li>
+            <li><a href="flanges.html">Flanges</a></li>
+            <li><a href="tubes.html">Tubes</a></li>
+            <li><a href="dairy-tubes.html">Dairy tubes &amp; fittings</a></li>
+          </ul>
+        </li>
+        <li class="nav-item-dropdown">
+          <a href="index.html#resources" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+            Resources <span class="nav-caret" aria-hidden="true">▾</span>
+          </a>
+          <ul class="nav-dropdown-menu">
+            <li><a href="company-profile.html">Company profile</a></li>
+            <li><a href="lor.html">LOR</a></li>
+            <li><a href="mill-test-report.html">Mill Test Report</a></li>
+            <li><a href="services.html">Services</a></li>
+          </ul>
+        </li>
+        <li class="nav-item-dropdown">
+          <a href="index.html#track-record" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+            Updates <span class="nav-caret" aria-hidden="true">▾</span>
+          </a>
+          <ul class="nav-dropdown-menu">
+            <li><a href="linkedin-updates.html">LinkedIn Updates</a></li>
+            <li><a href="engineering-articles.html">Engineering Articles</a></li>
+            <li><a href="project-gallery.html">Project Gallery</a></li>
+          </ul>
+        </li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <span class="nav-divider" aria-hidden="true"></span>
+
+    <div class="nav-actions">
+      <a href="index.html#contact" class="btn btn-primary btn-sm">Request a quote <span class="arrow">&rarr;</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+<div id="top"></div>
+
+<section class="block" id="mtr-top">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow"><a href="index.html#resources" style="color:inherit;">Resources</a> / Mill Test Reports</p>
+      <h2 class="heading">Mill Test Reports</h2>
+      <p class="sub-copy">Certified material test data, traceable to heat and batch, for every product line we supply.</p>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- CONTENT — MILL TEST REPORTS -->
+    <!-- ============================================================ -->
+
+    <div class="wrap" style="padding:0;max-width:100%;">
+
+      <!-- Spec summary -->
+      <div style="background:var(--color-bone);border:1px solid #ececec;border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:36px;">
+        <h3 style="margin:0 0 18px;font-size:18px;font-weight:500;">
+          <b>Mill Test Report (MTR)</b> — What It Certifies
+        </h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;">
+          <div class="spec-item"><span class="spec-label">Also Known As</span><span class="spec-value">CMTR, Mill Test Certificate (MTC)</span></div>
+          <div class="spec-item"><span class="spec-label">Certification Level</span><span class="spec-value">EN 10204 Type 3.1</span></div>
+          <div class="spec-item"><span class="spec-label">Data Included</span><span class="spec-value">Chemical composition, mechanical properties</span></div>
+          <div class="spec-item"><span class="spec-label">Traceability</span><span class="spec-value">Heat number, batch, mill of origin</span></div>
+          <div class="spec-item"><span class="spec-label">Standards</span><span class="spec-value">ASTM, ASME, DIN, EN</span></div>
+          <div class="spec-item"><span class="spec-label">Issued For</span><span class="spec-value">Every product line, every shipment</span></div>
+        </div>
+      </div>
+
+      <!-- Overview -->
+      <div style="margin-bottom:32px;">
+        <h3 style="font-size:20px;font-weight:500;margin:0 0 14px;">Why Mill Test Reports Matter</h3>
+        <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0 0 16px;">A Mill Test Report is the manufacturer's certified record of the chemical composition, mechanical properties, and heat or batch number of the material supplied. It is the document that proves a pipe, fitting, valve, or flange actually meets the grade and standard it is sold as — verified by laboratory testing, not just labelling. For engineering, procurement, and QA teams, the MTR is what allows material to be traced back to its original heat and mill, which is essential for accountability in pressure piping, process plants, and any application where failure is not an option.</p>
+        <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0 0 16px;">Every product line supplied by Murtaza Corporation is backed by an MTR issued in accordance with EN 10204 (Type 3.1), verifying compliance with international standards such as ASTM, ASME, and DIN. Maintaining these records means our customers can move into inspection, welding, or installation with full confidence in material provenance, and it means our supply meets the documentation standards expected by international buyers, EPC contractors, and regulatory bodies.</p>
+      </div>
+
+      <!-- Why it matters to the company -->
+      <div style="margin-bottom:36px;">
+        <h3 style="font-size:20px;font-weight:500;margin:0 0 18px;">Importance to the Company &amp; International Standards</h3>
+        <div style="display:flex;flex-direction:column;gap:20px;">
+
+          <div class="type-card">
+            <span class="type-badge">1</span>
+            <h4 style="margin:0 0 6px;font-size:17px;font-weight:600;">Quality Assurance &amp; Accountability</h4>
+            <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0;">MTRs give Murtaza Corporation a documented, auditable chain of custody for every material we sell — from mill to end customer. This protects customers from substandard or mismatched material and protects the company by keeping every batch fully traceable.</p>
+            <span class="spec-pill">Standard: EN 10204 – Type 3.1 Inspection Certificate</span>
+          </div>
+
+          <div class="type-card">
+            <span class="type-badge">2</span>
+            <h4 style="margin:0 0 6px;font-size:17px;font-weight:600;">International Compliance</h4>
+            <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0;">Global buyers, EPC contractors, and regulatory bodies require documented proof that material meets the ASTM, ASME, or DIN grade specified in a purchase order. Supplying certified MTRs allows our products to move freely into regulated industries such as oil &amp; gas, power generation, desalination, and petrochemicals.</p>
+            <span class="spec-pill">Standards: ASTM · ASME · DIN</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Report previews -->
+      <div style="margin-bottom:36px;">
+        <h3 style="font-size:20px;font-weight:500;margin:0 0 8px;">View &amp; Download Reports by Product</h3>
+        <p style="color:var(--color-ink);font-size:15px;line-height:1.7;margin:0 0 20px;">Tap any thumbnail to view the full report at readable size, or use the download button to save the PDF.</p>
+
+        <div class="report-grid reveal">
+
+          <div class="card report-card">
+            <button type="button" class="report-thumb-btn" data-report="SS Pipe 316" aria-label="View SS Pipe 316 mill test report at full size">
+              <img src="report/ss-pipe-316.jpg" alt="SS Pipe 316 mill test report thumbnail" class="report-thumb-img" data-report-thumb />
+              <span class="report-thumb-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i> View full size</span>
+            </button>
+            <div class="card-body">
+              <h3>SS Pipe 316</h3>
+              <a href="#" class="btn btn-ghost btn-sm mtr-download" data-report="SS Pipe 316">
+                <i class="fa-solid fa-download"></i> Download
+              </a>
+            </div>
+          </div>
+
+          <div class="card report-card">
+            <button type="button" class="report-thumb-btn" data-report="SS Pipe 304" aria-label="View SS Pipe 304 mill test report at full size">
+              <img src="report/ss-pipe-304.jpg" alt="SS Pipe 304 mill test report thumbnail" class="report-thumb-img" data-report-thumb />
+              <span class="report-thumb-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i> View full size</span>
+            </button>
+            <div class="card-body">
+              <h3>SS Pipe 304</h3>
+              <a href="#" class="btn btn-ghost btn-sm mtr-download" data-report="SS Pipe 304">
+                <i class="fa-solid fa-download"></i> Download
+              </a>
+            </div>
+          </div>
+
+          <div class="card report-card">
+            <button type="button" class="report-thumb-btn" data-report="Bothwell" aria-label="View Bothwell mill test report at full size">
+              <img src="report/bothwell- union.jpg" alt="Bothwell mill test report thumbnail" class="report-thumb-img" data-report-thumb />
+              <span class="report-thumb-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i> View full size</span>
+            </button>
+            <div class="card-body">
+              <h3>Bothwell</h3>
+              <a href="#" class="btn btn-ghost btn-sm mtr-download" data-report="Bothwell">
+                <i class="fa-solid fa-download"></i> Download
+              </a>
+            </div>
+          </div>
+
+          <div class="card report-card">
+            <button type="button" class="report-thumb-btn" data-report="SS Valve" aria-label="View SS Valve mill test report at full size">
+              <img src="report/valve.jpg" alt="SS Valve mill test report thumbnail" class="report-thumb-img" data-report-thumb />
+              <span class="report-thumb-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i> View full size</span>
+            </button>
+            <div class="card-body">
+              <h3>SS Valve</h3>
+              <a href="#" class="btn btn-ghost btn-sm mtr-download" data-report="SS Valve">
+                <i class="fa-solid fa-download"></i> Download
+              </a>
+            </div>
+          </div>
+
+          <div class="card report-card">
+            <button type="button" class="report-thumb-btn" data-report="SS Flange" aria-label="View SS Flange mill test report at full size">
+              <img src="report/ss-flange.jpg" alt="SS Flange mill test report thumbnail" class="report-thumb-img" data-report-thumb />
+              <span class="report-thumb-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i> View full size</span>
+            </button>
+            <div class="card-body">
+              <h3>SS Flange</h3>
+              <a href="#" class="btn btn-ghost btn-sm mtr-download" data-report="SS Flange">
+                <i class="fa-solid fa-download"></i> Download
+              </a>
+            </div>
+          </div>
+
+          <div class="card report-card">
+            <button type="button" class="report-thumb-btn" data-report="CS Flange" aria-label="View CS Flange mill test report at full size">
+              <img src="report/cs-flange.jpg" alt="CS Flange mill test report thumbnail" class="report-thumb-img" data-report-thumb />
+              <span class="report-thumb-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i> View full size</span>
+            </button>
+            <div class="card-body">
+              <h3>CS Flange</h3>
+              <a href="#" class="btn btn-ghost btn-sm mtr-download" data-report="CS Flange">
+                <i class="fa-solid fa-download"></i> Download
+              </a>
+            </div>
+          </div>
+
+          <div class="card report-card">
+            <button type="button" class="report-thumb-btn" data-report="CS Pipe" aria-label="View CS Pipe mill test report at full size">
+              <img src="report/cs-pipe.jpg" alt="CS Pipe mill test report thumbnail" class="report-thumb-img" data-report-thumb />
+              <span class="report-thumb-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i> View full size</span>
+            </button>
+            <div class="card-body">
+              <h3>CS Pipe</h3>
+              <a href="#" class="btn btn-ghost btn-sm mtr-download" data-report="CS Pipe">
+                <i class="fa-solid fa-download"></i> Download
+              </a>
+            </div>
+          </div>
+
+          <div class="card report-card">
+            <button type="button" class="report-thumb-btn" data-report="SS Buttweld Fitting" aria-label="View SS Buttweld Fitting mill test report at full size">
+              <img src="report/bw-fitting.jpg" alt="SS Buttweld Fitting mill test report thumbnail" class="report-thumb-img" data-report-thumb />
+              <span class="report-thumb-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i> View full size</span>
+            </button>
+            <div class="card-body">
+              <h3>SS Buttweld Fitting</h3>
+              <a href="#" class="btn btn-ghost btn-sm mtr-download" data-report="SS Buttweld Fitting">
+                <i class="fa-solid fa-download"></i> Download
+              </a>
+            </div>
+          </div>
+
+          <div class="card report-card">
+            <button type="button" class="report-thumb-btn" data-report="SS Bars" aria-label="View SS Bars mill test report at full size">
+              <img src="report/bar.jpg" alt="SS Bar mill test report thumbnail" class="report-thumb-img" data-report-thumb />
+              <span class="report-thumb-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i> View full size</span>
+            </button>
+            <div class="card-body">
+              <h3>SS Bar</h3>
+              <a href="#" class="btn btn-ghost btn-sm mtr-download" data-report="SS Bars">
+                <i class="fa-solid fa-download"></i> Download
+              </a>
+            </div>
+          </div>
+
+          <div class="card report-card">
+            <button type="button" class="report-thumb-btn" data-report="SS Dairy Fitting_1" aria-label="View SS Dairy Fitting_1 mill test report at full size">
+              <img src="report/dairy-fitting.jpg" alt="SS Dairy Fitting mill test report thumbnail" class="report-thumb-img" data-report-thumb />
+              <span class="report-thumb-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i> View full size</span>
+            </button>
+            <div class="card-body">
+              <h3>SS Dairy Fitting</h3>
+              <a href="#" class="btn btn-ghost btn-sm mtr-download" data-report="SS Dairy Fitting_1">
+                <i class="fa-solid fa-download"></i> Download
+              </a>
+            </div>
+          </div>
+
+          <div class="card report-card">
+            <button type="button" class="report-thumb-btn" data-report="SS Dairy Fitting_2" aria-label="View SS Dairy Fitting_2 mill test report at full size">
+              <img src="report/dairy-fitting-2.jpg" alt="SS Dairy Fitting 2 mill test report thumbnail" class="report-thumb-img" data-report-thumb />
+              <span class="report-thumb-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i> View full size</span>
+            </button>
+            <div class="card-body">
+              <h3>SS Dairy Fitting</h3>
+              <a href="#" class="btn btn-ghost btn-sm mtr-download" data-report="SS Dairy Fitting_2">
+                <i class="fa-solid fa-download"></i> Download
+              </a>
+            </div>
+          </div>
+
+          <div class="card report-card">
+            <button type="button" class="report-thumb-btn" data-report="SS BSP Fitting" aria-label="View SS BSP Fitting mill test report at full size">
+              <img src="report/bsp-fitting.jpg" alt="SS BSP Fitting mill test report thumbnail" class="report-thumb-img" data-report-thumb />
+              <span class="report-thumb-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i> View full size</span>
+            </button>
+            <div class="card-body">
+              <h3>SS BSP Fitting</h3>
+              <a href="#" class="btn btn-ghost btn-sm mtr-download" data-report="SS BSP Fitting">
+                <i class="fa-solid fa-download"></i> Download
+              </a>
+            </div>
+          </div>
+
+          <div class="card report-card">
+            <button type="button" class="report-thumb-btn" data-report="CS Fitting" aria-label="View CS Fitting mill test report at full size">
+              <img src="report/cs fittings.jpg" alt="CS Fitting mill test report thumbnail" class="report-thumb-img" data-report-thumb />
+              <span class="report-thumb-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i> View full size</span>
+            </button>
+            <div class="card-body">
+              <h3>CS Fitting</h3>
+              <a href="#" class="btn btn-ghost btn-sm mtr-download" data-report="CS Fitting">
+                <i class="fa-solid fa-download"></i> Download
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- Value to buyers -->
+      <div style="max-width:85ch;margin-bottom:40px;">
+        <p style="color:var(--color-ink);font-weight:600;line-height:1.75;margin:0;">Mill Test Reports supplied by Murtaza Corporation support customers with:</p>
+        <ul class="stock-list">
+          <li>Verified chemical and mechanical properties for every heat and batch supplied.</li>
+          <li>Documentation required for third-party inspection, customs clearance, and project QA/QC files.</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- END CONTENT -->
+    <!-- ============================================================ -->
+    <style>
+      #mtr-top .card::after {
+        display: none !important;
+      }
+    </style>
+    <div class="view-all reveal">
+      <a href="index.html#resources" class="btn btn-ghost">
+        Back to resources
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Report full-size viewer -->
+<div class="mtr-modal-overlay" id="mtrModalOverlay">
+  <div class="mtr-modal" role="dialog" aria-modal="true" aria-labelledby="mtrModalTitle">
+    <button type="button" class="mtr-modal-close" id="mtrModalClose" aria-label="Close">&times;</button>
+    <h3 id="mtrModalTitle" class="mtr-modal-title"></h3>
+    <div class="mtr-modal-image-wrap">
+      <img src="" alt="" id="mtrModalImage" class="mtr-modal-image" />
+    </div>
+    <a href="#" class="btn btn-primary btn-sm" id="mtrModalDownload">
+      <i class="fa-solid fa-download"></i> Download PDF
+    </a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="Logos/company.png" alt="Murtaza Corporation" class="footer-logo-img" />
+    </div>
+
+    <div class="footer-col">
+      <h4>Address</h4>
+      <p>516/517, Sector 6-A, Mehran Town, Korangi Industrial Area, Karachi - 74900, Pakistan</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contacts</h4>
+      <p>Email: <a href="mailto:sales@murtazacorporation.com.pk">sales@murtazacorporation.com.pk</a></p>
+      <p>Phone: <a href="tel:+922135141451">+92 (21) 35141451</a></p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Links</h4>
+      <ul class="footer-link-list">
+        <li><a href="http://www.wermac.org/" target="_blank" rel="noopener">Wermac</a></li>
+        <li><a href="http://www.huikepipe.com/en/" target="_blank" rel="noopener">Hebei Huike</a></li>
+        <li><a href="http://www.yuandavalves.com/brand.html" target="_blank" rel="noopener">Yuanda Valve</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">© 2026 Murtaza Corporation. All rights reserved.</div>
+</footer>
+
+<script src="script.js" defer></script>
+
+<!-- Floating WhatsApp Button -->
+<a href="https://wa.me/923343791852"
+   class="whatsapp-widget"
+   target="_blank"
+   aria-label="Chat on WhatsApp">
+
+    <span class="whatsapp-text">
+        Chat with us
+    </span>
+
+    <div class="whatsapp-icon">
+        <i class="fab fa-whatsapp"></i>
+    </div>
+
+</a>
+
+<script>
+  (function(){
+    // Images live in a single "report/" folder. The <img src="..."> already set
+    // on each thumbnail in the HTML is the single source of truth for the file path —
+    // this script no longer rebuilds or overwrites it.
+
+    // Wire up every download button using the thumbnail's own image path
+    document.querySelectorAll('.report-thumb-btn').forEach(function(btn){
+      var name = btn.getAttribute('data-report');
+      var img  = btn.querySelector('[data-report-thumb]');
+      var src  = img ? img.getAttribute('src') : '';
+      var card = btn.closest('.report-card');
+      var downloadBtn = card ? card.querySelector('.mtr-download[data-report="' + name + '"]') : null;
+      if (downloadBtn && src) {
+        downloadBtn.setAttribute('href', src);
+        downloadBtn.setAttribute('download', '');
+      }
+    });
+
+    // Full-size viewer modal
+    var overlay      = document.getElementById('mtrModalOverlay');
+    var modalTitle    = document.getElementById('mtrModalTitle');
+    var modalImage    = document.getElementById('mtrModalImage');
+    var modalDownload = document.getElementById('mtrModalDownload');
+    var modalClose    = document.getElementById('mtrModalClose');
+    var lastFocused   = null;
+
+    function openModal(btn){
+      var name = btn.getAttribute('data-report');
+      var img  = btn.querySelector('[data-report-thumb]');
+      var src  = img ? img.getAttribute('src') : '';
+
+      lastFocused = document.activeElement;
+      modalTitle.textContent = name;
+      modalImage.src = src;
+      modalImage.alt = name + ' mill test report — full size';
+      modalDownload.setAttribute('href', src);
+      modalDownload.setAttribute('download', '');
+      overlay.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+      modalClose.focus();
+    }
+
+    function closeModal(){
+      overlay.classList.remove('is-open');
+      document.body.style.overflow = '';
+      modalImage.src = '';
+      if (lastFocused) lastFocused.focus();
+    }
+
+    document.querySelectorAll('.report-thumb-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        openModal(btn);
+      });
+    });
+
+    modalClose.addEventListener('click', closeModal);
+    overlay.addEventListener('click', function(e){
+      if (e.target === overlay) closeModal();
+    });
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeModal();
+    });
+  })();
+</script>
+
+</body>
+</html>

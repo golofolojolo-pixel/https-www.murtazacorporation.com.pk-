@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Valves — Murtaza Corporation</title>
+<meta name="description" content="Stainless steel and carbon steel ball, gate, globe, check, needle, butterfly valves and Y-strainers, ½&quot; to 20&quot; NB — from Murtaza Corporation, Karachi." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  #product-top .section-head {
+    text-align: left;
+    margin: 0 0 40px 0;
+    max-width: none;
+  }
+
+  #product-top p {
+    text-align: left;
+  }
+
+  #product-top .spec-item {
+    background: #fff;
+    border: 1px solid #ececec;
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+
+  #product-top .spec-label {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-stone);
+    margin-bottom: 4px;
+  }
+
+  #product-top .spec-value {
+    color: var(--color-ink);
+    font-weight: 500;
+    font-size: 15px;
+  }
+
+  #product-top .type-card {
+    position: relative;
+    padding: 4px 18px 4px 54px;
+  }
+
+  #product-top .type-badge {
+    position: absolute;
+    left: 0;
+    top: 2px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--color-cobalt-ink);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #product-top .spec-pill {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: #eaf0fe;
+    color: var(--color-cobalt-ink);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  #product-top .stock-list {
+    list-style: none;
+    margin: 14px 0 0;
+    padding: 0;
+  }
+
+  #product-top .stock-list li {
+    position: relative;
+    padding-left: 26px;
+    margin-bottom: 14px;
+    color: var(--color-ink);
+    font-size: 16px;
+  }
+
+  #product-top .stock-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--color-cobalt-ink);
+    font-weight: 700;
+  }
+
+  @media (max-width: 640px) {
+    #product-top .type-card {
+      padding-left: 46px;
+    }
+    #product-top .type-badge {
+      width: 28px;
+      height: 28px;
+      font-size: 13px;
+    }
+  }
+
+  #product-top .product-photo-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  #product-top .product-photo-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+  }
+
+  #product-top .valve-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0,1fr));
+    gap: 16px;
+    margin-top: 18px;
+    justify-items: center;
+  }
+
+  #product-top .valve-tile {
+    background: #fff;
+    border: 1px solid #ececec;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    width: 150px !important;
+    height: auto;
+  }
+
+  #product-top .valve-tile:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+  }
+
+  #product-top .valve-tile img {
+    width: 150px !important;
+    height: 150px !important;
+    max-width: 150px !important;
+    min-width: 150px !important;
+    max-height: 150px !important;
+    min-height: 150px !important;
+    object-fit: contain !important;
+    object-position: center;
+    background: #fafafa;
+    display: block;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  #product-top .valve-tile span {
+    display: block;
+    padding: 8px 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-ink);
+  }
+
+  @media (max-width: 900px) {
+    #product-top .valve-grid {
+      grid-template-columns: repeat(3, minmax(0,1fr));
+    }
+  }
+
+  @media (max-width: 640px) {
+    #product-top .valve-grid {
+      grid-template-columns: repeat(2, minmax(0,1fr));
+    }
+  }
+</style>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+
+<div class="header-hover-zone" id="headerHoverZone"></div>
+<header>
+  <div class="nav-inner">
+
+    <a href="index.html#top" class="logo" aria-label="Murtaza Corporation home">
+      <img src="Logos/company.png" alt="Murtaza Corporation" class="logo-img" />
+      <span class="logo-name">Murtaza Corporation</span>
+    </a>
+
+    <span class="nav-divider" aria-hidden="true"></span>
+
+    <nav>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#about">About</a></li>
+        <li class="nav-item-dropdown">
+          <a href="index.html#products" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+            Products <span class="nav-caret" aria-hidden="true">▾</span>
+          </a>
+          <ul class="nav-dropdown-menu">
+            <li><a href="pipes.html">Pipes</a></li>
+            <li><a href="fittings.html">Fittings</a></li>
+            <li><a href="valves.html">Valves</a></li>
+            <li><a href="flanges.html">Flanges</a></li>
+            <li><a href="tubes.html">Tubes</a></li>
+            <li><a href="dairy-tubes.html">Dairy tubes &amp; fittings</a></li>
+          </ul>
+        </li>
+        <li class="nav-item-dropdown">
+          <a href="index.html#resources" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+            Resources <span class="nav-caret" aria-hidden="true">▾</span>
+          </a>
+          <ul class="nav-dropdown-menu">
+            <li><a href="company-profile.html">Company profile</a></li>
+            <li><a href="lor.html">LOR</a></li>
+            <li><a href="mill-test-report.html">Mill Test Report</a></li>
+            <li><a href="services.html">Services</a></li>
+          </ul>
+        </li>
+        <li class="nav-item-dropdown">
+          <a href="index.html#track-record" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+            Updates <span class="nav-caret" aria-hidden="true">▾</span>
+          </a>
+          <ul class="nav-dropdown-menu">
+            <li><a href="linkedin-updates.html">LinkedIn Updates</a></li>
+            <li><a href="engineering-articles.html">Engineering Articles</a></li>
+            <li><a href="project-gallery.html">Project Gallery</a></li>
+          </ul>
+        </li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <span class="nav-divider" aria-hidden="true"></span>
+
+    <div class="nav-actions">
+      <a href="index.html#contact" class="btn btn-primary btn-sm">Request a quote <span class="arrow">&rarr;</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+<div id="top"></div>
+
+<section class="block" id="product-top">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow"><a href="index.html#products" style="color:inherit;">Products</a> / Valves</p>
+      <h2 class="heading">Valves</h2>
+      <p class="sub-copy">Stainless &amp; carbon steel ball, gate, globe and check valves, certified stock.</p>
+    </div>
+
+
+    <!-- ============================================================ -->
+    <!-- PRODUCT CONTENT — VALVES -->
+    <!-- ============================================================ -->
+
+    <div class="wrap" style="padding:0;max-width:100%;">
+
+      <!-- Spec summary -->
+      <div style="background:var(--color-bone);border:1px solid #ececec;border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:36px;">
+        <h3 style="margin:0 0 18px;font-size:18px;font-weight:500;">Valves — Specification</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;">
+          <div class="spec-item"><span class="spec-label">Stainless Steel</span><span class="spec-value">ASTM A351 CF8 &amp; CF8M</span></div>
+          <div class="spec-item"><span class="spec-label">Carbon Steel</span><span class="spec-value">ASTM A216 WCB, A105, A350 LF3 &amp; LF2</span></div>
+          <div class="spec-item"><span class="spec-label">Size</span><span class="spec-value">½" NB to 12" NB</span></div>
+          <div class="spec-item"><span class="spec-label">Dimension Standard</span><span class="spec-value">ANSI B16.5, DIN, JIS</span></div>
+          <div class="spec-item"><span class="spec-label">End Connection</span><span class="spec-value">Flanged, BSPT, NPT or Socket-weld</span></div>
+          <div class="spec-item"><span class="spec-label">Class / Rating</span><span class="spec-value">150# to 3000#, PN10 – PN25, 5K, 10K &amp; more</span></div>
+        </div>
+      </div>
+
+
+      <!-- Valve type gallery -->
+      <div style="margin-bottom:36px;">
+        <h3 style="font-size:20px;font-weight:500;margin:0 0 4px;">Valve Types — At a Glance</h3>
+        <div class="valve-grid">
+          <div class="valve-tile"><img src="valves/S.S-BALL-VALVE-3-PC-BODY-150x150.jpg" alt="Ball Valve — 2PC Body" /><span>Ball Valve — 2PC Body</span></div>
+          <div class="valve-tile"><img src="valves/S.S-BALL-VALVE-3-PC-BODY-150x150.jpg" alt="Ball Valve — 3PC Body" /><span>Ball Valve — 3PC Body</span></div>
+          <div class="valve-tile"><img src="valves/S.S-BALL-VALVE-FLANGED-TYPE-150x150.jpg" alt="Ball Valve — Flanged Type" /><span>Ball Valve — Flanged Type</span></div>
+          <div class="valve-tile"><img src="valves/S.S-GATE-VALVE-FLANGE-TYPE-150x150.jpg" /><span>Gate Valve — Flanged</span></div>
+          <div class="valve-tile"><img src="valves/S.S-GLOBE-VALVE-FLANGE-TYPE-150x150.jpg" alt="Globe Valve — Flanged" /><span>Globe Valve — Flanged</span></div>
+          <div class="valve-tile"><img src="valves/S.S-CHECK-VALVE-FLANGE-TYPE-150x150.jpg" alt="Check Valve — Flanged" /><span>Check Valve — Flanged</span></div>
+          <div class="valve-tile"><img src="valves/S.S-STRAINER-150x150.jpg" alt="Threaded Strainer (Y-Strainer)" /><span>Threaded Strainer (Y-Strainer)</span></div>
+          <div class="valve-tile"><img src="valves/needle valve.jpg" alt="Needle Valve" /><span>Needle Valve</span></div>
+          <div class="valve-tile"><img src="valves/S.S-DAIRY-BUTTERFLUY-VALVE-150x150.jpg" alt="Dairy Butterfly Valve" /><span>Dairy Butterfly Valve</span></div>
+          <div class="valve-tile"><img src="valves/S.S-DAIRY-CHECK-VALVE-150x150.jpg" alt="Dairy Check Valve" /><span>Dairy Check Valve</span></div>
+          <div class="valve-tile"><img src="valves/S.S-DAIRY-DIAPHRAGM-150x150.jpg" alt="Dairy Diaphragm Valve" /><span>Dairy Diaphragm Valve</span></div>
+        </div>
+      </div>
+
+      <!-- Overview -->
+      <div style="margin-bottom:32px;">
+        <h3 style="font-size:20px;font-weight:500;margin:0 0 14px;">Stainless &amp; Carbon Steel Valve Systems</h3>
+        <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0 0 16px;">Valves are essential components within a piping system, regulating the flow, pressure and direction of fluids, gases and fumes to keep an installation performing as designed. Stainless steel valve bodies, cast in grades such as CF8 and CF8M, offer excellent corrosion resistance for corrosive or sanitary service, while carbon steel valves — cast or forged to A216 WCB and A105 — remain a durable, cost-effective choice for general industrial applications. Both are stocked across a range of end connections, pressure classes and dimension standards to suit line requirements.</p>
+        <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0 0 16px;">The stock range spans ball, gate, globe, check and needle valves, butterfly valves and Y-strainers for isolation, regulation, backflow prevention and line protection, alongside sanitary dairy butterfly, check and diaphragm valves for hygienic food, beverage and pharmaceutical process lines. Sizes run from ½" NB to 12" NB, manufactured to ANSI B16.5, DIN and JIS standards, with flanged, BSPT, NPT or socket-weld ends across classes from 150# up to 3000# and PN10 to PN25.</p>
+      </div>
+
+      <!-- Valve type breakdown -->
+      <div style="margin-bottom:36px;">
+        <h3 style="font-size:20px;font-weight:500;margin:0 0 18px;">Valve Types</h3>
+        <div style="display:flex;flex-direction:column;gap:20px;">
+
+          <div class="type-card">
+            <span class="type-badge">1</span>
+            <h4 style="margin:0 0 6px;font-size:17px;font-weight:600;">Ball Valve — 2PC Body</h4>
+            <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0;">Two-piece body ball valves offer a compact, cost-effective design for on/off flow control, with a quarter-turn bore that gives full, unobstructed flow when open and a tight shut-off when closed. Supplied in stainless and carbon steel, sizes 1/2" to 4", in grades 304 &amp; 316, with BSPT, NPT or socket-weld end connections.</p>
+            <span class="spec-pill">Spec: Size 1/2"–4" · Grade 304 &amp; 316 · Type BSPT, NPT, SW</span>
+          </div>
+
+          <div class="type-card">
+            <span class="type-badge">2</span>
+            <h4 style="margin:0 0 6px;font-size:17px;font-weight:600;">Ball Valve — 3PC Body</h4>
+            <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0;">Three-piece body construction allows the centre section, seats and ball to be removed and serviced without taking the valve out of the line, making it well suited to applications requiring frequent inspection or maintenance. Available in stainless and carbon steel, grades CF8 &amp; CF8M, sizes 1/2" to 20", with BSPT, NPT, socket-weld or butt-welded ends.</p>
+            <span class="spec-pill">Spec: Size 1/2"–20" · Grade CF8 &amp; CF8M · Type BSPT, NPT, SW, Butt-welded</span>
+          </div>
+
+          <div class="type-card">
+            <span class="type-badge">3</span>
+            <h4 style="margin:0 0 6px;font-size:17px;font-weight:600;">Ball Valve — Flanged Type</h4>
+            <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0;">Flanged ball valves provide a bolted, leak-tight connection suited to larger line sizes and higher-pressure duty across petrochemical and general process piping systems. Available in stainless and carbon steel, grades CF8 &amp; CF8M, sizes 1/2" to 20", classes PN-16, PN-40 &amp; 10K.</p>
+            <span class="spec-pill">Spec: Size 1/2"–20" · Grade CF8 &amp; CF8M · Class PN-16, PN-40, 10K</span>
+          </div>
+
+          <div class="type-card">
+            <span class="type-badge">4</span>
+            <h4 style="margin:0 0 6px;font-size:17px;font-weight:600;">Gate Valve — Flanged</h4>
+            <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0;">Gate valves give full, unobstructed flow when fully open, making them suited to on/off line isolation rather than throttling duty. Supplied in stainless steel, carbon steel, cast iron and forged steel, grades CF8, CF8M &amp; A-105, sizes ½" to 20", with flanged, BSPT, NPT or socket-weld end connections.</p>
+            <span class="spec-pill">Spec: Size ½"–20" · Grade CF8, CF8M, A-105 · Class 150#, 300#, 600#, 900#, PN-16, PN-40, 10K</span>
+          </div>
+
+          <div class="type-card">
+            <span class="type-badge">5</span>
+            <h4 style="margin:0 0 6px;font-size:17px;font-weight:600;">Globe Valve — Flanged</h4>
+            <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0;">Globe valves are built for throttling and flow regulation, using a linear-motion disc to give precise, repeatable control across a wide pressure and temperature range. Supplied in stainless steel, carbon steel, cast iron and forged steel, grades CF8, CF8M &amp; A-105, sizes ½" to 20", with flanged, BSPT, NPT or socket-weld end connections.</p>
+            <span class="spec-pill">Spec: Size ½"–20" · Grade CF8, CF8M, A-105 · Class 150#, 300#, 600#, 900#, PN-16, PN-40, 10K</span>
+          </div>
+
+          <div class="type-card">
+            <span class="type-badge">6</span>
+            <h4 style="margin:0 0 6px;font-size:17px;font-weight:600;">Check Valve — Flanged</h4>
+            <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0;">Check valves permit flow in a single direction only, protecting pumps and downstream equipment from backflow and reverse-flow damage. Supplied in stainless steel &amp; mild steel, grades CF8 &amp; CF8M, sizes ½" to 20", with flanged, BSPT, NPT or socket-weld end connections.</p>
+            <span class="spec-pill">Spec: Size ½"–20" · Grade CF8 &amp; CF8M · Class 150#, 300#, 600#, 900#, 1500#, 2500#, PN-10, PN-16, PN-40, 10K</span>
+          </div>
+
+          <div class="type-card">
+            <span class="type-badge">7</span>
+            <h4 style="margin:0 0 6px;font-size:17px;font-weight:600;">Threaded Strainer (Y-Strainer)</h4>
+            <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0;">Y-strainers filter debris and particulate matter from the process fluid, protecting downstream pumps, valves and meters from damage or blockage. Supplied in stainless steel, carbon steel &amp; cast iron, grades CF8 &amp; CF8M, sizes 1/2" to 20", with flanged, BSPT or NPT end connections.</p>
+            <span class="spec-pill">Spec: Size 1/2"–20" · Grade CF8 &amp; CF8M · Class 150#, 300#, 600#, 900#, PN-16, PN-40</span>
+          </div>
+
+          <div class="type-card">
+            <span class="type-badge">8</span>
+            <h4 style="margin:0 0 6px;font-size:17px;font-weight:600;">Needle Valve</h4>
+            <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0;">Needle valves use a tapered, needle-shaped plunger to give fine, precise flow regulation, making them well suited to low-flow and instrumentation lines where accurate throttling is required.</p>
+            <span class="spec-pill">Spec: Precision flow regulation for instrumentation &amp; low-flow lines</span>
+          </div>
+
+          <div class="type-card">
+            <span class="type-badge">9</span>
+            <h4 style="margin:0 0 6px;font-size:17px;font-weight:600;">Dairy Butterfly Valve</h4>
+            <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0;">Sanitary butterfly valves for hygienic process lines, offering quick quarter-turn operation and a crevice-free bore that's easy to clean, sized for food, beverage and pharmaceutical service. Supplied in stainless steel &amp; mild steel, grade 316L, sizes 19mm to 101mm.</p>
+            <span class="spec-pill">Spec: Size 19mm–101mm · Grade 316L</span>
+          </div>
+
+          <div class="type-card">
+            <span class="type-badge">10</span>
+            <h4 style="margin:0 0 6px;font-size:17px;font-weight:600;">Dairy Check Valve</h4>
+            <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0;">Sanitary check valves prevent backflow in hygienic process lines, designed for quick dismantling and cleaning across dairy, food and beverage processing. Supplied in stainless steel &amp; mild steel, grade 316L, sizes 19mm to 101mm.</p>
+            <span class="spec-pill">Spec: Size 19mm–101mm · Grade 316L</span>
+          </div>
+
+          <div class="type-card">
+            <span class="type-badge">11</span>
+            <h4 style="margin:0 0 6px;font-size:17px;font-weight:600;">Dairy Diaphragm Valve</h4>
+            <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0;">Diaphragm valves give smooth, crevice-free flow control ideal for sanitary applications where product purity and easy sterilisation are essential. Supplied in stainless steel &amp; mild steel, grade 316L, sizes 19mm to 101mm.</p>
+            <span class="spec-pill">Spec: Size 19mm–101mm · Grade 316L</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Stock range -->
+      <div style="max-width:85ch;margin-bottom:40px;">
+        <p style="color:var(--color-ink);font-weight:600;line-height:1.75;margin:0;">The range of valves stocked by Murtaza Corporation includes:</p>
+        <ul class="stock-list">
+          <li>1PC, 2PC and 3PC ball valves, needle, gate, globe, check and butterfly valves, and Y-strainers for a wide range of piping systems.</li>
+          <li>Sanitary dairy butterfly, check and diaphragm valves for hygienic food, beverage and pharmaceutical process lines.</li>
+          <li>Fluid, gas and fume transfer applications in petrochemical, industrial and process piping requiring corrosion resistance and precise control.</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- END PRODUCT CONTENT                                           -->
+    <!-- ============================================================ -->
+    <style>
+      #product-top .card::after {
+        display: none !important;
+      }
+    </style>
+    <div class="view-all reveal">
+      <a href="index.html#products" class="btn btn-ghost">
+        Back to all products
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="Logos/company.png" alt="Murtaza Corporation" class="footer-logo-img" />
+    </div>
+
+    <div class="footer-col">
+      <h4>Address</h4>
+      <p>516/517, Sector 6-A, Mehran Town, Korangi Industrial Area, Karachi - 74900, Pakistan</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contacts</h4>
+      <p>Email: <a href="mailto:sales@murtazacorporation.com.pk">sales@murtazacorporation.com.pk</a></p>
+      <p>Phone: <a href="tel:+922135141451">+92 (21) 35141451</a></p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Links</h4>
+      <ul class="footer-link-list">
+        <li><a href="http://www.wermac.org/" target="_blank" rel="noopener">Wermac</a></li>
+        <li><a href="http://www.huikepipe.com/en/" target="_blank" rel="noopener">Hebei Huike</a></li>
+        <li><a href="http://www.yuandavalves.com/brand.html" target="_blank" rel="noopener">Yuanda Valve</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">© 2026 Murtaza Corporation. All rights reserved.</div>
+</footer>
+
+<script src="script.js" defer></script>
+<!-- Floating Calculator Button -->
+<a href="#"
+   class="calculator-widget"
+   id="calculatorWidgetBtn"
+   aria-label="Open pipe calculator">
+
+    <span class="whatsapp-text">
+        Calculator
+    </span>
+
+    <div class="calculator-icon">
+        <i class="fa-solid fa-calculator"></i>
+    </div>
+
+</a>
+<!-- Floating WhatsApp Button -->
+<a href="https://wa.me/923343791852"
+   class="whatsapp-widget"
+   target="_blank"
+   aria-label="Chat on WhatsApp">
+
+    <span class="whatsapp-text">
+        Chat with us
+    </span>
+
+    <div class="whatsapp-icon">
+        <i class="fab fa-whatsapp"></i>
+    </div>
+
+</a>
+</body>
+</html>
