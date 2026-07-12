@@ -21,13 +21,11 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 <!-- ============================================================ -->
 <style>
   #articles-grid .card { display:flex; flex-direction:column; }
-  #articles-grid .card-media { position:relative; overflow:hidden; }
-  #articles-grid .card-media img { display:block; width:100%; height:auto; }
   #articles-grid .card-badge {
-    position:absolute; top:12px; left:12px;
-    background:#ffffff; color:#111111; font-size:11px; font-weight:600;
+    display:inline-block;
+    background:#111111; color:#ffffff; font-size:11px; font-weight:600;
     padding:4px 10px; border-radius:20px; letter-spacing:.02em;
-    box-shadow:0 1px 3px rgba(0,0,0,.15);
+    margin:0 0 10px;
   }
   .card-meta, .article-meta {
     display:flex; align-items:center; gap:8px; flex-wrap:wrap;
@@ -123,13 +121,10 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     <!-- New articles are added weekly. Newest cards go first in the   -->
     <!-- grid below; full write-ups go in the same order further down. -->
     <!--                                                                -->
-    <!-- CONSISTENT CARD TEMPLATE (use for every new card):             -->
+    <!-- CONSISTENT CARD TEMPLATE (use for every new card, no images):  -->
     <!-- <a class="card" href="#article-SLUG">                         -->
-    <!--   <div class="card-media">                                    -->
-    <!--     <img src="..." alt="..." />                                -->
-    <!--     <span class="card-badge">Category</span>                  -->
-    <!--   </div>                                                       -->
     <!--   <div class="card-body">                                      -->
+    <!--     <span class="card-badge">Category</span>                  -->
     <!--     <p class="card-meta"><span>Date</span><span class="dot">•</span><span>N min read</span></p> -->
     <!--     <h3>Title</h3>                                             -->
     <!--     <p class="card-summary">One or two sentence summary.</p>   -->
@@ -146,11 +141,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
       <!-- AUTO-CARDS:START (script inserts new card as first child here) -->
 
       <a class="card" href="#article-phmsa-rulemakings">
-        <div class="card-media">
-          <img src="https://images.unsplash.com/photo-1581093458791-9f3113e5cbb2?q=80&w=800&auto=format&fit=crop" alt="Pipeline safety regulation" />
-          <span class="card-badge">Regulations</span>
-        </div>
         <div class="card-body">
+          <span class="card-badge">Regulations</span>
           <p class="card-meta"><span>Apr 24, 2026</span><span class="dot">&middot;</span><span>9 min read</span></p>
           <h3>PHMSA Issues Multiple Rulemakings to Update Federal Pipeline Safety Regulations</h3>
           <p class="card-summary">PHMSA's 40 regulatory updates ease welding limitations, extend valve inspection intervals, and allow remote right-of-way monitoring — most rules effective Aug 3, 2026.</p>
@@ -159,11 +151,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
       </a>
 
       <a class="card" href="#article-forged-solutions-custom-alloy">
-        <div class="card-media">
-          <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=800&auto=format&fit=crop" alt="Forging and fittings manufacturing" />
-          <span class="card-badge">Industry News</span>
-        </div>
         <div class="card-body">
+          <span class="card-badge">Industry News</span>
           <p class="card-meta"><span>Jun 2026</span><span class="dot">&middot;</span><span>4 min read</span></p>
           <h3>J.F. Lehman's Forged Solutions Acquires Custom Alloy</h3>
           <p class="card-summary">A Navy-qualified forging and fitting manufacturer joins Forged Solutions Group, strengthening the U.S. nuclear submarine supply chain.</p>
@@ -172,11 +161,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
       </a>
 
       <a class="card" href="#article-304-vs-316">
-        <div class="card-media">
-          <img src="https://images.unsplash.com/photo-1581093458791-9f3113e5cbb2?q=80&w=800&auto=format&fit=crop" alt="Stainless steel pipe stock" />
-          <span class="card-badge">Materials</span>
-        </div>
         <div class="card-body">
+          <span class="card-badge">Materials</span>
           <p class="card-meta"><span>Jul 2026</span><span class="dot">&middot;</span><span>6 min read</span></p>
           <h3>304 vs 316 Stainless Steel: Choosing the Right Grade</h3>
           <p class="card-summary">Both grades look identical on the shelf, but the wrong choice can mean corrosion failure within months. Here's how to pick correctly.</p>
@@ -185,11 +171,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
       </a>
 
       <a class="card" href="#article-pipe-schedules">
-        <div class="card-media">
-          <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=800&auto=format&fit=crop" alt="Pipe wall thickness and schedule chart" />
-          <span class="card-badge">Piping Design</span>
-        </div>
         <div class="card-body">
+          <span class="card-badge">Piping Design</span>
           <p class="card-meta"><span>Jul 2026</span><span class="dot">&middot;</span><span>5 min read</span></p>
           <h3>Pipe Schedules Explained: Picking the Right Wall Thickness</h3>
           <p class="card-summary">SCH10, SCH40, SCH80 — what the schedule number actually means, and how pressure, size and corrosion allowance decide it.</p>
@@ -198,11 +181,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
       </a>
 
       <a class="card" href="#article-mill-test-certificates">
-        <div class="card-media">
-          <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=800&auto=format&fit=crop" alt="Mill test certificate document review" />
-          <span class="card-badge">Quality &amp; Traceability</span>
-        </div>
         <div class="card-body">
+          <span class="card-badge">Quality &amp; Traceability</span>
           <p class="card-meta"><span>Jul 2026</span><span class="dot">&middot;</span><span>5 min read</span></p>
           <h3>Reading a Mill Test Certificate: 3.1 vs 3.2 Explained</h3>
           <p class="card-summary">EN 10204 gets quoted on every PO, but few buyers know what it actually guarantees. A plain-English breakdown.</p>
