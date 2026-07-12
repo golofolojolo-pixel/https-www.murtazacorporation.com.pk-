@@ -1,0 +1,52 @@
+name: Monthly Engineering Articles Update
+
+"on":
+  schedule:
+    # 06:00 UTC on the 1st of every month
+    - cron: '0 6 1 * *'
+  workflow_dispatch: {}  # allows manually triggering a run from the Actions tab
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-articles:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Discover, summarize, and insert new articles
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          ARTICLES_PER_RUN: '2'
+        run: python scripts/fetch_articles.py
+
+      - name: Open pull request for review
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: add curated engineering articles"
+          branch: auto/engineering-articles-update
+          delete-branch: true
+          title: "New curated engineering articles - review before merge"
+          body: |
+            This PR was generated automatically by the monthly article pipeline.
+
+            - Sources were found via Google Search grounding (real, live search results).
+            - Each summary was generated only from the actual fetched article text.
+            - Nothing is auto-published: please read each summary against its
+              source link for accuracy and tone before merging.
+            - Merging this PR is what makes the new cards go live.
+          labels: |
+            content
+            needs-review
