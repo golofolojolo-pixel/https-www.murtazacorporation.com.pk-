@@ -52,8 +52,8 @@ TRACKING_PATH = os.path.join(REPO_ROOT, "data", "published_articles.json")
 
 CARD_MARKER = "<!-- AUTO-CARDS:START (script inserts new card as first child here) -->"
 
-MODEL_DISCOVER = "gemini-2.5-flash"
-MODEL_SUMMARIZE = "gemini-2.5-flash"
+MODEL_DISCOVER = "gemini-flash-latest"
+MODEL_SUMMARIZE = "gemini-flash-latest"
 
 ARTICLES_PER_RUN = int(os.environ.get("ARTICLES_PER_RUN", "2"))
 
