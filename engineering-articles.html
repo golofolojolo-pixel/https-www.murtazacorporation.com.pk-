@@ -13,6 +13,36 @@
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+<!-- ============================================================ -->
+<!-- Unified article card / summary styling.                       -->
+<!-- Move this block into style.css whenever convenient — it's      -->
+<!-- inline here so the new markup renders correctly immediately.   -->
+<!-- ============================================================ -->
+<style>
+  #articles-grid .card { display:flex; flex-direction:column; }
+  #articles-grid .card-media { position:relative; overflow:hidden; }
+  #articles-grid .card-media img { display:block; width:100%; height:auto; }
+  #articles-grid .card-badge {
+    position:absolute; top:12px; left:12px;
+    background:#ffffff; color:#111111; font-size:11px; font-weight:600;
+    padding:4px 10px; border-radius:20px; letter-spacing:.02em;
+    box-shadow:0 1px 3px rgba(0,0,0,.15);
+  }
+  .card-meta, .article-meta {
+    display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+    font-size:13px; color:#8a8a8a; margin:0 0 8px;
+  }
+  .card-meta .dot, .article-meta .dot { opacity:.6; }
+  .article-badge {
+    background:#111111; color:#ffffff; font-size:11px; font-weight:600;
+    padding:3px 10px; border-radius:20px; margin-right:2px;
+  }
+  .card-summary { margin:0 0 8px; }
+  .article-section { margin-top:56px; padding-top:24px; border-top:1px solid #ececec; scroll-margin-top:110px; }
+  .article-section h3 { font-size:26px; font-weight:600; margin:6px 0 20px; }
+  .article-section .btn { margin-top:8px; margin-right:8px; }
+</style>
 </head>
 <body>
 
@@ -92,54 +122,91 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     <!-- PAGE CONTENT — ENGINEERING ARTICLES                           -->
     <!-- New articles are added weekly. Newest cards go first in the   -->
     <!-- grid below; full write-ups go in the same order further down. -->
+    <!--                                                                -->
+    <!-- CONSISTENT CARD TEMPLATE (use for every new card):             -->
+    <!-- <a class="card" href="#article-SLUG">                         -->
+    <!--   <div class="card-media">                                    -->
+    <!--     <img src="..." alt="..." />                                -->
+    <!--     <span class="card-badge">Category</span>                  -->
+    <!--   </div>                                                       -->
+    <!--   <div class="card-body">                                      -->
+    <!--     <p class="card-meta"><span>Date</span><span class="dot">•</span><span>N min read</span></p> -->
+    <!--     <h3>Title</h3>                                             -->
+    <!--     <p class="card-summary">One or two sentence summary.</p>   -->
+    <!--     <p class="hint">Read more &rarr;</p>                       -->
+    <!--   </div>                                                       -->
+    <!-- </a>                                                            -->
+    <!-- Every card — curated or authored — links to an in-page         -->
+    <!-- #article-SLUG summary section, never straight to an external   -->
+    <!-- site. External sources get a "Read full article on X ↗" button -->
+    <!-- inside their summary section instead.                          -->
     <!-- ============================================================ -->
 
     <div class="grid-3 reveal" id="articles-grid" style="scroll-margin-top:110px;">
       <!-- AUTO-CARDS:START (script inserts new card as first child here) -->
-      <a class="card card-curated" href="https://natlawreview.com/article/phmsa-issues-multiple-rulemakings-update-clarify-or-amend-federal-pipeline-safety" target="_blank" rel="noopener noreferrer">
+
+      <a class="card" href="#article-phmsa-rulemakings">
+        <div class="card-media">
+          <img src="https://images.unsplash.com/photo-1581093458791-9f3113e5cbb2?q=80&w=800&auto=format&fit=crop" alt="Pipeline safety regulation" />
+          <span class="card-badge">Regulations</span>
+        </div>
         <div class="card-body">
-          <p class="num">natlawreview.com &middot; curated &middot; 9 min read</p>
-          <h3>PHMSA Issues Multiple Rulemakings to Update, Clarify, or Amend the Federal Pipeline Safety Regulations and to Incorporate Updated Industry Standards - The National Law Review</h3>
-          <p>On April 24, 2026, the Pipeline and Hazardous Materials Safety Administration issued 40 regulatory updates amending parts 191, 192, and 195 of the federal pipeline safety regulations. These rulemakings affect operators of gas, hazardous liquid, carbon dioxide, underground natural gas storage, and liquefied natural gas facilities. Public comments are due by June 23, 2026, with most final rules taking effect on August 3, 2026. Proposed changes include extending annual report filing deadlines and raising the monetary thresholds that trigger construction notifications. The proposals also eliminate outdated welding limitations and extend mainline valve inspection intervals for hazardous liquid pipelines to a maximum of 15 months. Operators would be permitted to use remote sensing technologies for right-of-way patrols and to remotely monitor rectifiers. Additionally, the proposals raise the property damage threshold for reporting releases and eliminate redundant material verification during pressure reconfirmations. The operational timeframe for newly installed rupture-mitigation valves would increase from 14 to 90 days. Direct final rules clarify hazardous liquid pipeline integrity management, allow electronic response plan storage, and incorporate 15 updated industry standards. Any direct final rules receiving adverse comments by the deadline will be withdrawn and republished as notices of proposed rulemakings.</p>
-          <p class="hint">Read full article <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></p>
+          <p class="card-meta"><span>Apr 24, 2026</span><span class="dot">&middot;</span><span>9 min read</span></p>
+          <h3>PHMSA Issues Multiple Rulemakings to Update Federal Pipeline Safety Regulations</h3>
+          <p class="card-summary">PHMSA's 40 regulatory updates ease welding limitations, extend valve inspection intervals, and allow remote right-of-way monitoring — most rules effective Aug 3, 2026.</p>
+          <p class="hint">Read more &rarr;</p>
         </div>
       </a>
-      <a class="card card-curated" href="https://peprofessional.com/2026/06/j-f-lehmans-forged-solutions-acquires-custom-alloy/" target="_blank" rel="noopener noreferrer">
+
+      <a class="card" href="#article-forged-solutions-custom-alloy">
+        <div class="card-media">
+          <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=800&auto=format&fit=crop" alt="Forging and fittings manufacturing" />
+          <span class="card-badge">Industry News</span>
+        </div>
         <div class="card-body">
-          <p class="num">peprofessional.com &middot; curated &middot; 4 min read</p>
-          <h3>J.F. Lehman’s Forged Solutions Acquires Custom Alloy - Private Equity Professional</h3>
-          <p>J.F. Lehman &amp; Company portfolio company Forged Solutions Group has acquired Custom Alloy Corporation. This acquisition realigns Custom Alloy within the J.F. Lehman portfolio following its 2023 acquisition by Trident Maritime Systems during a bankruptcy process. Forged Solutions Group specializes in manufacturing high-specification forged metal components, including rolled ring, closed-die, open-die, and extrusion forgings, for aerospace, defense, and space applications. Custom Alloy is a vertically integrated manufacturer producing open- and closed-die forgings along with seamless and welded pipe fittings for high-pressure, corrosive, and nuclear environments. Custom Alloy holds Level 1 qualifications from the U.S. Navy as both a forging and fitting manufacturer, making it one of only three national companies to hold both designations. The company serves as the sole-source manufacturer for Columbia-class Main Seawater Fittings and a dual-source supplier for Virginia-class Main Seawater Fittings. The acquisition provides Forged Solutions Group with critical exposure to the U.S. nuclear navy supply chain. This transaction positions the combined entity to address bottlenecks in the shipbuilding supply chain and meet demand driven by U.S. Navy submarine programs and the AUKUS partnership. Custom Alloy operates four manufacturing facilities totaling 450,000 square feet near Allentown in High Bridge, New Jersey.</p>
-          <p class="hint">Read full article <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></p>
+          <p class="card-meta"><span>Jun 2026</span><span class="dot">&middot;</span><span>4 min read</span></p>
+          <h3>J.F. Lehman's Forged Solutions Acquires Custom Alloy</h3>
+          <p class="card-summary">A Navy-qualified forging and fitting manufacturer joins Forged Solutions Group, strengthening the U.S. nuclear submarine supply chain.</p>
+          <p class="hint">Read more &rarr;</p>
         </div>
       </a>
 
       <a class="card" href="#article-304-vs-316">
-        <img src="https://images.unsplash.com/photo-1581093458791-9f3113e5cbb2?q=80&w=800&auto=format&fit=crop" alt="Stainless steel pipe stock" />
+        <div class="card-media">
+          <img src="https://images.unsplash.com/photo-1581093458791-9f3113e5cbb2?q=80&w=800&auto=format&fit=crop" alt="Stainless steel pipe stock" />
+          <span class="card-badge">Materials</span>
+        </div>
         <div class="card-body">
-          <p class="num">01.</p>
+          <p class="card-meta"><span>Jul 2026</span><span class="dot">&middot;</span><span>6 min read</span></p>
           <h3>304 vs 316 Stainless Steel: Choosing the Right Grade</h3>
-          <p>Both grades look identical on the shelf, but the wrong choice can mean corrosion failure within months. Here's how to pick correctly.</p>
-          <p class="hint">Read article &rarr;</p>
+          <p class="card-summary">Both grades look identical on the shelf, but the wrong choice can mean corrosion failure within months. Here's how to pick correctly.</p>
+          <p class="hint">Read more &rarr;</p>
         </div>
       </a>
 
       <a class="card" href="#article-pipe-schedules">
-        <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=800&auto=format&fit=crop" alt="Pipe wall thickness and schedule chart" />
+        <div class="card-media">
+          <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=800&auto=format&fit=crop" alt="Pipe wall thickness and schedule chart" />
+          <span class="card-badge">Piping Design</span>
+        </div>
         <div class="card-body">
-          <p class="num">02.</p>
+          <p class="card-meta"><span>Jul 2026</span><span class="dot">&middot;</span><span>5 min read</span></p>
           <h3>Pipe Schedules Explained: Picking the Right Wall Thickness</h3>
-          <p>SCH10, SCH40, SCH80 — what the schedule number actually means, and how pressure, size and corrosion allowance decide it.</p>
-          <p class="hint">Read article &rarr;</p>
+          <p class="card-summary">SCH10, SCH40, SCH80 — what the schedule number actually means, and how pressure, size and corrosion allowance decide it.</p>
+          <p class="hint">Read more &rarr;</p>
         </div>
       </a>
 
       <a class="card" href="#article-mill-test-certificates">
-        <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=800&auto=format&fit=crop" alt="Mill test certificate document review" />
+        <div class="card-media">
+          <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=800&auto=format&fit=crop" alt="Mill test certificate document review" />
+          <span class="card-badge">Quality &amp; Traceability</span>
+        </div>
         <div class="card-body">
-          <p class="num">03.</p>
+          <p class="card-meta"><span>Jul 2026</span><span class="dot">&middot;</span><span>5 min read</span></p>
           <h3>Reading a Mill Test Certificate: 3.1 vs 3.2 Explained</h3>
-          <p>EN 10204 gets quoted on every PO, but few buyers know what it actually guarantees. A plain-English breakdown.</p>
-          <p class="hint">Read article &rarr;</p>
+          <p class="card-summary">EN 10204 gets quoted on every PO, but few buyers know what it actually guarantees. A plain-English breakdown.</p>
+          <p class="hint">Read more &rarr;</p>
         </div>
       </a>
 
@@ -147,10 +214,46 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     </div>
 
     <!-- AUTO-ARTICLES:START (script inserts new full article as first child here) -->
-    <!-- ARTICLE 1 -->
-    <div id="article-304-vs-316" style="margin-top:64px;padding-top:24px;border-top:1px solid #ececec;scroll-margin-top:110px;">
-      <p class="eyebrow" style="margin:0 0 8px;">Article 01 &middot; Materials &middot; 6 min read</p>
-      <h3 style="font-size:26px;font-weight:600;margin:0 0 20px;">304 vs 316 Stainless Steel: Choosing the Right Grade</h3>
+
+    <!-- ARTICLE — curated: PHMSA rulemakings -->
+    <div id="article-phmsa-rulemakings" class="article-section">
+      <p class="article-meta">
+        <span class="article-badge">Regulations</span>
+        <span>Apr 24, 2026</span><span class="dot">&middot;</span><span>9 min read</span>
+      </p>
+      <h3>PHMSA Issues Multiple Rulemakings to Update the Federal Pipeline Safety Regulations</h3>
+
+      <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0 0 16px;">On April 24, 2026, the Pipeline and Hazardous Materials Safety Administration issued 40 regulatory updates amending parts 191, 192, and 195 of the federal pipeline safety regulations. These rulemakings affect operators of gas, hazardous liquid, carbon dioxide, underground natural gas storage, and liquefied natural gas facilities. Public comments are due by June 23, 2026, with most final rules taking effect on August 3, 2026.</p>
+
+      <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0 0 16px;">Proposed changes include extending annual report filing deadlines, raising the monetary thresholds that trigger construction notifications, eliminating outdated welding limitations, and extending mainline valve inspection intervals for hazardous liquid pipelines to a maximum of 15 months. Operators would be permitted to use remote sensing technologies for right-of-way patrols and to remotely monitor rectifiers. The proposals also raise the property damage threshold for reporting releases, eliminate redundant material verification during pressure reconfirmations, and increase the operational timeframe for newly installed rupture-mitigation valves from 14 to 90 days. Separate direct final rules clarify hazardous liquid pipeline integrity management, allow electronic response plan storage, and incorporate 15 updated industry standards; any direct final rule receiving adverse comment by the deadline will be withdrawn and republished as a proposed rulemaking.</p>
+
+      <a href="https://natlawreview.com/article/phmsa-issues-multiple-rulemakings-update-clarify-or-amend-federal-pipeline-safety" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">Read full article on natlawreview.com <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+      <a href="#articles-grid" class="btn btn-ghost btn-sm">&uarr; Back to articles</a>
+    </div>
+
+    <!-- ARTICLE — curated: Forged Solutions / Custom Alloy -->
+    <div id="article-forged-solutions-custom-alloy" class="article-section">
+      <p class="article-meta">
+        <span class="article-badge">Industry News</span>
+        <span>Jun 2026</span><span class="dot">&middot;</span><span>4 min read</span>
+      </p>
+      <h3>J.F. Lehman's Forged Solutions Acquires Custom Alloy</h3>
+
+      <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0 0 16px;">J.F. Lehman &amp; Company portfolio company Forged Solutions Group has acquired Custom Alloy Corporation, realigning it within the J.F. Lehman portfolio following its 2023 acquisition by Trident Maritime Systems during a bankruptcy process. Forged Solutions Group specializes in high-specification forged metal components — rolled ring, closed-die, open-die, and extrusion forgings — for aerospace, defense, and space applications.</p>
+
+      <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0 0 16px;">Custom Alloy is a vertically integrated manufacturer producing open- and closed-die forgings along with seamless and welded pipe fittings for high-pressure, corrosive, and nuclear environments. It holds Level 1 qualifications from the U.S. Navy as both a forging and fitting manufacturer — one of only three national companies with both designations — and serves as sole-source manufacturer for Columbia-class Main Seawater Fittings and a dual-source supplier for Virginia-class Main Seawater Fittings. The acquisition gives Forged Solutions Group critical exposure to the U.S. nuclear navy supply chain, positioning the combined entity to address shipbuilding supply chain bottlenecks tied to Navy submarine programs and the AUKUS partnership. Custom Alloy operates four manufacturing facilities totaling 450,000 square feet near Allentown in High Bridge, New Jersey.</p>
+
+      <a href="https://peprofessional.com/2026/06/j-f-lehmans-forged-solutions-acquires-custom-alloy/" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">Read full article on peprofessional.com <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+      <a href="#articles-grid" class="btn btn-ghost btn-sm">&uarr; Back to articles</a>
+    </div>
+
+    <!-- ARTICLE — authored: 304 vs 316 -->
+    <div id="article-304-vs-316" class="article-section">
+      <p class="article-meta">
+        <span class="article-badge">Materials</span>
+        <span>Jul 2026</span><span class="dot">&middot;</span><span>6 min read</span>
+      </p>
+      <h3>304 vs 316 Stainless Steel: Choosing the Right Grade</h3>
 
       <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0 0 16px;">304 and 316 are the two grades that come up in almost every piping enquiry, and it's easy to see why they get confused — both are austenitic, both are non-magnetic in the annealed condition, and both machine, weld and polish in much the same way. The difference that matters is molybdenum: 316 contains 2–3% Mo, which 304 does not, and that single alloying addition changes where each grade belongs in a plant.</p>
 
@@ -173,10 +276,13 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
       <a href="#articles-grid" class="btn btn-ghost btn-sm" style="margin-top:24px;">&uarr; Back to articles</a>
     </div>
 
-    <!-- ARTICLE 2 -->
-    <div id="article-pipe-schedules" style="margin-top:56px;padding-top:24px;border-top:1px solid #ececec;scroll-margin-top:110px;">
-      <p class="eyebrow" style="margin:0 0 8px;">Article 02 &middot; Piping Design &middot; 5 min read</p>
-      <h3 style="font-size:26px;font-weight:600;margin:0 0 20px;">Pipe Schedules Explained: Picking the Right Wall Thickness</h3>
+    <!-- ARTICLE — authored: pipe schedules -->
+    <div id="article-pipe-schedules" class="article-section">
+      <p class="article-meta">
+        <span class="article-badge">Piping Design</span>
+        <span>Jul 2026</span><span class="dot">&middot;</span><span>5 min read</span>
+      </p>
+      <h3>Pipe Schedules Explained: Picking the Right Wall Thickness</h3>
 
       <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0 0 16px;">The "schedule" number stamped on a pipe spec — SCH10, SCH40, SCH80, SCH160 — is simply a standardized way of expressing wall thickness relative to outside diameter, as set out in ASME B36.19 (stainless) and B36.10 (carbon steel). A higher schedule number means a thicker wall for the same nominal pipe size (NPS/DN), and therefore a smaller internal bore.</p>
 
@@ -198,10 +304,13 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
       <a href="#articles-grid" class="btn btn-ghost btn-sm" style="margin-top:24px;">&uarr; Back to articles</a>
     </div>
 
-    <!-- ARTICLE 3 -->
-    <div id="article-mill-test-certificates" style="margin-top:56px;padding-top:24px;border-top:1px solid #ececec;scroll-margin-top:110px;">
-      <p class="eyebrow" style="margin:0 0 8px;">Article 03 &middot; Quality &amp; Traceability &middot; 5 min read</p>
-      <h3 style="font-size:26px;font-weight:600;margin:0 0 20px;">Reading a Mill Test Certificate: 3.1 vs 3.2 Explained</h3>
+    <!-- ARTICLE — authored: mill test certificates -->
+    <div id="article-mill-test-certificates" class="article-section">
+      <p class="article-meta">
+        <span class="article-badge">Quality &amp; Traceability</span>
+        <span>Jul 2026</span><span class="dot">&middot;</span><span>5 min read</span>
+      </p>
+      <h3>Reading a Mill Test Certificate: 3.1 vs 3.2 Explained</h3>
 
       <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0 0 16px;">Almost every purchase order for pipe, fittings or valves asks for a "Mill Test Certificate" or "MTC," usually with a reference to EN 10204. In practice, the standard defines several inspection document types, and mixing them up can mean receiving less traceability than a project actually needs.</p>
 
