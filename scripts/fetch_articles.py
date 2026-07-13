@@ -1,379 +1,596 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Engineering Articles — Murtaza Corporation</title>
-<meta name="description" content="Practical articles on stainless steel materials, fabrication techniques, piping systems and corrosion prevention." />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+#!/usr/bin/env python3
+"""
+fetch_articles.py
 
-<!-- ============================================================ -->
-<!-- Unified article card / summary styling.                       -->
-<!-- Move this block into style.css whenever convenient — it's      -->
-<!-- inline here so the new markup renders correctly immediately.   -->
-<!-- ============================================================ -->
-<style>
-  #articles-grid .card { display:flex; flex-direction:column; }
-  #articles-grid .card-badge {
-    display:inline-block;
-    background:#111111; color:#ffffff; font-size:11px; font-weight:600;
-    padding:4px 10px; border-radius:20px; letter-spacing:.02em;
-    margin:0 0 10px;
-  }
-  .card-meta, .article-meta {
-    display:flex; align-items:center; gap:8px; flex-wrap:wrap;
-    font-size:13px; color:#8a8a8a; margin:0 0 8px;
-  }
-  .card-meta .dot, .article-meta .dot { opacity:.6; }
-  .article-badge {
-    background:#111111; color:#ffffff; font-size:11px; font-weight:600;
-    padding:3px 10px; border-radius:20px; margin-right:2px;
-  }
-  .card-summary { margin:0 0 8px; }
-  .article-section { margin-top:56px; padding-top:24px; border-top:1px solid #ececec; scroll-margin-top:110px; }
-  .article-section h3 { font-size:26px; font-weight:600; margin:6px 0 20px; }
-  .article-section .btn { margin-top:8px; margin-right:8px; }
-</style>
-</head>
-<body>
+Monthly pipeline for Murtaza Corporation's "Engineering Articles" page.
 
-<div class="header-hover-zone" id="headerHoverZone"></div>
-<header>
-  <div class="nav-inner">
+What it does, in order:
+  1. DISCOVER  - Search free, keyless RSS sources (Google News RSS search,
+                 plus any custom feeds you add) to find real, recently
+                 published articles about stainless steel (SS) and mild/
+                 carbon steel (MS) pipe specifically. No LLM call happens
+                 in this step, so it never requires a paid/billed Gemini
+                 project.
+  2. RESOLVE   - Decode Google News' obfuscated redirect links to the real
+                 publisher URL (via googlenewsdecoder).
+  3. FETCH     - Download the actual article page and extract its real text.
+  4. PRE-FILTER - Cheap, deterministic rejection of obviously-ineligible
+                 candidates (India-linked domains/titles, book-review
+                 titles) BEFORE spending an LLM call on them.
+  5. CLASSIFY+SUMMARIZE - Ask Gemini (free tier, plain text generation -
+                 no paid Google Search grounding tool) to judge whether the
+                 article is eligible under the strict rules below, assign
+                 it a short topic category, and summarize ONLY the fetched
+                 text into ~8-10 short lines. The model cannot invent facts
+                 that aren't in the source text, and articles that fail the
+                 eligibility check are skipped entirely.
+  6. DEDUPE    - Skip URLs already listed in data/published_articles.json.
+  7. INSERT    - Add a minimal card (heading, date, category, read time -
+                 no summary teaser) into engineering-articles.html, plus
+                 the matching full write-up section that the card links to.
+                 Cards never link straight to the external source; the full
+                 section does that instead, via a clearly labelled button.
 
-    <a href="index.html#top" class="logo" aria-label="Murtaza Corporation home">
-      <img src="Logos/company.png" alt="Murtaza Corporation" class="logo-img" />
-      <span class="logo-name">Murtaza Corporation</span>
-    </a>
+This script only edits files on disk. It does not commit, push, or open a
+pull request - that's handled by the GitHub Actions workflow, which uses
+peter-evans/create-pull-request so a human always reviews before anything
+merges.
 
-    <span class="nav-divider" aria-hidden="true"></span>
+STRICT CONTENT RULES (as of this version):
+  - Must be specifically about stainless steel (SS) or mild/carbon steel
+    (MS) pipe. Articles about valves, flanges, or other components with
+    no substantial pipe-specific content do NOT qualify.
+  - Must be educational/informative - explains a concept, standard,
+    technique, or a genuinely important industry development. Thin
+    market-research stat dumps, ads, or routine promotional company news
+    with no real educational value are rejected.
+  - Must NOT be a book review, article review, or any literary/media
+    review content.
+  - Must NOT be primarily about India, an Indian company, or written from
+    an Indian trade-publication's perspective.
 
-    <nav>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="index.html#about">About</a></li>
-        <li class="nav-item-dropdown">
-          <a href="index.html#products" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
-            Products <span class="nav-caret" aria-hidden="true">▾</span>
-          </a>
-          <ul class="nav-dropdown-menu">
-            <li><a href="pipes.html">Pipes</a></li>
-            <li><a href="fittings.html">Fittings</a></li>
-            <li><a href="valves.html">Valves</a></li>
-            <li><a href="flanges.html">Flanges</a></li>
-            <li><a href="tubes.html">Tubes</a></li>
-            <li><a href="dairy-tubes.html">Dairy tubes &amp; fittings</a></li>
-          </ul>
-        </li>
-        <li class="nav-item-dropdown">
-          <a href="index.html#resources" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
-            Resources <span class="nav-caret" aria-hidden="true">▾</span>
-          </a>
-          <ul class="nav-dropdown-menu">
-            <li><a href="company-profile.html">Company profile</a></li>
-            <li><a href="lor.html">LOR</a></li>
-            <li><a href="mill-test-report.html">Mill Test Report</a></li>
-            <li><a href="services.html">Services</a></li>
-          </ul>
-        </li>
-        <li class="nav-item-dropdown">
-          <a href="index.html#track-record" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
-            Updates <span class="nav-caret" aria-hidden="true">▾</span>
-          </a>
-          <ul class="nav-dropdown-menu">
-            <li><a href="linkedin-updates.html">LinkedIn Updates</a></li>
-            <li><a href="engineering-articles.html">Engineering Articles</a></li>
-            <li><a href="project-gallery.html">Project Gallery</a></li>
-          </ul>
-        </li>
-        <li><a href="index.html#contact">Contact</a></li>
-      </ul>
-    </nav>
+Environment variables:
+  GEMINI_API_KEY      Required. API key for the Gemini API.
+  ARTICLES_PER_RUN    Optional. Defaults to 2 (matches "1-2 per run").
+  MIN_SOURCE_CHARS    Optional. Defaults to 800.
+"""
 
-    <span class="nav-divider" aria-hidden="true"></span>
+import json
+import os
+import random
+import re
+import sys
+import time
+import xml.etree.ElementTree as ET
+from datetime import datetime, timezone
+from urllib.parse import urlparse, quote
 
-    <div class="nav-actions">
-      <a href="index.html#contact" class="btn btn-primary btn-sm">Request a quote <span class="arrow">&rarr;</span></a>
-      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </div>
-</header>
-<div id="top"></div>
+import requests
+import trafilatura
+from google import genai
+from googlenewsdecoder import gnewsdecoder
 
-<section class="block" id="page-top">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <p class="eyebrow"><a href="index.html#track-record" style="color:inherit;">Updates</a> / Engineering Articles</p>
-      <h2 class="heading">Engineering Articles</h2>
-      <p class="sub-copy">Read practical articles covering stainless steel materials, fabrication techniques, piping systems, corrosion prevention and engineering best practices.</p>
-    </div>
+# ---------------------------------------------------------------------------
+# Configuration
+# ---------------------------------------------------------------------------
 
-    <!-- ============================================================ -->
-    <!-- PAGE CONTENT — ENGINEERING ARTICLES                           -->
-    <!-- New articles are added monthly by the automated pipeline.     -->
-    <!-- Newest cards go first in the grid below; full write-ups go    -->
-    <!-- in the same order further down.                               -->
-    <!--                                                                -->
-    <!-- CONSISTENT CARD TEMPLATE (minimal card — no summary teaser):   -->
-    <!-- <a class="card" href="#article-SLUG">                         -->
-    <!--   <div class="card-body">                                      -->
-    <!--     <span class="card-badge">Category</span>                  -->
-    <!--     <p class="card-meta"><span>Date</span><span class="dot">•</span><span>N min read</span></p> -->
-    <!--     <h3>Title</h3>                                             -->
-    <!--     <p class="hint">Read more &rarr;</p>                       -->
-    <!--   </div>                                                       -->
-    <!-- </a>                                                            -->
-    <!-- Every card links to an in-page #article-SLUG summary section,  -->
-    <!-- never straight to an external site. External sources get a     -->
-    <!-- "Read full article on X ↗" button inside their summary section -->
-    <!-- instead.                                                        -->
-    <!-- ============================================================ -->
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+HTML_PATH = os.path.join(REPO_ROOT, "engineering-articles.html")
+TRACKING_PATH = os.path.join(REPO_ROOT, "data", "published_articles.json")
 
-    <div class="grid-3 reveal" id="articles-grid" style="scroll-margin-top:110px;">
-      <!-- AUTO-CARDS:START (script inserts new card as first child here) -->
-      <!-- AUTO-CARDS:END -->
-    </div>
+CARD_MARKER = "<!-- AUTO-CARDS:START (script inserts new card as first child here) -->"
+ARTICLE_MARKER = "<!-- AUTO-ARTICLES:START (script inserts new full article as first child here) -->"
 
-    <!-- AUTO-ARTICLES:START (script inserts new full article as first child here) -->
-    <!-- AUTO-ARTICLES:END -->
+# Only used for the classification+summarization step (plain text
+# generation - no paid Google Search grounding tool involved, so this
+# stays on the free tier).
+MODEL_SUMMARIZE = "gemini-flash-latest"
 
-    <!-- ============================================================ -->
-    <!-- END PAGE CONTENT                                              -->
-    <!-- ============================================================ -->
+ARTICLES_PER_RUN = int(os.environ.get("ARTICLES_PER_RUN", "2"))
+MIN_SOURCE_CHARS = int(os.environ.get("MIN_SOURCE_CHARS", "800"))
 
-    <div class="view-all reveal">
-      <a href="index.html#track-record" class="btn btn-ghost">
-        &larr; Back to all updates
+USER_AGENT = "Mozilla/5.0 (compatible; MurtazaArticleBot/1.0)"
+
+# Optional: paste direct RSS feed URLs from trade publications you trust
+# here (e.g. a publication's own /feed page). Direct feeds are more
+# reliable than Google News search since there's no redirect to resolve.
+# Leave empty to rely on Google News RSS search alone.
+CUSTOM_RSS_FEEDS = [
+    # "https://example-trade-publication.com/feed",
+]
+
+# Rotate through a subset of these each run so coverage stays broad over
+# time rather than repeating the same query. STRICTLY anchored on "steel
+# pipe" (SS or MS) - no valve-only / flange-only / instrumentation-only
+# topics, since those don't satisfy the "strictly pipe" requirement.
+TOPIC_POOL = [
+    "stainless steel pipe manufacturing standards",
+    "carbon steel pipe corrosion prevention industrial plants",
+    "welded vs seamless steel pipe manufacturing specification",
+    "steel pipe welding procedures weld quality inspection",
+    "stainless steel pipe pitting crevice corrosion chloride",
+    "mild steel pipe industrial applications specification",
+    "steel pipe wall thickness schedule selection ASME",
+    "ASTM ASME steel pipe standards specification",
+    "steel pipe mill test certificate EN 10204 traceability",
+    "steel pipe manufacturing quality control fabrication",
+    "hygienic sanitary stainless steel pipe tubing standards",
+    "steel pipeline safety regulations pipe integrity",
+]
+
+# Short categories the model can assign, used for the card's topic badge.
+# Keeping this list fixed means the badges stay consistent instead of the
+# model inventing a new label every run.
+CATEGORY_OPTIONS = [
+    "Materials",
+    "Piping Design",
+    "Welding & Fabrication",
+    "Corrosion & Coatings",
+    "Standards & Specifications",
+    "Quality & Traceability",
+    "Regulations",
+    "Industry News",
+]
+
+# --- Fast, deterministic pre-filters (run BEFORE any LLM call) ------------
+
+# Reject candidates whose domain or title suggests an Indian publication /
+# company, or where the TLD is .in. This is a heuristic, not a guarantee -
+# the LLM classification step below is a second, stricter check for cases
+# this misses (e.g. an India-based story on a .com domain with no obvious
+# marker in the title).
+INDIA_DOMAIN_MARKERS = [
+    ".in",          # TLD
+    "india",        # e.g. tubepipeindia.com
+]
+
+# Known low-value / off-topic domains you don't want cluttering the feed.
+# Add to this over time as junk sources show up in PRs.
+DOMAIN_DENYLIST = [
+    # "some-content-farm.com",
+]
+
+BOOK_REVIEW_TITLE_MARKERS = [
+    "book review",
+    "review of the book",
+    "author interview",
+    "book excerpt",
+]
+
+
+def fails_fast_prefilter(domain, title):
+    """Returns a rejection reason string if the candidate should be
+    skipped without ever spending an LLM call on it, or None if it passes
+    the fast filter (still subject to the stricter LLM check later)."""
+    domain_l = (domain or "").lower()
+    title_l = (title or "").lower()
+
+    for marker in INDIA_DOMAIN_MARKERS:
+        if marker in domain_l:
+            return f"domain matches India marker '{marker}'"
+
+    for denied in DOMAIN_DENYLIST:
+        if denied.lower() in domain_l:
+            return f"domain is denylisted ({denied})"
+
+    for marker in BOOK_REVIEW_TITLE_MARKERS:
+        if marker in title_l:
+            return f"title matches book-review marker '{marker}'"
+
+    return None
+
+
+# ---------------------------------------------------------------------------
+# Step 1: Discover real candidate articles via free RSS sources (no billing)
+# ---------------------------------------------------------------------------
+
+def _parse_rss_items(xml_bytes):
+    items = []
+    try:
+        root = ET.fromstring(xml_bytes)
+    except ET.ParseError:
+        return items
+    for item in root.findall(".//item"):
+        title = (item.findtext("title") or "").strip()
+        link = (item.findtext("link") or "").strip()
+        if title and link:
+            items.append({"title": title, "url": link})
+    return items
+
+
+def discover_candidates(topics, excluded_urls, want_count):
+    """Finds real candidate articles using free, keyless RSS sources:
+    Google News RSS search (per topic) plus any custom feeds you've added
+    above. No LLM call happens here, so this step never touches billing."""
+    candidates = []
+    seen = set(excluded_urls)
+
+    for topic in topics:
+        rss_url = (
+            "https://news.google.com/rss/search?q="
+            f"{quote(topic)}+when:180d&hl=en-US&gl=US&ceid=US:en"
+        )
+        try:
+            resp = requests.get(rss_url, timeout=15, headers={"User-Agent": USER_AGENT})
+            resp.raise_for_status()
+        except requests.RequestException:
+            continue
+
+        for item in _parse_rss_items(resp.content):
+            if item["url"] not in seen:
+                seen.add(item["url"])
+                candidates.append(item)
+
+    for feed_url in CUSTOM_RSS_FEEDS:
+        try:
+            resp = requests.get(feed_url, timeout=15, headers={"User-Agent": USER_AGENT})
+            resp.raise_for_status()
+        except requests.RequestException:
+            continue
+        for item in _parse_rss_items(resp.content):
+            if item["url"] not in seen:
+                seen.add(item["url"])
+                candidates.append(item)
+
+    random.shuffle(candidates)
+    return candidates[: want_count * 8]  # slightly wider pool since filters are stricter now
+
+
+def resolve_real_url(url):
+    """Google News RSS <link> values are obfuscated redirect URLs, not the
+    actual article URL. This decodes them to the real source URL so that
+    (a) we can fetch the real page text, and (b) the published card links
+    to the original publisher, not to Google News."""
+    if "news.google.com" not in url:
+        return url
+    try:
+        result = gnewsdecoder(url, interval=1)
+    except Exception:
+        return None
+    if result and result.get("status"):
+        return result.get("decoded_url")
+    return None
+
+
+# ---------------------------------------------------------------------------
+# Step 2: Fetch real article text
+# ---------------------------------------------------------------------------
+
+def fetch_article_text(url):
+    """Downloads a URL and extracts the main article text. Returns None on
+    failure (paywall, blocked, too short, non-HTML, etc.) so the caller can
+    skip to the next candidate rather than summarizing junk."""
+    try:
+        resp = requests.get(
+            url,
+            timeout=15,
+            headers={"User-Agent": USER_AGENT},
+        )
+        resp.raise_for_status()
+    except requests.RequestException:
+        return None
+
+    text = trafilatura.extract(resp.text, include_comments=False, include_tables=False)
+    if not text or len(text) < MIN_SOURCE_CHARS:
+        return None
+    return text
+
+
+# ---------------------------------------------------------------------------
+# Step 3: Classify eligibility, categorize, AND summarize - strictly from
+# the fetched text.
+# ---------------------------------------------------------------------------
+
+def classify_and_summarize(client, title, url, source_text, max_attempts=3):
+    """Asks Gemini to (a) judge whether the article is eligible under the
+    strict content rules, (b) assign a topic category for the card badge,
+    and (c) if eligible, summarize ONLY the given text. No search tool is
+    attached, which keeps the model from pulling in outside claims.
+
+    Returns a dict:
+      {"eligible": bool, "reason": str, "category": str|None, "summary": str|None}
+    or None if the call failed after retries.
+
+    Retries a couple of times on transient server errors (e.g. 503 'high
+    demand') before giving up on this one article - a temporary hiccup on
+    one candidate shouldn't crash the whole run."""
+
+    # Trim very long articles to keep the prompt focused and cheap.
+    trimmed = source_text[:12000]
+    category_list = ", ".join(f'"{c}"' for c in CATEGORY_OPTIONS)
+
+    prompt = f"""
+You are screening a candidate article for an industrial steel pipe company's
+curated articles feed. Judge ELIGIBILITY first, using ONLY the article text
+provided below (do not use outside knowledge to guess at facts not present).
+
+An article is ELIGIBLE only if ALL of the following are true:
+1. It is specifically about stainless steel (SS) or mild/carbon steel (MS)
+   PIPE - manufacturing, standards, specifications, corrosion, welding,
+   fabrication, testing, applications, or maintenance of steel pipe.
+   Articles primarily about valves, flanges, or other components, with no
+   substantial pipe-specific content, do NOT qualify.
+2. It is educational/informative - it explains a concept, standard,
+   technique, or a genuinely important industry development that a piping
+   engineer or buyer should know. Thin market-research statistic dumps,
+   advertisements, or routine promotional company news with no real
+   educational content do NOT qualify.
+3. It is NOT a book review, article review, or any literary/media review.
+4. It is NOT primarily about India, an Indian company, or written from an
+   Indian trade publication's perspective (check for Indian company names,
+   INR/rupee pricing, Indian place names, or an Indian publisher context).
+
+If eligible, also assign the single best-fitting category from this exact
+list (copy one string verbatim, do not invent a new one):
+[{category_list}]
+
+Respond with ONLY a JSON object (no markdown fences, no extra text) in
+exactly this shape:
+{{
+  "eligible": true or false,
+  "reason": "one short sentence explaining the eligibility decision",
+  "category": "one of the category strings above, or null if not eligible",
+  "summary": "8 to 10 short sentences in plain, engineering-audience prose,
+    third person, no bullet points, no markdown, based ONLY on the article
+    text below - or null if not eligible"
+}}
+
+Title: {title}
+
+Article text:
+\"\"\"
+{trimmed}
+\"\"\"
+""".strip()
+
+    for attempt in range(1, max_attempts + 1):
+        try:
+            response = client.models.generate_content(
+                model=MODEL_SUMMARIZE,
+                contents=prompt,
+            )
+            raw = (response.text or "").strip()
+            # Strip accidental markdown code fences if the model adds them.
+            raw = re.sub(r"^```(?:json)?\s*|\s*```$", "", raw.strip())
+            data = json.loads(raw)
+            if not isinstance(data, dict) or "eligible" not in data:
+                print("  -> unexpected response shape from model, skipping.")
+                return None
+            if data.get("eligible") and data.get("category") not in CATEGORY_OPTIONS:
+                # Model didn't pick a valid category - fall back to a safe default
+                # rather than rejecting an otherwise-good article over this.
+                data["category"] = "Industry News"
+            return data
+        except json.JSONDecodeError as exc:
+            print(f"  -> could not parse model response as JSON (attempt {attempt}/{max_attempts}): {exc}")
+        except Exception as exc:
+            print(f"  -> Gemini call failed (attempt {attempt}/{max_attempts}): {exc}")
+
+        if attempt < max_attempts:
+            time.sleep(5 * attempt)  # 5s, then 10s
+        else:
+            print("  -> giving up on this article after repeated failures.")
+            return None
+
+
+# ---------------------------------------------------------------------------
+# Step 4/5: Tracking file + HTML card/section generation
+# ---------------------------------------------------------------------------
+
+def load_tracking():
+    if not os.path.exists(TRACKING_PATH):
+        return []
+    with open(TRACKING_PATH, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def save_tracking(entries):
+    os.makedirs(os.path.dirname(TRACKING_PATH), exist_ok=True)
+    with open(TRACKING_PATH, "w", encoding="utf-8") as f:
+        json.dump(entries, f, indent=2, ensure_ascii=False)
+
+
+def estimate_read_minutes(text):
+    words = len(text.split())
+    return max(1, round(words / 200))
+
+
+def html_escape(s):
+    return (
+        s.replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace('"', "&quot;")
+    )
+
+
+def slugify(title, existing_slugs):
+    """Turns a title into a short, URL-safe, unique slug for the
+    #article-SLUG anchor. Appends -2, -3, etc. if there's a collision
+    (e.g. two articles with very similar titles in the same run)."""
+    base = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")
+    base = re.sub(r"-{2,}", "-", base)[:60].strip("-") or "article"
+    slug = base
+    counter = 2
+    while slug in existing_slugs:
+        slug = f"{base}-{counter}"
+        counter += 1
+    existing_slugs.add(slug)
+    return slug
+
+
+def build_card_html(article):
+    """Minimal card: category badge, date, read time, heading - no summary
+    teaser. Clicking it jumps to the in-page full write-up section."""
+    title = html_escape(article["title"])
+    category = html_escape(article["category"])
+    date_display = article["date_display"]
+    minutes = article["read_minutes"]
+    slug = article["slug"]
+
+    return f"""      <a class="card" href="#article-{slug}">
+        <div class="card-body">
+          <span class="card-badge">{category}</span>
+          <p class="card-meta"><span>{date_display}</span><span class="dot">&middot;</span><span>{minutes} min read</span></p>
+          <h3>{title}</h3>
+          <p class="hint">Read more &rarr;</p>
+        </div>
       </a>
+"""
+
+
+def build_article_html(article):
+    """Full write-up section: summary plus a clearly labelled button that
+    links out to the original source (curation, not republishing)."""
+    domain = urlparse(article["url"]).netloc.replace("www.", "")
+    title = html_escape(article["title"])
+    category = html_escape(article["category"])
+    date_display = article["date_display"]
+    minutes = article["read_minutes"]
+    slug = article["slug"]
+    summary = html_escape(article["summary"])
+
+    return f"""    <div id="article-{slug}" class="article-section">
+      <p class="article-meta">
+        <span class="article-badge">{category}</span>
+        <span>{date_display}</span><span class="dot">&middot;</span><span>{minutes} min read</span>
+      </p>
+      <h3>{title}</h3>
+      <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0 0 16px;">{summary}</p>
+      <a href="{article['url']}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">Read full article on {domain} <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+      <a href="#articles-grid" class="btn btn-ghost btn-sm">&uarr; Back to articles</a>
     </div>
-  </div>
-</section>
+"""
 
-<footer>
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <img src="Logos/company.png" alt="Murtaza Corporation" class="footer-logo-img" />
-    </div>
 
-    <div class="footer-col">
-      <h4>Address</h4>
-      <p>516/517, Sector 6-A, Mehran Town, Korangi Industrial Area, Karachi - 74900, Pakistan</p>
-    </div>
+def insert_into_html(new_cards_html, new_articles_html):
+    with open(HTML_PATH, "r", encoding="utf-8") as f:
+        html = f.read()
 
-    <div class="footer-col">
-      <h4>Contacts</h4>
-      <p>Email: <a href="mailto:sales@murtazacorporation.com.pk">sales@murtazacorporation.com.pk</a></p>
-      <p>Phone: <a href="tel:+922135141451">+92 (21) 35141451</a></p>
-    </div>
+    if CARD_MARKER not in html:
+        raise RuntimeError(
+            f"Could not find card marker in {HTML_PATH}. "
+            "The page structure may have changed - insert manually."
+        )
+    if ARTICLE_MARKER not in html:
+        raise RuntimeError(
+            f"Could not find article marker in {HTML_PATH}. "
+            "The page structure may have changed - insert manually."
+        )
 
-    <div class="footer-col">
-      <h4>Links</h4>
-      <ul class="footer-link-list">
-        <li><a href="http://www.wermac.org/" target="_blank" rel="noopener">Wermac</a></li>
-        <li><a href="http://www.huikepipe.com/en/" target="_blank" rel="noopener">Hebei Huike</a></li>
-        <li><a href="http://www.yuandavalves.com/brand.html" target="_blank" rel="noopener">Yuanda Valve</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-copy">© 2026 Murtaza Corporation. All rights reserved.</div>
-</footer>
+    html = html.replace(CARD_MARKER, CARD_MARKER + "\n" + new_cards_html, 1)
+    html = html.replace(ARTICLE_MARKER, ARTICLE_MARKER + "\n" + new_articles_html, 1)
 
-<script src="script.js" defer></script>
-<a href="#" class="calculator-widget" id="calculatorWidgetBtn" aria-label="Open pipe calculator">
-    <span class="whatsapp-text">Calculator</span>
-    <div class="calculator-icon"><i class="fa-solid fa-calculator"></i></div>
-</a>
-<a href="https://wa.me/923343791852" class="whatsapp-widget" target="_blank" aria-label="Chat on WhatsApp">
-    <span class="whatsapp-text">Chat with us</span>
-    <div class="whatsapp-icon"><i class="fab fa-whatsapp"></i></div>
-</a>
-</body>
-</html>
-<div class="calculator-overlay" id="calculatorOverlay">
-  <div class="calculator-modal" id="calculatorModal" role="dialog" aria-modal="true" aria-labelledby="calculatorModalTitle">
-    <button type="button" class="calculator-modal-close" id="calculatorModalClose" aria-label="Close calculator">&times;</button>
-    <div class="calculator-modal-header">
-      <h3 id="calculatorModalTitle">Pipe Calculator</h3>
-    </div>
-    <div class="calculator-modal-body">
-  <form id="calcForm" onsubmit="return false;" class="calc-form">
+    with open(HTML_PATH, "w", encoding="utf-8") as f:
+        f.write(html)
 
-   <div class="calc-shape-bar" id="calcShapeBar">
-      <label>Shape</label>
-      <div class="calc-shape-icons" id="calcShapeIcons">
-        <button type="button" class="calc-shape-icon is-active" data-shape="Round" aria-pressed="true" aria-label="Round"><img src="images/round.png" alt="" /><span class="calc-shape-icon-label">Round</span></button>
-        <button type="button" class="calc-shape-icon" data-shape="Square" aria-pressed="false" aria-label="Square"><img src="images/icon-square.png" alt="" /><span class="calc-shape-icon-label">Square</span></button>
-        <button type="button" class="calc-shape-icon" data-shape="Rectangle" aria-pressed="false" aria-label="Rectangle"><img src="images/icon-rectangle.png" alt="" /><span class="calc-shape-icon-label">Rectangle</span></button>
-        <button type="button" class="calc-shape-icon" data-shape="Hexagonal" aria-pressed="false" aria-label="Hexagonal"><img src="images/icon-hexagol.jpg" alt="" /><span class="calc-shape-icon-label">Hexagonal</span></button>
-        <button type="button" class="calc-shape-icon" data-shape="Octagonal" aria-pressed="false" aria-label="Octagonal"><img src="images/icon-octa.png" alt="" /><span class="calc-shape-icon-label">Octagonal</span></button>
-        <button type="button" class="calc-shape-icon" data-shape="Sheet" aria-pressed="false" aria-label="Sheet"><img src="images/sheet.png" alt="" /><span class="calc-shape-icon-label">Sheet</span></button>
-        <button type="button" class="calc-shape-icon" data-shape="Plate" aria-pressed="false" aria-label="Plate"><img src="images/plate.jpg" alt="" /><span class="calc-shape-icon-label">Plate</span></button>
-        <button type="button" class="calc-shape-icon" data-shape="Pipe" aria-pressed="false" aria-label="Tubular / Pipe"><img src="images/tubular.jpg" alt="" /><span class="calc-shape-icon-label">Tubular/Pipe</span></button>
-        <button type="button" class="calc-shape-icon" data-shape="Ring" aria-pressed="false" aria-label="Ring"><img src="images/ring.png" alt="" /><span class="calc-shape-icon-label">Ring</span></button>
-      </div>
-      <p class="calc-shape-name" id="calcShapeName" style="display:none;">Round</p>
-      <select id="calcShape" style="display:none;">
-        <option value="Round" selected>Round</option>
-        <option value="Square">Square</option>
-        <option value="Rectangle">Rectangle</option>
-        <option value="Hexagonal">Hexagonal</option>
-        <option value="Octagonal">Octagonal</option>
-        <option value="Sheet">Sheet</option>
-        <option value="Plate">Plate</option>
-        <option value="Tubular">Tubular</option>
-        <option value="Pipe">Pipe</option>
-        <option value="Ring">Ring</option>
-        </select>
-    </div>
 
-   <div class="calc-layout">
-    <div class="calc-main">
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
 
-    <div class="calc-row">
-      <label for="calcMaterial">Material</label>
-      <select id="calcMaterial">
-        <option data-factor="1" selected>Steel (default)</option>
-        <option data-factor="0.3462">Aluminum 1100</option>
-        <option data-factor="0.3604">Aluminum 2011</option>
-        <option data-factor="0.3568">Aluminum 2014</option>
-        <option data-factor="0.3568">Aluminum 2017</option>
-        <option data-factor="0.3533">Aluminum 2024</option>
-        <option data-factor="0.3498">Aluminum 3003</option>
-        <option data-factor="0.3462">Aluminum 5005</option>
-        <option data-factor="0.3427">Aluminum 5052</option>
-        <option data-factor="0.3356">Aluminum 5056</option>
-        <option data-factor="0.3392">Aluminum 5083</option>
-        <option data-factor="0.3392">Aluminum 5086</option>
-        <option data-factor="0.3462">Aluminum 6061</option>
-        <option data-factor="0.3462">Aluminum 6063</option>
-        <option data-factor="0.3568">Aluminum 7050</option>
-        <option data-factor="0.3568">Aluminum 7075</option>
-        <option data-factor="0.3604">Aluminum 7178</option>
-        <option data-factor="1.030">Stainless 300 Series</option>
-        <option data-factor="1.010">Stainless 400 Series</option>
-        <option data-factor="1.132">Nickel 200</option>
-        <option data-factor="1.125">Nickel 400</option>
-        <option data-factor="1.121">Nickel R-405</option>
-        <option data-factor="1.075">Nickel K-500</option>
-        <option data-factor="1.072">Nickel 600</option>
-        <option data-factor="1.075">Nickel 625</option>
-        <option data-factor="1.012">Nickel 800H</option>
-        <option data-factor="1.012">Nickel 800AT</option>
-        <option data-factor="1.037">Nickel 825</option>
-        <option data-factor="1.012">Nickel 330</option>
-        <option data-factor="1.030">Nickel 20</option>
-        <option data-factor="1.132">Nickel C-276</option>
-        <option data-factor="1.012">Nickel 2545MD</option>
-        <option data-factor="0.229">Magnesium</option>
-        <option data-factor="0.236">Beryllium</option>
-        <option data-factor="0.575">Titanium</option>
-        <option data-factor="0.812">Zirconium</option>
-        <option data-factor="0.911">Cast Iron</option>
-        <option data-factor="0.911">Zinc</option>
-        <option data-factor="1.084">Brass</option>
-        <option data-factor="1.095">Columbium</option>
-        <option data-factor="1.144">Copper</option>
-        <option data-factor="1.303">Molybdenum</option>
-        <option data-factor="1.339">Silver</option>
-        <option data-factor="1.448">Lead</option>
-        <option data-factor="2.120">Tantalum</option>
-        <option data-factor="2.462">Tungsten</option>
-        <option data-factor="2.466">Gold</option>
-      </select>
-    </div>
+def main():
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        print("ERROR: GEMINI_API_KEY environment variable is not set.", file=sys.stderr)
+        sys.exit(1)
 
-    <div class="calc-row" id="calcField1Row">
-      <label id="calcLabel1" for="calcParam1">Diameter</label>
-      <div class="calc-input-group">
-        <input type="number" step="any" id="calcParam1" placeholder="0.00" />
-        <select id="calcUnit1">
-          <option>in</option><option>ft</option><option>yd</option>
-          <option>mm</option><option>cm</option><option>m</option>
-        </select>
-      </div>
-    </div>
+    client = genai.Client(api_key=api_key)
 
-    <div class="calc-row" id="calcField2Row" style="display:none;">
-      <label id="calcLabel2" for="calcParam2">Width</label>
-      <div class="calc-input-group">
-        <input type="number" step="any" id="calcParam2" placeholder="0.00" />
-        <select id="calcUnit2">
-          <option>in</option><option>ft</option><option>yd</option>
-          <option>mm</option><option>cm</option><option>m</option>
-        </select>
-      </div>
-    </div>
+    tracking = load_tracking()
+    excluded_urls = {entry["url"] for entry in tracking}
+    existing_slugs = {entry["slug"] for entry in tracking if "slug" in entry}
 
-    <div class="calc-row" id="calcField3Row">
-      <label id="calcLabel3" for="calcParam3">Length</label>
-      <div class="calc-input-group">
-        <input type="number" step="any" id="calcParam3" placeholder="0.00" />
-        <select id="calcUnit3">
-          <option>in</option><option>ft</option><option>yd</option>
-          <option>mm</option><option>cm</option><option>m</option>
-        </select>
-      </div>
-    </div>
+    # Rotate topics by month so coverage broadens over time instead of
+    # repeating the same query. (Seeded per-run, not globally, so it
+    # doesn't also pin candidate shuffling below to the month.)
+    month_index = datetime.now(timezone.utc).month
+    topic_rng = random.Random(month_index)
+    topics = topic_rng.sample(TOPIC_POOL, k=min(4, len(TOPIC_POOL)))
 
-    <div class="calc-row">
-      <label for="calcQty">Quantity (pieces)</label>
-      <input type="number" step="1" min="1" id="calcQty" value="1" />
-    </div>
+    print(f"Topics this run: {topics}")
 
-    <p class="calc-error" id="calcError" style="display:none;"></p>
+    candidates = discover_candidates(topics, excluded_urls, ARTICLES_PER_RUN)
+    print(f"Discovered {len(candidates)} candidate URLs via free RSS sources.")
 
-    <div class="calc-actions">
-      <button type="button" class="btn btn-primary btn-sm" id="calcCalculateBtn">Calculate</button>
-      <button type="button" class="btn btn-ghost btn-sm" id="calcClearBtn">Clear</button>
-    </div>
+    accepted = []
+    for candidate in candidates:
+        if len(accepted) >= ARTICLES_PER_RUN:
+            break
 
-   </div>
-    <div class="calc-side">
+        try:
+            url = candidate["url"]
+            real_url = resolve_real_url(url)
+            if not real_url:
+                print(f"  -> could not resolve real URL for {url[:80]}, skipping.")
+                continue
+            if real_url in excluded_urls:
+                continue
 
-<div class="calc-history-header calc-side-header">
-  <span>Saved calculations</span>
-  <button type="button" class="calc-history-clear" id="calcHistoryClearBtn">Remove all</button>
-</div>
+            domain = urlparse(real_url).netloc.replace("www.", "")
+            title = candidate["title"] or real_url
 
-<div class="calc-history" id="calcHistory" style="display:none;">
-  <div class="calc-history-list" id="calcHistoryList"></div>
+            # Fast, free, deterministic rejection before spending a fetch
+            # or an LLM call.
+            prefilter_reason = fails_fast_prefilter(domain, title)
+            if prefilter_reason:
+                print(f"  -> pre-filter rejected ({prefilter_reason}): {title[:80]}")
+                continue
 
- <div class="calc-history-total">
-    <span>Total weight</span>
-    <strong><span id="calcHistoryTotalLbs">0</span> lbs / <span id="calcHistoryTotalKg">0</span> kg</strong>
-  </div>
+            print(f"Fetching: {real_url}")
+            text = fetch_article_text(real_url)
+            if not text:
+                print("  -> could not extract usable text, skipping.")
+                continue
 
-  <button type="button" class="calc-history-pdf" id="calcHistoryPdfBtn">Export as PDF</button>
+            result = classify_and_summarize(client, title, real_url, text)
+            if not result:
+                print("  -> classification/summarization failed, skipping.")
+                continue
 
-  <p class="calc-standards-note">Weights calculated per standard imperial steel weight formulas.</p>
+            if not result.get("eligible"):
+                print(f"  -> rejected by content rules: {result.get('reason', 'no reason given')}")
+                continue
 
-  <div class="calc-history-confirm" id="calcHistoryConfirm" style="display:none;">
-    Are you sure?
-    <span class="calc-history-confirm-yes" id="calcHistoryConfirmYes">Yes</span>
-    <span class="calc-history-confirm-no" id="calcHistoryConfirmNo">No</span>
-  </div>
-</div>
+            summary = (result.get("summary") or "").strip()
+            if not summary:
+                print("  -> marked eligible but no summary returned, skipping.")
+                continue
 
-    <div class="calc-results" id="calcResults" style="display:none;">
-      <div class="calc-result-row">
-        <span>Weight</span>
-        <strong><span id="calcResultLbs">0</span> lbs</strong>
-      </div>
-      <div class="calc-result-row">
-        <span>Weight</span>
-        <strong><span id="calcResultKg">0</span> kg</strong>
-      </div>
-  </div>
-</div>
-    </div>
+            now = datetime.now(timezone.utc)
+            slug = slugify(title, existing_slugs)
 
- </form></div></div>
-</div>
+            accepted.append(
+                {
+                    "url": real_url,
+                    "title": title,
+                    "summary": summary,
+                    "category": result.get("category") or "Industry News",
+                    "slug": slug,
+                    "read_minutes": estimate_read_minutes(text),
+                    "added": now.strftime("%Y-%m-%d"),
+                    "date_display": now.strftime("%b %Y"),
+                }
+            )
+            print(f"  -> accepted [{result.get('category')}]: {title}")
+            excluded_urls.add(real_url)
+        except Exception as exc:
+            print(f"  -> unexpected error on this candidate, skipping: {exc}")
+            continue
+
+    if not accepted:
+        print("No new articles were accepted this run. Nothing to do.")
+        return
+
+    cards_html = "".join(build_card_html(a) for a in accepted)
+    articles_html = "".join(build_article_html(a) for a in accepted)
+    insert_into_html(cards_html, articles_html)
+
+    tracking = accepted + tracking  # newest first
+    save_tracking(tracking)
+
+    print(f"Inserted {len(accepted)} new article card(s)/section(s) into {HTML_PATH}.")
+
+
+if __name__ == "__main__":
+    main()
