@@ -20,6 +20,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 <!-- inline here so the new markup renders correctly immediately.   -->
 <!-- ============================================================ -->
 <style>
+  /* ---- Card (grid) — minimal: heading, date, topic group, read time.
+     No summary teaser on the card itself; that only appears after the
+     click-through, in the matching .article-section below. ---- */
   #articles-grid .card { display:flex; flex-direction:column; }
   #articles-grid .card-badge {
     display:inline-block;
@@ -32,14 +35,38 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     font-size:13px; color:#8a8a8a; margin:0 0 8px;
   }
   .card-meta .dot, .article-meta .dot { opacity:.6; }
+  #articles-grid .card h3 { margin:0; font-size:19px; line-height:1.35; }
+
+  /* ---- Article detail section (shown after clicking a card) ---- */
   .article-badge {
     background:#111111; color:#ffffff; font-size:11px; font-weight:600;
     padding:3px 10px; border-radius:20px; margin-right:2px;
   }
-  .card-summary { margin:0 0 8px; }
   .article-section { margin-top:56px; padding-top:24px; border-top:1px solid #ececec; scroll-margin-top:110px; }
   .article-section h3 { font-size:26px; font-weight:600; margin:6px 0 20px; }
   .article-section .btn { margin-top:8px; margin-right:8px; }
+
+  /* Small, justified summary paragraph inside the article section —
+     this is the only body copy shown post-click for curated articles. */
+  .article-summary {
+    color:var(--color-ink);
+    font-size:15px;
+    line-height:1.75;
+    text-align:justify;
+    text-justify:inter-word;
+    max-width:640px;
+    margin:0 0 20px;
+  }
+
+  /* Empty-state placeholder shown while AUTO-CARDS has no entries yet. */
+  #articles-empty {
+    padding:48px 24px;
+    text-align:center;
+    color:#8a8a8a;
+    font-size:15px;
+    border:1px dashed #dcdcdc;
+    border-radius:12px;
+  }
 </style>
 </head>
 <body>
@@ -118,23 +145,32 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
     <!-- ============================================================ -->
     <!-- PAGE CONTENT — ENGINEERING ARTICLES                           -->
-    <!-- New articles are added monthly by the automated pipeline.     -->
-    <!-- Newest cards go first in the grid below; full write-ups go    -->
-    <!-- in the same order further down.                               -->
     <!--                                                                -->
-    <!-- CONSISTENT CARD TEMPLATE (minimal card — no summary teaser):   -->
+    <!-- CARD TEMPLATE (minimal — no summary teaser on the card):       -->
     <!-- <a class="card" href="#article-SLUG">                         -->
     <!--   <div class="card-body">                                      -->
-    <!--     <span class="card-badge">Category</span>                  -->
+    <!--     <span class="card-badge">Topic group</span>                -->
     <!--     <p class="card-meta"><span>Date</span><span class="dot">•</span><span>N min read</span></p> -->
     <!--     <h3>Title</h3>                                             -->
     <!--     <p class="hint">Read more &rarr;</p>                       -->
     <!--   </div>                                                       -->
     <!-- </a>                                                            -->
-    <!-- Every card links to an in-page #article-SLUG summary section,  -->
-    <!-- never straight to an external site. External sources get a     -->
-    <!-- "Read full article on X ↗" button inside their summary section -->
-    <!-- instead.                                                        -->
+    <!--                                                                -->
+    <!-- MATCHING ARTICLE-SECTION TEMPLATE (shown after click-through): -->
+    <!-- <div id="article-SLUG" class="article-section">                -->
+    <!--   <p class="article-meta">                                     -->
+    <!--     <span class="article-badge">Topic group</span>              -->
+    <!--     <span>Date</span><span class="dot">&middot;</span><span>N min read</span> -->
+    <!--   </p>                                                          -->
+    <!--   <h3>Title</h3>                                               -->
+    <!--   <p class="article-summary">Small, justified summary text.</p> -->
+    <!--   <a href="SOURCE_URL" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">Read full article on DOMAIN <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a> -->
+    <!--   <a href="#articles-grid" class="btn btn-ghost btn-sm">&uarr; Back to articles</a> -->
+    <!-- </div>                                                          -->
+    <!--                                                                -->
+    <!-- Every card links to an in-page #article-SLUG section — never   -->
+    <!-- straight to an external site. The external link only appears   -->
+    <!-- as a button inside that section.                                -->
     <!-- ============================================================ -->
 
     <div class="grid-3 reveal" id="articles-grid" style="scroll-margin-top:110px;">
@@ -142,7 +178,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
       <!-- AUTO-CARDS:END -->
     </div>
 
-    <!-- AUTO-ARTICLES:START (script inserts new full article as first child here) -->
+    <p id="articles-empty">No articles yet — new curated pieces are added automatically each month and will appear here once published.</p>
+
+    <!-- AUTO-ARTICLES:START (script inserts new full article-section as first child here) -->
     <!-- AUTO-ARTICLES:END -->
 
     <!-- ============================================================ -->
