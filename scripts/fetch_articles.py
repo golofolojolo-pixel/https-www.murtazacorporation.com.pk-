@@ -16,20 +16,19 @@ What it does, in order:
   3. FETCH     - Download the actual article page and extract its real text.
   4. PRE-FILTER - Cheap, deterministic rejection of obviously-ineligible
                  candidates (India-linked domains/titles, book-review
-                 titles) BEFORE spending an LLM call on them.
+                 titles, off-topic content, known low-value domains)
+                 BEFORE spending an LLM call on them.
   5. CLASSIFY+SUMMARIZE - Ask Gemini (free tier, plain text generation -
-                 no paid Google Search grounding tool) to judge whether the
-                 article is eligible under the strict rules below, assign
-                 it a short topic category, and summarize ONLY the fetched
-                 text into ~8-10 short lines. The model cannot invent facts
-                 that aren't in the source text, and articles that fail the
-                 eligibility check are skipped entirely.
+                 no paid Google Search grounding tool) to first judge
+                 whether the article is actually eligible under the strict
+                 rules below, and only then summarize ONLY the fetched
+                 text into ~8-10 short lines. The model cannot invent
+                 facts that aren't in the source text, and articles that
+                 fail the eligibility check are skipped entirely.
   6. DEDUPE    - Skip URLs already listed in data/published_articles.json.
-  7. INSERT    - Add a minimal card (heading, date, category, read time -
-                 no summary teaser) into engineering-articles.html, plus
-                 the matching full write-up section that the card links to.
-                 Cards never link straight to the external source; the full
-                 section does that instead, via a clearly labelled button.
+  7. INSERT    - Add new, image-free cards into engineering-articles.html
+                 that link OUT to the original article (curation, not
+                 republishing).
 
 This script only edits files on disk. It does not commit, push, or open a
 pull request - that's handled by the GitHub Actions workflow, which uses
@@ -50,9 +49,14 @@ STRICT CONTENT RULES (as of this version):
     an Indian trade-publication's perspective.
 
 Environment variables:
-  GEMINI_API_KEY      Required. API key for the Gemini API.
-  ARTICLES_PER_RUN    Optional. Defaults to 2 (matches "1-2 per run").
-  MIN_SOURCE_CHARS    Optional. Defaults to 800.
+  GEMINI_API_KEY          Required. API key for the Gemini API.
+  ARTICLES_PER_RUN        Optional. Defaults to 2 (matches "1-2 per run").
+  MIN_SOURCE_CHARS        Optional. Defaults to 800.
+  MAX_GEMINI_CALLS_PER_RUN Optional. Defaults to 8. Hard ceiling on how many
+                          Gemini requests (including retries) a single run
+                          will ever make, so a bad run can't burn through
+                          the whole daily free-tier quota (20/day as of
+                          this writing) in one go.
 """
 
 import json
@@ -68,6 +72,7 @@ from urllib.parse import urlparse, quote
 import requests
 import trafilatura
 from google import genai
+from google.genai import types
 from googlenewsdecoder import gnewsdecoder
 
 # ---------------------------------------------------------------------------
@@ -79,7 +84,6 @@ HTML_PATH = os.path.join(REPO_ROOT, "engineering-articles.html")
 TRACKING_PATH = os.path.join(REPO_ROOT, "data", "published_articles.json")
 
 CARD_MARKER = "<!-- AUTO-CARDS:START (script inserts new card as first child here) -->"
-ARTICLE_MARKER = "<!-- AUTO-ARTICLES:START (script inserts new full article as first child here) -->"
 
 # Only used for the classification+summarization step (plain text
 # generation - no paid Google Search grounding tool involved, so this
@@ -88,6 +92,12 @@ MODEL_SUMMARIZE = "gemini-flash-latest"
 
 ARTICLES_PER_RUN = int(os.environ.get("ARTICLES_PER_RUN", "2"))
 MIN_SOURCE_CHARS = int(os.environ.get("MIN_SOURCE_CHARS", "800"))
+
+# Hard ceiling on Gemini requests for the whole run (see module docstring).
+# Free tier is commonly 20 requests/day - default here leaves headroom for
+# other runs/testing that day, rather than assuming this run owns the
+# entire daily budget.
+MAX_GEMINI_CALLS_PER_RUN = int(os.environ.get("MAX_GEMINI_CALLS_PER_RUN", "8"))
 
 USER_AGENT = "Mozilla/5.0 (compatible; MurtazaArticleBot/1.0)"
 
@@ -100,9 +110,9 @@ CUSTOM_RSS_FEEDS = [
 ]
 
 # Rotate through a subset of these each run so coverage stays broad over
-# time rather than repeating the same query. STRICTLY anchored on "steel
-# pipe" (SS or MS) - no valve-only / flange-only / instrumentation-only
-# topics, since those don't satisfy the "strictly pipe" requirement.
+# time rather than repeating the same query every month. STRICTLY anchored
+# on "steel pipe" (SS or MS) - no valve-only / flange-only / instrumentation
+# -only topics, since those don't satisfy the "strictly pipe" requirement.
 TOPIC_POOL = [
     "stainless steel pipe manufacturing standards",
     "carbon steel pipe corrosion prevention industrial plants",
@@ -118,20 +128,6 @@ TOPIC_POOL = [
     "steel pipeline safety regulations pipe integrity",
 ]
 
-# Short categories the model can assign, used for the card's topic badge.
-# Keeping this list fixed means the badges stay consistent instead of the
-# model inventing a new label every run.
-CATEGORY_OPTIONS = [
-    "Materials",
-    "Piping Design",
-    "Welding & Fabrication",
-    "Corrosion & Coatings",
-    "Standards & Specifications",
-    "Quality & Traceability",
-    "Regulations",
-    "Industry News",
-]
-
 # --- Fast, deterministic pre-filters (run BEFORE any LLM call) ------------
 
 # Reject candidates whose domain or title suggests an Indian publication /
@@ -144,10 +140,15 @@ INDIA_DOMAIN_MARKERS = [
     "india",        # e.g. tubepipeindia.com
 ]
 
-# Known low-value / off-topic domains you don't want cluttering the feed.
-# Add to this over time as junk sources show up in PRs.
+# Known low-value / off-topic domains you don't want cluttering the feed,
+# or that reliably fail the "educational, not a stat dump" rule anyway and
+# so are never worth spending a fetch + Gemini call on. Grow this list as
+# junk sources show up in PRs or run logs.
 DOMAIN_DENYLIST = [
-    # "some-content-farm.com",
+    "indexbox.io",            # thin market-size/forecast stat dumps
+    "openpr.com",              # press-release / market-report aggregator
+    "marketdataforecast.com",  # market-research report teasers, not articles
+    "vocal.media",             # low-quality open blogging platform, off-topic hits
 ]
 
 BOOK_REVIEW_TITLE_MARKERS = [
@@ -157,11 +158,47 @@ BOOK_REVIEW_TITLE_MARKERS = [
     "book excerpt",
 ]
 
+# Cheap relevance gate: title (and later, fetched text) must show some
+# real sign of being about steel pipe before we spend a fetch/LLM call on
+# it. This is deliberately generous (OR of many terms) - it's here to
+# catch obviously off-topic RSS mismatches (e.g. an "Audi exhaust pipe"
+# blog post matched on the word "pipe"), not to replace the strict LLM
+# eligibility check.
+RELEVANCE_TERMS = [
+    "steel", "stainless", "ss pipe", "ms pipe", "carbon steel",
+    "pipeline", "piping", "astm", "asme", "welded", "seamless",
+    "corrosion", "alloy", "metallurg", "mill test", "schedule 40",
+    "schedule 80", "en 10204",
+]
+
+OFF_TOPIC_TITLE_MARKERS = [
+    "exhaust", "muffler", "car", "vehicle", "automotive", "audi", "bmw",
+    "toyota", "honda", "tailpipe",
+]
+
+
+def title_is_relevant(title):
+    """Very cheap sanity check on the RSS title alone, before any network
+    fetch. Returns False if the title looks unambiguously off-topic (e.g.
+    car exhaust content matched only because it contains the word 'pipe'),
+    or if it shows literally none of the expected steel/pipe vocabulary."""
+    title_l = (title or "").lower()
+
+    for marker in OFF_TOPIC_TITLE_MARKERS:
+        if marker in title_l:
+            return False
+
+    # Require at least one relevance term in the title. This is generous
+    # on purpose (title alone is a weak signal) - real topic/eligibility
+    # filtering still happens via fails_fast_prefilter + the LLM step.
+    return any(term in title_l for term in RELEVANCE_TERMS)
+
 
 def fails_fast_prefilter(domain, title):
     """Returns a rejection reason string if the candidate should be
-    skipped without ever spending an LLM call on it, or None if it passes
-    the fast filter (still subject to the stricter LLM check later)."""
+    skipped without ever spending a fetch or LLM call on it, or None if it
+    passes the fast filter (still subject to the stricter LLM check
+    later)."""
     domain_l = (domain or "").lower()
     title_l = (title or "").lower()
 
@@ -176,6 +213,9 @@ def fails_fast_prefilter(domain, title):
     for marker in BOOK_REVIEW_TITLE_MARKERS:
         if marker in title_l:
             return f"title matches book-review marker '{marker}'"
+
+    if not title_is_relevant(title):
+        return "title shows no steel/pipe relevance (or matches an off-topic marker)"
 
     return None
 
@@ -277,27 +317,47 @@ def fetch_article_text(url):
 
 
 # ---------------------------------------------------------------------------
-# Step 3: Classify eligibility, categorize, AND summarize - strictly from
-# the fetched text.
+# Step 3: Classify eligibility AND summarize, strictly from the fetched text
 # ---------------------------------------------------------------------------
+
+class QuotaExhaustedError(Exception):
+    """Raised when Gemini reports the daily/free-tier quota is exhausted.
+    Unlike a transient 503 'high demand' error, retrying this within the
+    same run is pointless - every subsequent call will fail identically
+    until the quota resets. Callers should stop issuing new Gemini calls
+    for the rest of the run when they see this, rather than burning
+    retries (and log noise) on every remaining candidate."""
+    pass
+
+
+def _is_quota_exhausted_error(exc):
+    """Distinguishes a hard quota/rate-limit exhaustion from a transient
+    error (like a 503 'high demand' blip) worth retrying. Gemini reports
+    quota exhaustion as a 429 RESOURCE_EXHAUSTED with 'quota' in the
+    message - we check for that combination rather than any 429, in case
+    a future error taxonomy adds other 429 reasons that ARE worth
+    retrying."""
+    msg = str(exc).lower()
+    return "resource_exhausted" in msg and "quota" in msg
+
 
 def classify_and_summarize(client, title, url, source_text, max_attempts=3):
     """Asks Gemini to (a) judge whether the article is eligible under the
-    strict content rules, (b) assign a topic category for the card badge,
-    and (c) if eligible, summarize ONLY the given text. No search tool is
-    attached, which keeps the model from pulling in outside claims.
+    strict content rules, and (b) if eligible, summarize ONLY the given
+    text. No search tool is attached, which keeps the model from pulling
+    in outside claims.
 
-    Returns a dict:
-      {"eligible": bool, "reason": str, "category": str|None, "summary": str|None}
+    Returns a dict: {"eligible": bool, "reason": str, "summary": str|None}
     or None if the call failed after retries.
 
     Retries a couple of times on transient server errors (e.g. 503 'high
     demand') before giving up on this one article - a temporary hiccup on
-    one candidate shouldn't crash the whole run."""
+    one candidate shouldn't crash the whole run. Raises QuotaExhaustedError
+    immediately (no retries) if the quota is exhausted, since retrying that
+    is guaranteed to fail and just wastes the run's remaining time."""
 
     # Trim very long articles to keep the prompt focused and cheap.
     trimmed = source_text[:12000]
-    category_list = ", ".join(f'"{c}"' for c in CATEGORY_OPTIONS)
 
     prompt = f"""
 You are screening a candidate article for an industrial steel pipe company's
@@ -320,16 +380,11 @@ An article is ELIGIBLE only if ALL of the following are true:
    Indian trade publication's perspective (check for Indian company names,
    INR/rupee pricing, Indian place names, or an Indian publisher context).
 
-If eligible, also assign the single best-fitting category from this exact
-list (copy one string verbatim, do not invent a new one):
-[{category_list}]
-
 Respond with ONLY a JSON object (no markdown fences, no extra text) in
 exactly this shape:
 {{
   "eligible": true or false,
   "reason": "one short sentence explaining the eligibility decision",
-  "category": "one of the category strings above, or null if not eligible",
   "summary": "8 to 10 short sentences in plain, engineering-audience prose,
     third person, no bullet points, no markdown, based ONLY on the article
     text below - or null if not eligible"
@@ -356,14 +411,15 @@ Article text:
             if not isinstance(data, dict) or "eligible" not in data:
                 print("  -> unexpected response shape from model, skipping.")
                 return None
-            if data.get("eligible") and data.get("category") not in CATEGORY_OPTIONS:
-                # Model didn't pick a valid category - fall back to a safe default
-                # rather than rejecting an otherwise-good article over this.
-                data["category"] = "Industry News"
             return data
         except json.JSONDecodeError as exc:
             print(f"  -> could not parse model response as JSON (attempt {attempt}/{max_attempts}): {exc}")
         except Exception as exc:
+            if _is_quota_exhausted_error(exc):
+                # Don't retry - every remaining attempt will fail the same
+                # way, and each one still counts as a burned request.
+                print(f"  -> Gemini quota exhausted, aborting retries for this article: {exc}")
+                raise QuotaExhaustedError(str(exc)) from exc
             print(f"  -> Gemini call failed (attempt {attempt}/{max_attempts}): {exc}")
 
         if attempt < max_attempts:
@@ -374,7 +430,7 @@ Article text:
 
 
 # ---------------------------------------------------------------------------
-# Step 4/5: Tracking file + HTML card/section generation
+# Step 4/5: Tracking file + HTML card generation
 # ---------------------------------------------------------------------------
 
 def load_tracking():
@@ -404,66 +460,24 @@ def html_escape(s):
     )
 
 
-def slugify(title, existing_slugs):
-    """Turns a title into a short, URL-safe, unique slug for the
-    #article-SLUG anchor. Appends -2, -3, etc. if there's a collision
-    (e.g. two articles with very similar titles in the same run)."""
-    base = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")
-    base = re.sub(r"-{2,}", "-", base)[:60].strip("-") or "article"
-    slug = base
-    counter = 2
-    while slug in existing_slugs:
-        slug = f"{base}-{counter}"
-        counter += 1
-    existing_slugs.add(slug)
-    return slug
-
-
 def build_card_html(article):
-    """Minimal card: category badge, date, read time, heading - no summary
-    teaser. Clicking it jumps to the in-page full write-up section."""
+    domain = urlparse(article["url"]).netloc.replace("www.", "")
     title = html_escape(article["title"])
-    category = html_escape(article["category"])
-    date_display = article["date_display"]
+    summary = html_escape(article["summary"])
     minutes = article["read_minutes"]
-    slug = article["slug"]
 
-    return f"""      <a class="card" href="#article-{slug}">
+    return f"""      <a class="card card-curated" href="{article['url']}" target="_blank" rel="noopener noreferrer">
         <div class="card-body">
-          <span class="card-badge">{category}</span>
-          <p class="card-meta"><span>{date_display}</span><span class="dot">&middot;</span><span>{minutes} min read</span></p>
+          <p class="num">{domain} &middot; curated &middot; {minutes} min read</p>
           <h3>{title}</h3>
-          <p class="hint">Read more &rarr;</p>
+          <p>{summary}</p>
+          <p class="hint">Read full article <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></p>
         </div>
       </a>
 """
 
 
-def build_article_html(article):
-    """Full write-up section: summary plus a clearly labelled button that
-    links out to the original source (curation, not republishing)."""
-    domain = urlparse(article["url"]).netloc.replace("www.", "")
-    title = html_escape(article["title"])
-    category = html_escape(article["category"])
-    date_display = article["date_display"]
-    minutes = article["read_minutes"]
-    slug = article["slug"]
-    summary = html_escape(article["summary"])
-
-    return f"""    <div id="article-{slug}" class="article-section">
-      <p class="article-meta">
-        <span class="article-badge">{category}</span>
-        <span>{date_display}</span><span class="dot">&middot;</span><span>{minutes} min read</span>
-      </p>
-      <h3>{title}</h3>
-      <p style="color:var(--color-ink);font-size:16px;line-height:1.75;margin:0 0 16px;">{summary}</p>
-      <a href="{article['url']}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">Read full article on {domain} <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
-      <a href="#articles-grid" class="btn btn-ghost btn-sm">&uarr; Back to articles</a>
-    </div>
-"""
-
-
-def insert_into_html(new_cards_html, new_articles_html):
+def insert_cards_into_html(new_cards_html):
     with open(HTML_PATH, "r", encoding="utf-8") as f:
         html = f.read()
 
@@ -472,14 +486,8 @@ def insert_into_html(new_cards_html, new_articles_html):
             f"Could not find card marker in {HTML_PATH}. "
             "The page structure may have changed - insert manually."
         )
-    if ARTICLE_MARKER not in html:
-        raise RuntimeError(
-            f"Could not find article marker in {HTML_PATH}. "
-            "The page structure may have changed - insert manually."
-        )
 
     html = html.replace(CARD_MARKER, CARD_MARKER + "\n" + new_cards_html, 1)
-    html = html.replace(ARTICLE_MARKER, ARTICLE_MARKER + "\n" + new_articles_html, 1)
 
     with open(HTML_PATH, "w", encoding="utf-8") as f:
         f.write(html)
@@ -499,7 +507,6 @@ def main():
 
     tracking = load_tracking()
     excluded_urls = {entry["url"] for entry in tracking}
-    existing_slugs = {entry["slug"] for entry in tracking if "slug" in entry}
 
     # Rotate topics by month so coverage broadens over time instead of
     # repeating the same query. (Seeded per-run, not globally, so it
@@ -514,8 +521,22 @@ def main():
     print(f"Discovered {len(candidates)} candidate URLs via free RSS sources.")
 
     accepted = []
+    gemini_calls_used = 0
+    quota_exhausted = False
+
     for candidate in candidates:
         if len(accepted) >= ARTICLES_PER_RUN:
+            break
+
+        if quota_exhausted:
+            print("  -> skipping remaining candidates: Gemini quota already exhausted this run.")
+            break
+
+        if gemini_calls_used >= MAX_GEMINI_CALLS_PER_RUN:
+            print(
+                f"  -> reached MAX_GEMINI_CALLS_PER_RUN ({MAX_GEMINI_CALLS_PER_RUN}) "
+                "for this run, stopping to preserve quota for future runs."
+            )
             break
 
         try:
@@ -543,7 +564,14 @@ def main():
                 print("  -> could not extract usable text, skipping.")
                 continue
 
-            result = classify_and_summarize(client, title, real_url, text)
+            gemini_calls_used += 1
+            try:
+                result = classify_and_summarize(client, title, real_url, text)
+            except QuotaExhaustedError:
+                quota_exhausted = True
+                print("  -> stopping this run: Gemini free-tier quota exhausted.")
+                break
+
             if not result:
                 print("  -> classification/summarization failed, skipping.")
                 continue
@@ -557,39 +585,40 @@ def main():
                 print("  -> marked eligible but no summary returned, skipping.")
                 continue
 
-            now = datetime.now(timezone.utc)
-            slug = slugify(title, existing_slugs)
-
             accepted.append(
                 {
                     "url": real_url,
                     "title": title,
                     "summary": summary,
-                    "category": result.get("category") or "Industry News",
-                    "slug": slug,
                     "read_minutes": estimate_read_minutes(text),
-                    "added": now.strftime("%Y-%m-%d"),
-                    "date_display": now.strftime("%b %Y"),
+                    "added": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
                 }
             )
-            print(f"  -> accepted [{result.get('category')}]: {title}")
+            print(f"  -> accepted: {title}")
             excluded_urls.add(real_url)
         except Exception as exc:
             print(f"  -> unexpected error on this candidate, skipping: {exc}")
             continue
+
+    if quota_exhausted:
+        print(
+            "NOTE: this run stopped early because the Gemini free-tier daily "
+            "quota was exhausted. If this keeps happening, either lower "
+            "MAX_GEMINI_CALLS_PER_RUN's competition by running less often, "
+            "reduce ARTICLES_PER_RUN, or move to a paid Gemini tier."
+        )
 
     if not accepted:
         print("No new articles were accepted this run. Nothing to do.")
         return
 
     cards_html = "".join(build_card_html(a) for a in accepted)
-    articles_html = "".join(build_article_html(a) for a in accepted)
-    insert_into_html(cards_html, articles_html)
+    insert_cards_into_html(cards_html)
 
     tracking = accepted + tracking  # newest first
     save_tracking(tracking)
 
-    print(f"Inserted {len(accepted)} new article card(s)/section(s) into {HTML_PATH}.")
+    print(f"Inserted {len(accepted)} new article card(s) into {HTML_PATH}.")
 
 
 if __name__ == "__main__":
