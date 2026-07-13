@@ -13,6 +13,44 @@
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+<!-- ============================================================ -->
+<!-- Simplified LinkedIn post card styling — image + "See more"     -->
+<!-- only. White by default, light grey on hover/focus/click. Move  -->
+<!-- into style.css whenever convenient — inline here so it renders  -->
+<!-- correctly immediately without touching the shared stylesheet.  -->
+<!-- ============================================================ -->
+<style>
+  .li-post-card {
+    background:#ffffff;
+    display:flex;
+    flex-direction:column;
+    border-radius:12px;
+    overflow:hidden;
+    transition:background-color .15s ease;
+  }
+  .li-post-card:hover,
+  .li-post-card:focus-visible,
+  .li-post-card:active {
+    background:#f0f0f0;
+  }
+  .li-post-card .li-post-image {
+    width:100%;
+    display:block;
+    aspect-ratio:1.2 / 1;
+    object-fit:cover;
+  }
+  .li-post-card .li-post-link {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    padding:14px 12px;
+    font-size:14px;
+    font-weight:600;
+    color:var(--color-ink, #111111);
+  }
+</style>
 </head>
 <body>
 
@@ -90,8 +128,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
     <!-- ============================================================ -->
     <!-- PAGE CONTENT — 6 REAL LINKEDIN POST CARDS                     -->
-    <!-- Post text and comments are placeholders — swap in real copy   -->
-    <!-- when it's ready. Links below are the real post URLs supplied. -->
+    <!-- Simplified card: image + "See more" only. Links below are the -->
+    <!-- real post URLs supplied.                                       -->
     <!-- ============================================================ -->
 
     <div class="li-follow-banner reveal">
@@ -111,98 +149,38 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
       <!-- POST 1 -->
       <a href="https://www.linkedin.com/posts/murtaza-corporation_industrialsolutions-pipesandtubes-constructionmaterials-activity-7452632664446185472-AlUT" target="_blank" rel="noopener" class="li-post-card">
-        <div class="li-post-head">
-          <img src="Logos/company.png" alt="Murtaza Corporation" class="li-post-logo" />
-          <div>
-            <strong>Murtaza Corporation</strong>
-            <span class="li-post-date">Post date</span>
-          </div>
-        </div>
         <img src="likedin/1771569231864.jpg" alt="" class="li-post-image" />
-        <p class="li-post-text">[Post text to be added] Industrial solutions, pipes &amp; tubes, construction materials.</p>
-        <span class="li-post-link">
-          View post on LinkedIn <span class="arrow">&rarr;</span>
-        </span>
+        <span class="li-post-link">See more <span class="arrow">&rarr;</span></span>
       </a>
 
       <!-- POST 2 -->
       <a href="https://www.linkedin.com/posts/murtaza-corporation_industrialfittings-flanges-engineeringmaterials-activity-7455571748143501312-uxB7" target="_blank" rel="noopener" class="li-post-card">
-        <div class="li-post-head">
-          <img src="Logos/company.png" alt="Murtaza Corporation" class="li-post-logo" />
-          <div>
-            <strong>Murtaza Corporation</strong>
-            <span class="li-post-date">Post date</span>
-          </div>
-        </div>
         <img src="likedin/1776846088646.jpg" alt="" class="li-post-image" />
-        <p class="li-post-text">[Post text to be added] Industrial fittings, flanges, engineering materials.</p>
-        <span class="li-post-link">
-          View post on LinkedIn <span class="arrow">&rarr;</span>
-        </span>
+        <span class="li-post-link">See more <span class="arrow">&rarr;</span></span>
       </a>
 
       <!-- POST 3 -->
       <a href="https://www.linkedin.com/posts/murtaza-corporation_industrialpipes-pipelinesystems-steelsolutions-activity-7471177278157320193-lwaK" target="_blank" rel="noopener" class="li-post-card">
-        <div class="li-post-head">
-          <img src="Logos/company.png" alt="Murtaza Corporation" class="li-post-logo" />
-          <div>
-            <strong>Murtaza Corporation</strong>
-            <span class="li-post-date">Post date</span>
-          </div>
-        </div>
         <img src="likedin/1781267470242.jpg" alt="" class="li-post-image" />
-        <p class="li-post-text">[Post text to be added] Industrial pipes, pipeline systems, steel solutions.</p>
-        <span class="li-post-link">
-          View post on LinkedIn <span class="arrow">&rarr;</span>
-        </span>
+        <span class="li-post-link">See more <span class="arrow">&rarr;</span></span>
       </a>
 
       <!-- POST 4 -->
       <a href="https://www.linkedin.com/posts/murtaza-corporation_murtazacorporation-flanges-industrialsolutions-activity-7477690572594573314-8n7M" target="_blank" rel="noopener" class="li-post-card">
-        <div class="li-post-head">
-          <img src="Logos/company.png" alt="Murtaza Corporation" class="li-post-logo" />
-          <div>
-            <strong>Murtaza Corporation</strong>
-            <span class="li-post-date">Post date</span>
-          </div>
-        </div>
         <img src="likedin/1782820360204.jpg" alt="" class="li-post-image" />
-        <p class="li-post-text">[Post text to be added] Murtaza Corporation, flanges, industrial solutions.</p>
-        <span class="li-post-link">
-          View post on LinkedIn <span class="arrow">&rarr;</span>
-        </span>
+        <span class="li-post-link">See more <span class="arrow">&rarr;</span></span>
       </a>
 
       <!-- POST 5 -->
       <a href="https://www.linkedin.com/feed/update/urn:li:share:7478059785721036800/" target="_blank" rel="noopener" class="li-post-card">
-        <div class="li-post-head">
-          <img src="Logos/company.png" alt="Murtaza Corporation" class="li-post-logo" />
-          <div>
-            <strong>Murtaza Corporation</strong>
-            <span class="li-post-date">Post date</span>
-          </div>
-        </div>
         <img src="likedin/1782908387248.jpg" alt="" class="li-post-image" />
-        <p class="li-post-text">[Post text to be added]</p>
-        <span class="li-post-link">
-          View post on LinkedIn <span class="arrow">&rarr;</span>
-        </span>
+        <span class="li-post-link">See more <span class="arrow">&rarr;</span></span>
       </a>
 
       <!-- POST 6 -->
       <a href="https://www.linkedin.com/feed/update/urn:li:share:7478060163577589760/" target="_blank" rel="noopener" class="li-post-card">
-        <div class="li-post-head">
-          <img src="Logos/company.png" alt="Murtaza Corporation" class="li-post-logo" />
-          <div>
-            <strong>Murtaza Corporation</strong>
-            <span class="li-post-date">Post date</span>
-          </div>
-        </div>
         <img src="likedin/1782908477616.jpg" alt="" class="li-post-image" />
-        <p class="li-post-text">[Post text to be added]</p>
-        <span class="li-post-link">
-          View post on LinkedIn <span class="arrow">&rarr;</span>
-        </span>
+        <span class="li-post-link">See more <span class="arrow">&rarr;</span></span>
       </a>
 
     </div>
