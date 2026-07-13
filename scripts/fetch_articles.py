@@ -7,20 +7,25 @@ Monthly pipeline for Murtaza Corporation's "Engineering Articles" page.
 What it does, in order:
   1. DISCOVER  - Search free, keyless RSS sources (Google News RSS search,
                  plus any custom feeds you add) to find real, recently
-                 published articles relevant to Murtaza Corporation's
-                 business (stainless & carbon steel piping, tubes,
-                 fittings, flanges, valves, corrosion, MTRs/EN 10204,
-                 welding & fabrication). No LLM call happens in this step,
-                 so it never requires a paid/billed Gemini project.
+                 published articles about stainless steel (SS) and mild/
+                 carbon steel (MS) pipe specifically. No LLM call happens
+                 in this step, so it never requires a paid/billed Gemini
+                 project.
   2. RESOLVE   - Decode Google News' obfuscated redirect links to the real
                  publisher URL (via googlenewsdecoder).
   3. FETCH     - Download the actual article page and extract its real text.
-  4. SUMMARIZE - Ask Gemini (free tier, plain text generation - no paid
-                 Google Search grounding tool) to summarize ONLY the
-                 fetched text into ~10 short lines. The model cannot invent
-                 facts that aren't in the source text.
-  5. DEDUPE    - Skip URLs already listed in data/published_articles.json.
-  6. INSERT    - Add new, image-free cards into engineering-articles.html
+  4. PRE-FILTER - Cheap, deterministic rejection of obviously-ineligible
+                 candidates (India-linked domains/titles, book-review
+                 titles) BEFORE spending an LLM call on them.
+  5. CLASSIFY+SUMMARIZE - Ask Gemini (free tier, plain text generation -
+                 no paid Google Search grounding tool) to first judge
+                 whether the article is actually eligible under the strict
+                 rules below, and only then summarize ONLY the fetched
+                 text into ~8-10 short lines. The model cannot invent
+                 facts that aren't in the source text, and articles that
+                 fail the eligibility check are skipped entirely.
+  6. DEDUPE    - Skip URLs already listed in data/published_articles.json.
+  7. INSERT    - Add new, image-free cards into engineering-articles.html
                  that link OUT to the original article (curation, not
                  republishing).
 
@@ -28,6 +33,19 @@ This script only edits files on disk. It does not commit, push, or open a
 pull request - that's handled by the GitHub Actions workflow, which uses
 peter-evans/create-pull-request so a human always reviews before anything
 merges.
+
+STRICT CONTENT RULES (as of this version):
+  - Must be specifically about stainless steel (SS) or mild/carbon steel
+    (MS) pipe. Articles about valves, flanges, or other components with
+    no substantial pipe-specific content do NOT qualify.
+  - Must be educational/informative - explains a concept, standard,
+    technique, or a genuinely important industry development. Thin
+    market-research stat dumps, ads, or routine promotional company news
+    with no real educational value are rejected.
+  - Must NOT be a book review, article review, or any literary/media
+    review content.
+  - Must NOT be primarily about India, an Indian company, or written from
+    an Indian trade-publication's perspective.
 
 Environment variables:
   GEMINI_API_KEY      Required. API key for the Gemini API.
@@ -60,11 +78,13 @@ TRACKING_PATH = os.path.join(REPO_ROOT, "data", "published_articles.json")
 
 CARD_MARKER = "<!-- AUTO-CARDS:START (script inserts new card as first child here) -->"
 
-# Only used for the summarization step (plain text generation - no paid
-# Google Search grounding tool involved, so this stays on the free tier).
+# Only used for the classification+summarization step (plain text
+# generation - no paid Google Search grounding tool involved, so this
+# stays on the free tier).
 MODEL_SUMMARIZE = "gemini-flash-latest"
 
 ARTICLES_PER_RUN = int(os.environ.get("ARTICLES_PER_RUN", "2"))
+MIN_SOURCE_CHARS = int(os.environ.get("MIN_SOURCE_CHARS", "800"))
 
 USER_AGENT = "Mozilla/5.0 (compatible; MurtazaArticleBot/1.0)"
 
@@ -76,24 +96,71 @@ CUSTOM_RSS_FEEDS = [
     # "https://example-trade-publication.com/feed",
 ]
 
-# Rotate through a subset of these each run so coverage stays broad over time
-# rather than repeating the same query every month.
+# Rotate through a subset of these each run so coverage stays broad over
+# time rather than repeating the same query every month. STRICTLY anchored
+# on "steel pipe" (SS or MS) - no valve-only / flange-only / instrumentation
+# -only topics, since those don't satisfy the "strictly pipe" requirement.
 TOPIC_POOL = [
-    "304 vs 316 stainless steel selection industrial piping",
+    "stainless steel pipe manufacturing standards",
     "carbon steel pipe corrosion prevention industrial plants",
-    "welded vs seamless pipe fittings manufacturing specification",
-    "flange types gasket selection process piping",
-    "industrial valve selection ball gate check camlock",
-    "instrumentation tubing standards installation practices",
-    "EN 10204 mill test certificates material traceability",
-    "ASTM ASME piping standards stainless carbon steel",
-    "structural steel fabrication techniques quality control",
-    "pipe welding procedures weld quality inspection",
-    "pitting crevice corrosion chloride environments",
-    "hygienic sanitary stainless tubing food dairy processing",
+    "welded vs seamless steel pipe manufacturing specification",
+    "steel pipe welding procedures weld quality inspection",
+    "stainless steel pipe pitting crevice corrosion chloride",
+    "mild steel pipe industrial applications specification",
+    "steel pipe wall thickness schedule selection ASME",
+    "ASTM ASME steel pipe standards specification",
+    "steel pipe mill test certificate EN 10204 traceability",
+    "steel pipe manufacturing quality control fabrication",
+    "hygienic sanitary stainless steel pipe tubing standards",
+    "steel pipeline safety regulations pipe integrity",
 ]
 
-MIN_SOURCE_CHARS = 800  # skip pages that are too thin to summarize responsibly
+# --- Fast, deterministic pre-filters (run BEFORE any LLM call) ------------
+
+# Reject candidates whose domain or title suggests an Indian publication /
+# company, or where the TLD is .in. This is a heuristic, not a guarantee -
+# the LLM classification step below is a second, stricter check for cases
+# this misses (e.g. an India-based story on a .com domain with no obvious
+# marker in the title).
+INDIA_DOMAIN_MARKERS = [
+    ".in",          # TLD
+    "india",        # e.g. tubepipeindia.com
+]
+
+# Known low-value / off-topic domains you don't want cluttering the feed.
+# Add to this over time as junk sources show up in PRs.
+DOMAIN_DENYLIST = [
+    # "some-content-farm.com",
+]
+
+BOOK_REVIEW_TITLE_MARKERS = [
+    "book review",
+    "review of the book",
+    "author interview",
+    "book excerpt",
+]
+
+
+def fails_fast_prefilter(domain, title):
+    """Returns a rejection reason string if the candidate should be
+    skipped without ever spending an LLM call on it, or None if it passes
+    the fast filter (still subject to the stricter LLM check later)."""
+    domain_l = (domain or "").lower()
+    title_l = (title or "").lower()
+
+    for marker in INDIA_DOMAIN_MARKERS:
+        if marker in domain_l:
+            return f"domain matches India marker '{marker}'"
+
+    for denied in DOMAIN_DENYLIST:
+        if denied.lower() in domain_l:
+            return f"domain is denylisted ({denied})"
+
+    for marker in BOOK_REVIEW_TITLE_MARKERS:
+        if marker in title_l:
+            return f"title matches book-review marker '{marker}'"
+
+    return None
 
 
 # ---------------------------------------------------------------------------
@@ -117,8 +184,7 @@ def _parse_rss_items(xml_bytes):
 def discover_candidates(topics, excluded_urls, want_count):
     """Finds real candidate articles using free, keyless RSS sources:
     Google News RSS search (per topic) plus any custom feeds you've added
-    above. No LLM call happens here, so this step never touches billing.
-    """
+    above. No LLM call happens here, so this step never touches billing."""
     candidates = []
     seen = set(excluded_urls)
 
@@ -150,7 +216,7 @@ def discover_candidates(topics, excluded_urls, want_count):
                 candidates.append(item)
 
     random.shuffle(candidates)
-    return candidates[: want_count * 6]
+    return candidates[: want_count * 8]  # slightly wider pool since filters are stricter now
 
 
 def resolve_real_url(url):
@@ -181,7 +247,7 @@ def fetch_article_text(url):
         resp = requests.get(
             url,
             timeout=15,
-            headers={"User-Agent": "Mozilla/5.0 (compatible; MurtazaArticleBot/1.0)"},
+            headers={"User-Agent": USER_AGENT},
         )
         resp.raise_for_status()
     except requests.RequestException:
@@ -194,12 +260,17 @@ def fetch_article_text(url):
 
 
 # ---------------------------------------------------------------------------
-# Step 3: Summarize strictly from the fetched text
+# Step 3: Classify eligibility AND summarize, strictly from the fetched text
 # ---------------------------------------------------------------------------
 
-def summarize_article(client, title, url, source_text, max_attempts=3):
-    """Asks Gemini to summarize ONLY the given text. No search tool is
-    attached here, which keeps the model from pulling in outside claims.
+def classify_and_summarize(client, title, url, source_text, max_attempts=3):
+    """Asks Gemini to (a) judge whether the article is eligible under the
+    strict content rules, and (b) if eligible, summarize ONLY the given
+    text. No search tool is attached, which keeps the model from pulling
+    in outside claims.
+
+    Returns a dict: {"eligible": bool, "reason": str, "summary": str|None}
+    or None if the call failed after retries.
 
     Retries a couple of times on transient server errors (e.g. 503 'high
     demand') before giving up on this one article - a temporary hiccup on
@@ -209,11 +280,35 @@ def summarize_article(client, title, url, source_text, max_attempts=3):
     trimmed = source_text[:12000]
 
     prompt = f"""
-Summarize the following article in EXACTLY 8 to 10 short sentences, written
-in plain, engineering-audience prose (no bullet points, no headers, no
-markdown). Base the summary ONLY on the text provided below - do not add
-outside facts, opinions, or claims that are not present in the text. Do not
-mention that you are summarizing. Write in third person.
+You are screening a candidate article for an industrial steel pipe company's
+curated articles feed. Judge ELIGIBILITY first, using ONLY the article text
+provided below (do not use outside knowledge to guess at facts not present).
+
+An article is ELIGIBLE only if ALL of the following are true:
+1. It is specifically about stainless steel (SS) or mild/carbon steel (MS)
+   PIPE - manufacturing, standards, specifications, corrosion, welding,
+   fabrication, testing, applications, or maintenance of steel pipe.
+   Articles primarily about valves, flanges, or other components, with no
+   substantial pipe-specific content, do NOT qualify.
+2. It is educational/informative - it explains a concept, standard,
+   technique, or a genuinely important industry development that a piping
+   engineer or buyer should know. Thin market-research statistic dumps,
+   advertisements, or routine promotional company news with no real
+   educational content do NOT qualify.
+3. It is NOT a book review, article review, or any literary/media review.
+4. It is NOT primarily about India, an Indian company, or written from an
+   Indian trade publication's perspective (check for Indian company names,
+   INR/rupee pricing, Indian place names, or an Indian publisher context).
+
+Respond with ONLY a JSON object (no markdown fences, no extra text) in
+exactly this shape:
+{{
+  "eligible": true or false,
+  "reason": "one short sentence explaining the eligibility decision",
+  "summary": "8 to 10 short sentences in plain, engineering-audience prose,
+    third person, no bullet points, no markdown, based ONLY on the article
+    text below - or null if not eligible"
+}}
 
 Title: {title}
 
@@ -229,15 +324,24 @@ Article text:
                 model=MODEL_SUMMARIZE,
                 contents=prompt,
             )
-            summary = (response.text or "").strip()
-            return summary or None
+            raw = (response.text or "").strip()
+            # Strip accidental markdown code fences if the model adds them.
+            raw = re.sub(r"^```(?:json)?\s*|\s*```$", "", raw.strip())
+            data = json.loads(raw)
+            if not isinstance(data, dict) or "eligible" not in data:
+                print("  -> unexpected response shape from model, skipping.")
+                return None
+            return data
+        except json.JSONDecodeError as exc:
+            print(f"  -> could not parse model response as JSON (attempt {attempt}/{max_attempts}): {exc}")
         except Exception as exc:
             print(f"  -> Gemini call failed (attempt {attempt}/{max_attempts}): {exc}")
-            if attempt < max_attempts:
-                time.sleep(5 * attempt)  # 5s, then 10s
-            else:
-                print("  -> giving up on this article after repeated failures.")
-                return None
+
+        if attempt < max_attempts:
+            time.sleep(5 * attempt)  # 5s, then 10s
+        else:
+            print("  -> giving up on this article after repeated failures.")
+            return None
 
 
 # ---------------------------------------------------------------------------
@@ -320,10 +424,11 @@ def main():
     excluded_urls = {entry["url"] for entry in tracking}
 
     # Rotate topics by month so coverage broadens over time instead of
-    # repeating the same query.
+    # repeating the same query. (Seeded per-run, not globally, so it
+    # doesn't also pin candidate shuffling below to the month.)
     month_index = datetime.now(timezone.utc).month
-    random.seed(month_index)
-    topics = random.sample(TOPIC_POOL, k=min(4, len(TOPIC_POOL)))
+    topic_rng = random.Random(month_index)
+    topics = topic_rng.sample(TOPIC_POOL, k=min(4, len(TOPIC_POOL)))
 
     print(f"Topics this run: {topics}")
 
@@ -344,16 +449,34 @@ def main():
             if real_url in excluded_urls:
                 continue
 
+            domain = urlparse(real_url).netloc.replace("www.", "")
+            title = candidate["title"] or real_url
+
+            # Fast, free, deterministic rejection before spending a fetch
+            # or an LLM call.
+            prefilter_reason = fails_fast_prefilter(domain, title)
+            if prefilter_reason:
+                print(f"  -> pre-filter rejected ({prefilter_reason}): {title[:80]}")
+                continue
+
             print(f"Fetching: {real_url}")
             text = fetch_article_text(real_url)
             if not text:
                 print("  -> could not extract usable text, skipping.")
                 continue
 
-            title = candidate["title"] or real_url
-            summary = summarize_article(client, title, real_url, text)
+            result = classify_and_summarize(client, title, real_url, text)
+            if not result:
+                print("  -> classification/summarization failed, skipping.")
+                continue
+
+            if not result.get("eligible"):
+                print(f"  -> rejected by content rules: {result.get('reason', 'no reason given')}")
+                continue
+
+            summary = (result.get("summary") or "").strip()
             if not summary:
-                print("  -> summarization failed, skipping.")
+                print("  -> marked eligible but no summary returned, skipping.")
                 continue
 
             accepted.append(
@@ -386,4 +509,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
