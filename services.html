@@ -1,72 +1,461 @@
-<div class="services-mindmap-wrap reveal">
-  <p class="eyebrow">How it all connects</p>
-  <p class="services-mindmap-caption">Four services, one order. Click any branch to jump straight to it.</p>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Services — Murtaza Corporation</title>
+<meta name="description" content="Sourcing, customization, logistics and after-sales support — the full range of services offered by Murtaza Corporation." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
 
-  <svg class="services-mindmap" viewBox="0 0 1000 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mind map of Murtaza Corporation's four services: Counter Sales, Project Tender, Supply and Logistics, and Projects Feasibility">
+<div class="header-hover-zone" id="headerHoverZone"></div>
+<header>
+  <div class="nav-inner">
 
-    <!-- trunk: center node down to the shared horizontal spine -->
-    <path class="mm-path" d="M500,70 L500,92" />
-
-    <!-- spine + drops to each branch (orthogonal elbow connectors) -->
-    <path class="mm-path" d="M500,92 L130,92 L130,116" />
-    <path class="mm-path" d="M500,92 L375,92 L375,116" />
-    <path class="mm-path" d="M500,92 L620,92 L620,116" />
-    <path class="mm-path" d="M500,92 L865,92 L865,116" />
-
-    <!-- branch to leaf connectors -->
-    <path class="mm-path-leaf" d="M130,166 L130,190" />
-    <path class="mm-path-leaf" d="M130,216 L130,230" />
-    <path class="mm-path-leaf" d="M375,166 L375,190" />
-    <path class="mm-path-leaf" d="M375,216 L375,230" />
-    <path class="mm-path-leaf" d="M620,166 L620,190" />
-    <path class="mm-path-leaf" d="M620,216 L620,230" />
-    <path class="mm-path-leaf" d="M865,166 L865,190" />
-    <path class="mm-path-leaf" d="M865,216 L865,230" />
-
-    <!-- center node -->
-    <g>
-      <rect class="mm-node-rect" x="400" y="18" width="200" height="52" rx="10" fill="var(--color-ink,#1f1d1e)" />
-      <text class="mm-center-label" x="500" y="49" text-anchor="middle">Our Services</text>
-    </g>
-
-    <!-- branch: Counter Sales -->
-    <a href="#svc-counter-sales" class="mm-link" aria-label="Jump to Counter Sales">
-      <rect class="mm-node-rect" x="15" y="116" width="230" height="50" rx="10" fill="#1e37a0" />
-      <text class="mm-branch-label" x="130" y="146" text-anchor="middle">Counter Sales</text>
+    <a href="index.html#top" class="logo" aria-label="Murtaza Corporation home">
+      <img src="Logos/company.png" alt="Murtaza Corporation" class="logo-img" />
+      <span class="logo-name">Murtaza Corporation</span>
     </a>
-    <rect class="mm-leaf-pill" x="15" y="190" width="230" height="26" rx="6" />
-    <text class="mm-leaf-text" x="130" y="208" text-anchor="middle">In-person advice</text>
-    <rect class="mm-leaf-pill" x="15" y="230" width="230" height="26" rx="6" />
-    <text class="mm-leaf-text" x="130" y="248" text-anchor="middle">Same-day pickup</text>
 
-    <!-- branch: Project Tender -->
-    <a href="#svc-project-tender" class="mm-link" aria-label="Jump to Project Tender">
-      <rect class="mm-node-rect" x="260" y="116" width="230" height="50" rx="10" fill="#1e37a0" />
-      <text class="mm-branch-label" x="375" y="146" text-anchor="middle">Project Tender</text>
-    </a>
-    <rect class="mm-leaf-pill" x="260" y="190" width="230" height="26" rx="6" />
-    <text class="mm-leaf-text" x="375" y="208" text-anchor="middle">Competitive bids</text>
-    <rect class="mm-leaf-pill" x="260" y="230" width="230" height="26" rx="6" />
-    <text class="mm-leaf-text" x="375" y="248" text-anchor="middle">Dedicated support</text>
+    <span class="nav-divider" aria-hidden="true"></span>
 
-    <!-- branch: Supply & Logistics -->
-    <a href="#svc-supply-logistics" class="mm-link" aria-label="Jump to Supply and Logistics">
-      <rect class="mm-node-rect" x="505" y="116" width="230" height="50" rx="10" fill="#1e37a0" />
-      <text class="mm-branch-label" x="620" y="146" text-anchor="middle">Supply &amp; Logistics</text>
-    </a>
-    <rect class="mm-leaf-pill" x="505" y="190" width="230" height="26" rx="6" />
-    <text class="mm-leaf-text" x="620" y="208" text-anchor="middle">Matched dispatch</text>
-    <rect class="mm-leaf-pill" x="505" y="230" width="230" height="26" rx="6" />
-    <text class="mm-leaf-text" x="620" y="248" text-anchor="middle">On-time schedules</text>
+    <nav>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#about">About</a></li>
+        <li class="nav-item-dropdown">
+          <a href="index.html#products" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+            Products <span class="nav-caret" aria-hidden="true">▾</span>
+          </a>
+          <ul class="nav-dropdown-menu">
+            <li><a href="pipes.html">Pipes</a></li>
+            <li><a href="fittings.html">Fittings</a></li>
+            <li><a href="valves.html">Valves</a></li>
+            <li><a href="flanges.html">Flanges</a></li>
+            <li><a href="tubes.html">Tubes</a></li>
+            <li><a href="dairy-tubes.html">Dairy tubes &amp; fittings</a></li>
+          </ul>
+        </li>
+        <li class="nav-item-dropdown open">
+          <a href="index.html#resources" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="true">
+            Resources <span class="nav-caret" aria-hidden="true">▾</span>
+          </a>
+          <ul class="nav-dropdown-menu">
+            <li><a href="company-profile.html">Company profile</a></li>
+            <li><a href="lor.html">LOR</a></li>
+            <li><a href="mill-test-report.html">Mill Test Report</a></li>
+            <li><a href="services.html" class="active" aria-current="page">Services</a></li>
+          </ul>
+        </li>
+        <li class="nav-item-dropdown">
+          <a href="index.html#track-record" class="nav-dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+            Updates <span class="nav-caret" aria-hidden="true">▾</span>
+          </a>
+          <ul class="nav-dropdown-menu">
+            <li><a href="linkedin-updates.html">LinkedIn Updates</a></li>
+            <li><a href="engineering-articles.html">Engineering Articles</a></li>
+            <li><a href="project-gallery.html">Project Gallery</a></li>
+          </ul>
+        </li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
 
-    <!-- branch: Projects Feasibility -->
-    <a href="#svc-projects-feasibility" class="mm-link" aria-label="Jump to Projects Feasibility">
-      <rect class="mm-node-rect" x="750" y="116" width="230" height="50" rx="10" fill="#1e37a0" />
-      <text class="mm-branch-label" x="865" y="146" text-anchor="middle">Projects Feasibility</text>
-    </a>
-    <rect class="mm-leaf-pill" x="750" y="190" width="230" height="26" rx="6" />
-    <text class="mm-leaf-text" x="865" y="208" text-anchor="middle">Steel &amp; mill estimating</text>
-    <rect class="mm-leaf-pill" x="750" y="230" width="230" height="26" rx="6" />
-    <text class="mm-leaf-text" x="865" y="248" text-anchor="middle">Lead-time guidance</text>
-  </svg>
+    <span class="nav-divider" aria-hidden="true"></span>
+
+    <div class="nav-actions">
+      <a href="index.html#contact" class="btn btn-primary btn-sm">Request a quote <span class="arrow">&rarr;</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+<div id="top"></div>
+
+<section class="block" id="page-top">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow"><a href="index.html#resources" style="color:inherit;">Resources</a> / Services</p>
+      <h2 class="heading">Services</h2>
+      <p class="sub-copy">From sourcing and customization to logistics and after-sales support — see the full range of services we offer.</p>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- PAGE CONTENT — PASTE YOUR CONTENT FOR "SERVICES" HERE -->
+    <!-- ============================================================ -->
+
+    <div class="services-intro reveal">
+      <p>Murtaza Corporation is driven by continuous improvement and a strong customer focus &mdash; aiming to be a leader in giving our customers excellent value, top-quality products, and outstanding service at every stage of the order.</p>
+    </div>
+
+    <div class="services-mindmap-wrap reveal">
+      <p class="eyebrow">How it all connects</p>
+      <p class="services-mindmap-caption">Four services, one order. Click any branch to jump straight to it.</p>
+
+      <svg class="services-mindmap" viewBox="0 0 1000 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mind map of Murtaza Corporation's four services: Counter Sales, Project Tender, Supply and Logistics, and Projects Feasibility">
+
+        <!-- connecting paths: center to branches -->
+        <path class="mm-path" d="M500,70 C500,105 130,85 130,120" />
+        <path class="mm-path" d="M500,70 C500,100 375,95 375,120" />
+        <path class="mm-path" d="M500,70 C500,100 620,95 620,120" />
+        <path class="mm-path" d="M500,70 C500,105 865,85 865,120" />
+
+        <!-- connecting paths: branches to leaves -->
+        <path class="mm-path-leaf" d="M130,172 L130,200" />
+        <path class="mm-path-leaf" d="M130,228 L130,236" />
+        <path class="mm-path-leaf" d="M375,172 L375,200" />
+        <path class="mm-path-leaf" d="M375,228 L375,236" />
+        <path class="mm-path-leaf" d="M620,172 L620,200" />
+        <path class="mm-path-leaf" d="M620,228 L620,236" />
+        <path class="mm-path-leaf" d="M865,172 L865,200" />
+        <path class="mm-path-leaf" d="M865,228 L865,236" />
+
+        <!-- center node -->
+        <g>
+          <rect class="mm-node-rect" x="400" y="14" width="200" height="56" rx="28" fill="var(--color-ink,#1f1d1e)" />
+          <text class="mm-center-label" x="500" y="48" text-anchor="middle">Our Services</text>
+        </g>
+
+        <!-- branch: Counter Sales -->
+        <a href="#svc-counter-sales" class="mm-link" aria-label="Jump to Counter Sales">
+          <rect class="mm-node-rect" x="15" y="120" width="230" height="52" rx="16" fill="#1e37a0" />
+          <text class="mm-branch-label" x="130" y="152" text-anchor="middle">Counter Sales</text>
+        </a>
+        <rect class="mm-leaf-pill" x="15" y="200" width="230" height="28" rx="14" />
+        <text class="mm-leaf-text" x="130" y="218" text-anchor="middle">In-person advice</text>
+        <rect class="mm-leaf-pill" x="15" y="236" width="230" height="28" rx="14" />
+        <text class="mm-leaf-text" x="130" y="254" text-anchor="middle">Same-day pickup</text>
+
+        <!-- branch: Project Tender -->
+        <a href="#svc-project-tender" class="mm-link" aria-label="Jump to Project Tender">
+          <rect class="mm-node-rect" x="260" y="120" width="230" height="52" rx="16" fill="#1e37a0" />
+          <text class="mm-branch-label" x="375" y="152" text-anchor="middle">Project Tender</text>
+        </a>
+        <rect class="mm-leaf-pill" x="260" y="200" width="230" height="28" rx="14" />
+        <text class="mm-leaf-text" x="375" y="218" text-anchor="middle">Competitive bids</text>
+        <rect class="mm-leaf-pill" x="260" y="236" width="230" height="28" rx="14" />
+        <text class="mm-leaf-text" x="375" y="254" text-anchor="middle">Dedicated support team</text>
+
+        <!-- branch: Supply & Logistics -->
+        <a href="#svc-supply-logistics" class="mm-link" aria-label="Jump to Supply and Logistics">
+          <rect class="mm-node-rect" x="505" y="120" width="230" height="52" rx="16" fill="#1e37a0" />
+          <text class="mm-branch-label" x="620" y="152" text-anchor="middle">Supply &amp; Logistics</text>
+        </a>
+        <rect class="mm-leaf-pill" x="505" y="200" width="230" height="28" rx="14" />
+        <text class="mm-leaf-text" x="620" y="218" text-anchor="middle">Invoice-matched dispatch</text>
+        <rect class="mm-leaf-pill" x="505" y="236" width="230" height="28" rx="14" />
+        <text class="mm-leaf-text" x="620" y="254" text-anchor="middle">On-time truck schedules</text>
+
+        <!-- branch: Projects Feasibility -->
+        <a href="#svc-projects-feasibility" class="mm-link" aria-label="Jump to Projects Feasibility">
+          <rect class="mm-node-rect" x="750" y="120" width="230" height="52" rx="16" fill="#1e37a0" />
+          <text class="mm-branch-label" x="865" y="152" text-anchor="middle">Projects Feasibility</text>
+        </a>
+        <rect class="mm-leaf-pill" x="750" y="200" width="230" height="28" rx="14" />
+        <text class="mm-leaf-text" x="865" y="218" text-anchor="middle">Steel &amp; mill estimating</text>
+        <rect class="mm-leaf-pill" x="750" y="236" width="230" height="28" rx="14" />
+        <text class="mm-leaf-text" x="865" y="254" text-anchor="middle">Lead-time guidance</text>
+      </svg>
+    </div>
+
+    <div class="services-grid reveal">
+
+      <div class="service-card" id="svc-counter-sales">
+        <div class="service-icon"><i class="fa-solid fa-shop"></i></div>
+        <div class="service-copy">
+          <h3>Counter Sales</h3>
+          <ul class="service-list">
+            <li>View samples of every product line and get professional advice from our counter staff in person</li>
+            <li>Place your order on the spot, no back-and-forth required</li>
+            <li>Same-day pickup on most in-stock sizes and grades</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="service-card" id="svc-project-tender">
+        <div class="service-icon"><i class="fa-solid fa-file-signature"></i></div>
+        <div class="service-copy">
+          <h3>Project Tender</h3>
+          <ul class="service-list">
+            <li>Professional project supply bids</li>
+            <li>Open dialogue to work toward the best offer</li>
+            <li>Murtaza Corporation resources allocated for project support</li>
+            <li>Reasonable terms and conditions of supply</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="service-card" id="svc-supply-logistics">
+        <div class="service-icon"><i class="fa-solid fa-truck-fast"></i></div>
+        <div class="service-copy">
+          <h3>Supply &amp; Logistics</h3>
+          <ul class="service-list">
+            <li>Every dispatch checked against the customer's invoice</li>
+            <li>Couriers and freight company pickups arranged on your behalf</li>
+            <li>Our own trucks' manifests organized so deliveries leave on time</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="service-card" id="svc-projects-feasibility">
+        <div class="service-icon"><i class="fa-solid fa-drafting-compass"></i></div>
+        <div class="service-copy">
+          <h3>Projects Feasibility</h3>
+          <ul class="service-list">
+            <li>Estimating service for upcoming projects</li>
+            <li>Technical assistance with steel selection</li>
+            <li>Guidance on mill selection and production lead times</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="services-cta reveal">
+      <div>
+        <h3>Need one of these for your next order?</h3>
+        <p>Tell us what you're sourcing and we'll match it to the right service &mdash; counter, tender, logistics, or feasibility.</p>
+      </div>
+      <a href="index.html#contact" class="btn btn-primary">Request a quote <span class="arrow">&rarr;</span></a>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- END PAGE CONTENT                                              -->
+    <!-- ============================================================ -->
+
+    <div class="view-all reveal">
+      <a href="index.html#resources" class="btn btn-ghost">
+        &larr; Back to all resources
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="Logos/company.png" alt="Murtaza Corporation" class="footer-logo-img" />
+    </div>
+
+    <div class="footer-col">
+      <h4>Address</h4>
+      <p>516/517, Sector 6-A, Mehran Town, Korangi Industrial Area, Karachi - 74900, Pakistan</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contacts</h4>
+      <p>Email: <a href="mailto:sales@murtazacorporation.com.pk">sales@murtazacorporation.com.pk</a></p>
+      <p>Phone: <a href="tel:+922135141451">+92 (21) 35141451</a></p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Links</h4>
+      <ul class="footer-link-list">
+        <li><a href="http://www.wermac.org/" target="_blank" rel="noopener">Wermac</a></li>
+        <li><a href="http://www.huikepipe.com/en/" target="_blank" rel="noopener">Hebei Huike</a></li>
+        <li><a href="http://www.yuandavalves.com/brand.html" target="_blank" rel="noopener">Yuanda Valve</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copy">© 2026 Murtaza Corporation. All rights reserved.</div>
+</footer>
+
+<script src="script.js" defer></script>
+<a href="#" class="calculator-widget" id="calculatorWidgetBtn" aria-label="Open pipe calculator">
+    <span class="whatsapp-text">Calculator</span>
+    <div class="calculator-icon"><i class="fa-solid fa-calculator"></i></div>
+</a>
+<a href="https://wa.me/923343791852" class="whatsapp-widget" target="_blank" aria-label="Chat on WhatsApp">
+    <span class="whatsapp-text">Chat with us</span>
+    <div class="whatsapp-icon"><i class="fab fa-whatsapp"></i></div>
+</a>
+<div class="calculator-overlay" id="calculatorOverlay">
+  <div class="calculator-modal" id="calculatorModal" role="dialog" aria-modal="true" aria-labelledby="calculatorModalTitle">
+    <button type="button" class="calculator-modal-close" id="calculatorModalClose" aria-label="Close calculator">&times;</button>
+    <div class="calculator-modal-header">
+      <h3 id="calculatorModalTitle">Pipe Calculator</h3>
+    </div>
+    <div class="calculator-modal-body">
+  <form id="calcForm" onsubmit="return false;" class="calc-form">
+
+   <div class="calc-shape-bar" id="calcShapeBar">
+      <label>Shape</label>
+      <div class="calc-shape-icons" id="calcShapeIcons">
+        <button type="button" class="calc-shape-icon is-active" data-shape="Round" aria-pressed="true" aria-label="Round"><img src="images/round.png" alt="" /><span class="calc-shape-icon-label">Round</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Square" aria-pressed="false" aria-label="Square"><img src="images/icon-square.png" alt="" /><span class="calc-shape-icon-label">Square</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Rectangle" aria-pressed="false" aria-label="Rectangle"><img src="images/icon-rectangle.png" alt="" /><span class="calc-shape-icon-label">Rectangle</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Hexagonal" aria-pressed="false" aria-label="Hexagonal"><img src="images/icon-hexagol.jpg" alt="" /><span class="calc-shape-icon-label">Hexagonal</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Octagonal" aria-pressed="false" aria-label="Octagonal"><img src="images/icon-octa.png" alt="" /><span class="calc-shape-icon-label">Octagonal</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Sheet" aria-pressed="false" aria-label="Sheet"><img src="images/sheet.png" alt="" /><span class="calc-shape-icon-label">Sheet</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Plate" aria-pressed="false" aria-label="Plate"><img src="images/plate.jpg" alt="" /><span class="calc-shape-icon-label">Plate</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Pipe" aria-pressed="false" aria-label="Tubular / Pipe"><img src="images/tubular.jpg" alt="" /><span class="calc-shape-icon-label">Tubular/Pipe</span></button>
+        <button type="button" class="calc-shape-icon" data-shape="Ring" aria-pressed="false" aria-label="Ring"><img src="images/ring.png" alt="" /><span class="calc-shape-icon-label">Ring</span></button>
+      </div>
+      <p class="calc-shape-name" id="calcShapeName" style="display:none;">Round</p>
+      <select id="calcShape" style="display:none;">
+        <option value="Round" selected>Round</option>
+        <option value="Square">Square</option>
+        <option value="Rectangle">Rectangle</option>
+        <option value="Hexagonal">Hexagonal</option>
+        <option value="Octagonal">Octagonal</option>
+        <option value="Sheet">Sheet</option>
+        <option value="Plate">Plate</option>
+        <option value="Tubular">Tubular</option>
+        <option value="Pipe">Pipe</option>
+        <option value="Ring">Ring</option>
+        </select>
+    </div>
+
+   <div class="calc-layout">
+    <div class="calc-main">
+
+    <div class="calc-row">
+      <label for="calcMaterial">Material</label>
+      <select id="calcMaterial">
+        <option data-factor="1" selected>Steel (default)</option>
+        <option data-factor="0.3462">Aluminum 1100</option>
+        <option data-factor="0.3604">Aluminum 2011</option>
+        <option data-factor="0.3568">Aluminum 2014</option>
+        <option data-factor="0.3568">Aluminum 2017</option>
+        <option data-factor="0.3533">Aluminum 2024</option>
+        <option data-factor="0.3498">Aluminum 3003</option>
+        <option data-factor="0.3462">Aluminum 5005</option>
+        <option data-factor="0.3427">Aluminum 5052</option>
+        <option data-factor="0.3356">Aluminum 5056</option>
+        <option data-factor="0.3392">Aluminum 5083</option>
+        <option data-factor="0.3392">Aluminum 5086</option>
+        <option data-factor="0.3462">Aluminum 6061</option>
+        <option data-factor="0.3462">Aluminum 6063</option>
+        <option data-factor="0.3568">Aluminum 7050</option>
+        <option data-factor="0.3568">Aluminum 7075</option>
+        <option data-factor="0.3604">Aluminum 7178</option>
+        <option data-factor="1.030">Stainless 300 Series</option>
+        <option data-factor="1.010">Stainless 400 Series</option>
+        <option data-factor="1.132">Nickel 200</option>
+        <option data-factor="1.125">Nickel 400</option>
+        <option data-factor="1.121">Nickel R-405</option>
+        <option data-factor="1.075">Nickel K-500</option>
+        <option data-factor="1.072">Nickel 600</option>
+        <option data-factor="1.075">Nickel 625</option>
+        <option data-factor="1.012">Nickel 800H</option>
+        <option data-factor="1.012">Nickel 800AT</option>
+        <option data-factor="1.037">Nickel 825</option>
+        <option data-factor="1.012">Nickel 330</option>
+        <option data-factor="1.030">Nickel 20</option>
+        <option data-factor="1.132">Nickel C-276</option>
+        <option data-factor="1.012">Nickel 2545MD</option>
+        <option data-factor="0.229">Magnesium</option>
+        <option data-factor="0.236">Beryllium</option>
+        <option data-factor="0.575">Titanium</option>
+        <option data-factor="0.812">Zirconium</option>
+        <option data-factor="0.911">Cast Iron</option>
+        <option data-factor="0.911">Zinc</option>
+        <option data-factor="1.084">Brass</option>
+        <option data-factor="1.095">Columbium</option>
+        <option data-factor="1.144">Copper</option>
+        <option data-factor="1.303">Molybdenum</option>
+        <option data-factor="1.339">Silver</option>
+        <option data-factor="1.448">Lead</option>
+        <option data-factor="2.120">Tantalum</option>
+        <option data-factor="2.462">Tungsten</option>
+        <option data-factor="2.466">Gold</option>
+      </select>
+    </div>
+
+    <div class="calc-row" id="calcField1Row">
+      <label id="calcLabel1" for="calcParam1">Diameter</label>
+      <div class="calc-input-group">
+        <input type="number" step="any" id="calcParam1" placeholder="0.00" />
+        <select id="calcUnit1">
+          <option>in</option><option>ft</option><option>yd</option>
+          <option>mm</option><option>cm</option><option>m</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="calc-row" id="calcField2Row" style="display:none;">
+      <label id="calcLabel2" for="calcParam2">Width</label>
+      <div class="calc-input-group">
+        <input type="number" step="any" id="calcParam2" placeholder="0.00" />
+        <select id="calcUnit2">
+          <option>in</option><option>ft</option><option>yd</option>
+          <option>mm</option><option>cm</option><option>m</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="calc-row" id="calcField3Row">
+      <label id="calcLabel3" for="calcParam3">Length</label>
+      <div class="calc-input-group">
+        <input type="number" step="any" id="calcParam3" placeholder="0.00" />
+        <select id="calcUnit3">
+          <option>in</option><option>ft</option><option>yd</option>
+          <option>mm</option><option>cm</option><option>m</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="calc-row">
+      <label for="calcQty">Quantity (pieces)</label>
+      <input type="number" step="1" min="1" id="calcQty" value="1" />
+    </div>
+
+    <p class="calc-error" id="calcError" style="display:none;"></p>
+
+    <div class="calc-actions">
+      <button type="button" class="btn btn-primary btn-sm" id="calcCalculateBtn">Calculate</button>
+      <button type="button" class="btn btn-ghost btn-sm" id="calcClearBtn">Clear</button>
+    </div>
+
+   </div>
+    <div class="calc-side">
+
+<div class="calc-history-header calc-side-header">
+  <span>Saved calculations</span>
+  <button type="button" class="calc-history-clear" id="calcHistoryClearBtn">Remove all</button>
 </div>
+
+<div class="calc-history" id="calcHistory" style="display:none;">
+  <div class="calc-history-list" id="calcHistoryList"></div>
+
+ <div class="calc-history-total">
+    <span>Total weight</span>
+    <strong><span id="calcHistoryTotalLbs">0</span> lbs / <span id="calcHistoryTotalKg">0</span> kg</strong>
+  </div>
+
+  <button type="button" class="calc-history-pdf" id="calcHistoryPdfBtn">Export as PDF</button>
+
+  <p class="calc-standards-note">Weights calculated per standard imperial steel weight formulas.</p>
+
+  <div class="calc-history-confirm" id="calcHistoryConfirm" style="display:none;">
+    Are you sure?
+    <span class="calc-history-confirm-yes" id="calcHistoryConfirmYes">Yes</span>
+    <span class="calc-history-confirm-no" id="calcHistoryConfirmNo">No</span>
+  </div>
+</div>
+
+    <div class="calc-results" id="calcResults" style="display:none;">
+      <div class="calc-result-row">
+        <span>Weight</span>
+        <strong><span id="calcResultLbs">0</span> lbs</strong>
+      </div>
+      <div class="calc-result-row">
+        <span>Weight</span>
+        <strong><span id="calcResultKg">0</span> kg</strong>
+      </div>
+  </div>
+</div>
+    </div>
+
+ </form></div></div>
+</div>
+</body>
+</html>
