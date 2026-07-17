@@ -11,10 +11,10 @@
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
 </head>
 <body>
+<div class="page-veil" aria-hidden="true"></div>
 
 <div class="header-hover-zone" id="headerHoverZone"></div>
 <header>
@@ -476,7 +476,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
       </div>
      <div class="map-ph reveal">
         <iframe
-          src="https://www.google.com/maps?q=24.847867,67.1008223(Murtaza+Corporation+Warehouse)&z=15&output=embed"
+          src="https://www.google.com/maps?q=24.847867,67.1008223&z=17&output=embed"
           width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
           title="Murtaza Corporation location"></iframe>
       </div>
@@ -514,21 +514,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 </footer>
 
 <script src="script.js" defer></script>
-<!-- Floating Calculator Button -->
-<a href="#"
-   class="calculator-widget"
-   id="calculatorWidgetBtn"
-   aria-label="Open pipe calculator">
-
-    <span class="whatsapp-text">
-        Calculator
-    </span>
-
-    <div class="calculator-icon">
-        <i class="fa-solid fa-calculator"></i>
-    </div>
-
-</a>
+<script src="calculator-widget.js" defer></script>
 <!-- Floating WhatsApp Button -->
 <a href="https://wa.me/923343791852"
    class="whatsapp-widget"
@@ -546,184 +532,3 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 </a>
 </body>
 </html>
-<!-- Calculator Modal -->
-<div class="calculator-overlay" id="calculatorOverlay">
-  <div class="calculator-modal" id="calculatorModal" role="dialog" aria-modal="true" aria-labelledby="calculatorModalTitle">
-    <button type="button" class="calculator-modal-close" id="calculatorModalClose" aria-label="Close calculator">&times;</button>
-    <div class="calculator-modal-header">
-      <h3 id="calculatorModalTitle">Pipe Calculator</h3>
-    </div>
-    <div class="calculator-modal-body">
-  <form id="calcForm" onsubmit="return false;" class="calc-form">
-
-   <div class="calc-shape-bar" id="calcShapeBar">
-      <label>Shape</label>
-      <div class="calc-shape-icons" id="calcShapeIcons">
-        <button type="button" class="calc-shape-icon is-active" data-shape="Round" aria-pressed="true" aria-label="Round"><img src="images/round.png" alt="" /><span class="calc-shape-icon-label">Round</span></button>
-        <button type="button" class="calc-shape-icon" data-shape="Square" aria-pressed="false" aria-label="Square"><img src="images/icon-square.png" alt="" /><span class="calc-shape-icon-label">Square</span></button>
-        <button type="button" class="calc-shape-icon" data-shape="Rectangle" aria-pressed="false" aria-label="Rectangle"><img src="images/icon-rectangle.png" alt="" /><span class="calc-shape-icon-label">Rectangle</span></button>
-        <button type="button" class="calc-shape-icon" data-shape="Hexagonal" aria-pressed="false" aria-label="Hexagonal"><img src="images/icon-hexagol.jpg" alt="" /><span class="calc-shape-icon-label">Hexagonal</span></button>
-        <button type="button" class="calc-shape-icon" data-shape="Octagonal" aria-pressed="false" aria-label="Octagonal"><img src="images/icon-octa.png" alt="" /><span class="calc-shape-icon-label">Octagonal</span></button>
-        <button type="button" class="calc-shape-icon" data-shape="Sheet" aria-pressed="false" aria-label="Sheet"><img src="images/sheet.png" alt="" /><span class="calc-shape-icon-label">Sheet</span></button>
-        <button type="button" class="calc-shape-icon" data-shape="Plate" aria-pressed="false" aria-label="Plate"><img src="images/plate.jpg" alt="" /><span class="calc-shape-icon-label">Plate</span></button>
-        <button type="button" class="calc-shape-icon" data-shape="Pipe" aria-pressed="false" aria-label="Tubular / Pipe"><img src="images/tubular.jpg" alt="" /><span class="calc-shape-icon-label">Tubular/Pipe</span></button>
-        <button type="button" class="calc-shape-icon" data-shape="Ring" aria-pressed="false" aria-label="Ring"><img src="images/ring.png" alt="" /><span class="calc-shape-icon-label">Ring</span></button>
-      </div>
-      <p class="calc-shape-name" id="calcShapeName" style="display:none;">Round</p>
-      <select id="calcShape" style="display:none;">
-        <option value="Round" selected>Round</option>
-        <option value="Square">Square</option>
-        <option value="Rectangle">Rectangle</option>
-        <option value="Hexagonal">Hexagonal</option>
-        <option value="Octagonal">Octagonal</option>
-        <option value="Sheet">Sheet</option>
-        <option value="Plate">Plate</option>
-        <option value="Tubular">Tubular</option>
-        <option value="Pipe">Pipe</option>
-        <option value="Ring">Ring</option>
-        </select>
-    </div>
-
-   <div class="calc-layout">
-    <div class="calc-main">
-
-    <div class="calc-row">
-      <label for="calcMaterial">Material</label>
-      <select id="calcMaterial">
-        <option data-factor="1" selected>Steel (default)</option>
-        <option data-factor="0.3462">Aluminum 1100</option>
-        <option data-factor="0.3604">Aluminum 2011</option>
-        <option data-factor="0.3568">Aluminum 2014</option>
-        <option data-factor="0.3568">Aluminum 2017</option>
-        <option data-factor="0.3533">Aluminum 2024</option>
-        <option data-factor="0.3498">Aluminum 3003</option>
-        <option data-factor="0.3462">Aluminum 5005</option>
-        <option data-factor="0.3427">Aluminum 5052</option>
-        <option data-factor="0.3356">Aluminum 5056</option>
-        <option data-factor="0.3392">Aluminum 5083</option>
-        <option data-factor="0.3392">Aluminum 5086</option>
-        <option data-factor="0.3462">Aluminum 6061</option>
-        <option data-factor="0.3462">Aluminum 6063</option>
-        <option data-factor="0.3568">Aluminum 7050</option>
-        <option data-factor="0.3568">Aluminum 7075</option>
-        <option data-factor="0.3604">Aluminum 7178</option>
-        <option data-factor="1.030">Stainless 300 Series</option>
-        <option data-factor="1.010">Stainless 400 Series</option>
-        <option data-factor="1.132">Nickel 200</option>
-        <option data-factor="1.125">Nickel 400</option>
-        <option data-factor="1.121">Nickel R-405</option>
-        <option data-factor="1.075">Nickel K-500</option>
-        <option data-factor="1.072">Nickel 600</option>
-        <option data-factor="1.075">Nickel 625</option>
-        <option data-factor="1.012">Nickel 800H</option>
-        <option data-factor="1.012">Nickel 800AT</option>
-        <option data-factor="1.037">Nickel 825</option>
-        <option data-factor="1.012">Nickel 330</option>
-        <option data-factor="1.030">Nickel 20</option>
-        <option data-factor="1.132">Nickel C-276</option>
-        <option data-factor="1.012">Nickel 2545MD</option>
-        <option data-factor="0.229">Magnesium</option>
-        <option data-factor="0.236">Beryllium</option>
-        <option data-factor="0.575">Titanium</option>
-        <option data-factor="0.812">Zirconium</option>
-        <option data-factor="0.911">Cast Iron</option>
-        <option data-factor="0.911">Zinc</option>
-        <option data-factor="1.084">Brass</option>
-        <option data-factor="1.095">Columbium</option>
-        <option data-factor="1.144">Copper</option>
-        <option data-factor="1.303">Molybdenum</option>
-        <option data-factor="1.339">Silver</option>
-        <option data-factor="1.448">Lead</option>
-        <option data-factor="2.120">Tantalum</option>
-        <option data-factor="2.462">Tungsten</option>
-        <option data-factor="2.466">Gold</option>
-      </select>
-    </div>
-
-    <div class="calc-row" id="calcField1Row">
-      <label id="calcLabel1" for="calcParam1">Diameter</label>
-      <div class="calc-input-group">
-        <input type="number" step="any" id="calcParam1" placeholder="0.00" />
-        <select id="calcUnit1">
-          <option>in</option><option>ft</option><option>yd</option>
-          <option>mm</option><option>cm</option><option>m</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="calc-row" id="calcField2Row" style="display:none;">
-      <label id="calcLabel2" for="calcParam2">Width</label>
-      <div class="calc-input-group">
-        <input type="number" step="any" id="calcParam2" placeholder="0.00" />
-        <select id="calcUnit2">
-          <option>in</option><option>ft</option><option>yd</option>
-          <option>mm</option><option>cm</option><option>m</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="calc-row" id="calcField3Row">
-      <label id="calcLabel3" for="calcParam3">Length</label>
-      <div class="calc-input-group">
-        <input type="number" step="any" id="calcParam3" placeholder="0.00" />
-        <select id="calcUnit3">
-          <option>in</option><option>ft</option><option>yd</option>
-          <option>mm</option><option>cm</option><option>m</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="calc-row">
-      <label for="calcQty">Quantity (pieces)</label>
-      <input type="number" step="1" min="1" id="calcQty" value="1" />
-    </div>
-
-    <p class="calc-error" id="calcError" style="display:none;"></p>
-
-    <div class="calc-actions">
-      <button type="button" class="btn btn-primary btn-sm" id="calcCalculateBtn">Calculate</button>
-      <button type="button" class="btn btn-ghost btn-sm" id="calcClearBtn">Clear</button>
-    </div>
-
-   </div>
-    <div class="calc-side">
-
-<div class="calc-history-header calc-side-header">
-  <span>Saved calculations</span>
-  <button type="button" class="calc-history-clear" id="calcHistoryClearBtn">Remove all</button>
-</div>
-
-<div class="calc-history" id="calcHistory" style="display:none;">
-  <div class="calc-history-list" id="calcHistoryList"></div>
-
- <div class="calc-history-total">
-    <span>Total weight</span>
-    <strong><span id="calcHistoryTotalLbs">0</span> lbs / <span id="calcHistoryTotalKg">0</span> kg</strong>
-  </div>
-
-  <button type="button" class="calc-history-pdf" id="calcHistoryPdfBtn">Export as PDF</button>
-
-  <p class="calc-standards-note">Weights calculated per standard imperial steel weight formulas.</p>
-
-  <div class="calc-history-confirm" id="calcHistoryConfirm" style="display:none;">
-    Are you sure?
-    <span class="calc-history-confirm-yes" id="calcHistoryConfirmYes">Yes</span>
-    <span class="calc-history-confirm-no" id="calcHistoryConfirmNo">No</span>
-  </div>
-</div>
-
-    <div class="calc-results" id="calcResults" style="display:none;">
-      <div class="calc-result-row">
-        <span>Weight</span>
-        <strong><span id="calcResultLbs">0</span> lbs</strong>
-      </div>
-      <div class="calc-result-row">
-        <span>Weight</span>
-        <strong><span id="calcResultKg">0</span> kg</strong>
-      </div>
-  </div>
-</div>
-    </div>
-
- </form></div></div>
-</div>
